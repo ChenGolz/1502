@@ -96,7 +96,8 @@
     var style = document.createElement('style');
     style.id = STYLE_ID;
     style.textContent = [
-      '.dealMedia{display:block;overflow:hidden;border-radius:14px;}',
+      '.dealMedia{position:relative;display:block;overflow:hidden;border-radius:14px;}',
+      '.dealDiscountBadge{position:absolute;top:10px;inset-inline-start:10px;z-index:2;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;line-height:1;background:rgba(255,255,255,.92);color:#0b2a3a;box-shadow:0 6px 18px rgba(0,0,0,.12);}',
       '.dealImg{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;}',
       '.dealPlaceholder{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;font-size:34px;}',
       '.dealCard .dealTop{margin-top:10px;}',
@@ -661,10 +662,35 @@ var labels = resolveLabels(p, brand);
     if (fsText) pills.push('<span class="pMetaPill pMetaPill--freeShip">' + esc(fsText) + '</span>');
     var pillsHtml = pills.length ? ('<div class="pMeta dealPills">' + pills.join('') + '</div>') : '';
 
+    // Discount badge (percent if possible, else "מבצע")
+    var discountText = '';
+    try {
+      function num(v){ return (typeof v === 'number' && isFinite(v)) ? v : null; }
+      var was =
+        num(offer.priceWasUSD) || num(offer.priceBeforeUSD) || num(offer.listPriceUSD) || num(offer.originalPriceUSD) ||
+        num(offer.priceWas) || num(offer.priceBefore) || num(offer.listPrice) || num(offer.originalPrice) || num(offer.compareAtPrice) || num(offer.wasPrice) ||
+        num(p && p.priceWas) || num(p && p.priceBefore) || num(p && p.listPrice) || num(p && p.originalPrice) || num(p && p.compareAtPrice);
+
+      var pct = null;
+      if (was != null && price != null && was > price) {
+        pct = Math.round((1 - (price / was)) * 100);
+      } else {
+        var explicitPct = num(offer.discountPercent) || num(offer.discountPct) || num(p && p.discountPercent) || num(p && p.discountPct);
+        if (explicitPct != null) pct = Math.round(explicitPct);
+      }
+
+      if (pct != null && pct >= 5) discountText = '-' + pct + '%';
+      else if (p && p.isDiscounted === true) discountText = 'מבצע';
+    } catch (e) {
+      if (p && p.isDiscounted === true) discountText = 'מבצע';
+    }
+    var discountBadgeHtml = discountText ? ('<span class="dealDiscountBadge">' + esc(discountText) + '</span>') : '';
+
     return (
       '<article class="dealCard">' +
         // Image (clickable)
         '<a class="dealMedia" href="' + esc(url || '#') + '" rel="noopener" target="_blank">' +
+          discountBadgeHtml +
           (imgSrc
             ? '<img class="dealImg" src="' + esc(imgSrc) + '" alt="' + esc(safeText(p.name)) + '" loading="lazy" decoding="async" width="640" height="640" onerror="this.onerror=null;this.src=\'assets/img/icons/bag-heart.png\';" />'
             : '<img class="dealImg" src="assets/img/icons/bag-heart.png" alt="" loading="lazy" decoding="async" width="640" height="640" />'
