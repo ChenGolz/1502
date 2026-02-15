@@ -165,7 +165,7 @@ h3{ font-size: 18px; margin:0 0 8px; }
 
 
 /* ---------------------------------------------------------
-   Language switcher placement (desktop + mobile)
+   Weglot language switcher placement (desktop + mobile)
    --------------------------------------------------------- */
 #siteHeader .langSlot{
   display: inline-flex;
@@ -197,8 +197,45 @@ h3{ font-size: 18px; margin:0 0 8px; }
   }
 }
 
+/* When the Weglot widget is moved into a slot, neutralize any fixed positioning */
+#siteHeader .langSlot .wg-default,
+#siteHeader .langSlot .wg-drop,
+#siteHeader .langSlot .weglot-container,
+#siteHeader .langSlot #wg-switcher-container,
+#siteHeader .langSlot #wg-switcher,
+#siteHeader .langSlot #weglot_switcher,
+#siteHeader .langSlot #weglot_here,
+#siteHeader .langSlot .kbwgWeglotMounted{
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  transform: none !important;
+}
 
+#siteHeader .langSlot .wg-default,
+#siteHeader .langSlot .wg-drop,
+#siteHeader .langSlot .weglot-container,
+#siteHeader .langSlot #wg-switcher-container,
+#siteHeader .langSlot #wg-switcher,
+#siteHeader .langSlot .kbwgWeglotMounted{
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  max-height: 44px;
+}
 
+/* Slightly tighten the widget so it doesn't steal space on small screens */
+@media (max-width: 420px){
+  #siteHeader .langSlot .wg-default,
+  #siteHeader .langSlot .wg-drop{
+    transform: scale(.92) !important;
+    transform-origin: center;
+  }
+}
 
 
 /* Hero */
@@ -3383,6 +3420,7 @@ table{ width: 100%; border-collapse: collapse; }
 
 /* --- January 2026 UI fixes --- */
 
+/* Fix LTR word order inside RTL nav (helps Weglot /en pages) */
 .nav a{ unicode-bidi: plaintext; }
 
 /* מוצרים filter panel: prevent overlap + horizontal scroll */
@@ -3585,13 +3623,6 @@ html[dir="rtl"] input, html[dir="rtl"] textarea, html[dir="rtl"] select { font-f
 html[dir="rtl"] .nav, html[dir="rtl"] nav ul { flex-direction: row; }
 html[dir="rtl"] .menu, html[dir="rtl"] .topMenu, html[dir="rtl"] .navbar, html[dir="rtl"] .nav-links { flex-direction: row; }
 html[dir="rtl"] .card, html[dir="rtl"] .productCard, html[dir="rtl"] .dealCard, html[dir="rtl"] .brandCard { text-align: right; }
-
-/* --- English LTR enhancements --- */
-:root { --en-font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
-html[dir="ltr"] body { direction: ltr; text-align: left; font-family: var(--en-font); }
-html[dir="ltr"] input, html[dir="ltr"] textarea, html[dir="ltr"] select { font-family: var(--en-font); }
-html[dir="ltr"] .card, html[dir="ltr"] .productCard, html[dir="ltr"] .dealCard, html[dir="ltr"] .brandCard { text-align: left; }
-
 
 /* ------------------------------------------------------------
    Mobile: reduce scrolling by showing 2 cards per row
@@ -5325,8 +5356,26 @@ html, body, main, button, input, select, textarea {
 }
 
 
+/* ---------------------------------------------------------
+   KBWG Weglot visibility guard
+   If you hid the default floating widget via Weglot "Custom CSS",
+   use :not(.kbwgWeglotMounted) so the header-mounted one still shows.
+   --------------------------------------------------------- */
+#siteHeader .langSlot .kbwgWeglotMounted,
+#siteHeader .langSlot .kbwgWeglotMounted *{
+  visibility: visible !important;
+  opacity: 1 !important;
+}
 
+/* If Weglot custom CSS used display:none !important on the default containers,
    this makes the mounted one show when inside the header slot. */
+#siteHeader .langSlot .weglot-container.kbwgWeglotMounted,
+#siteHeader .langSlot #wg-switcher-container.kbwgWeglotMounted,
+#siteHeader .langSlot #wg-switcher.kbwgWeglotMounted,
+#siteHeader .langSlot .wg-default.kbwgWeglotMounted,
+#siteHeader .langSlot .wg-drop.kbwgWeglotMounted{
+  display: inline-flex !important;
+}
 /* DEALS: make the product images much smaller */
 .page-deals .dealCard > a.dealMedia{
   width: 80px !important;        /* <-- change this (60–110) */
@@ -5389,3 +5438,4 @@ html, body, main, button, input, select, textarea {
   border-width: 10px 10px 10px 0;
   border-color: transparent #00B853 transparent transparent;
 }
+
