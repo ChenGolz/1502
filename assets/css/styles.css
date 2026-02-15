@@ -182,35 +182,25 @@ h3{ font-size: 18px; margin:0 0 8px; }
   #siteHeader #langSlotDesktop{ display: none; }
 }
 
-/* Desktop language slot placement: between menu and logo */
-@media (min-width: 901px){
-  #siteHeader #langSlotDesktop{
-    margin-inline-start: 10px; /* in RTL this is left of the logo */
-  }
-}
-
 /* Keep the switcher sized like the other header controls */
 #siteHeader #langSlotMobile{ width: 44px; height: 44px; }
 
-/* Mobile header layout: hamburger (left), language (center), logo (right) */
+/* Mobile: keep the switcher between the hamburger and the site title */
 @media (max-width: 900px){
-  #siteHeader .headerRow{
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+  #siteHeader .headerRow{ align-items: center; }
+  #siteHeader #langSlotMobile{
+    margin-inline: auto;
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
   }
-
-  /* place controls in the grid */
-  #siteHeader .navToggle{ grid-column: 1; justify-self: start; }
-  #siteHeader #langSlotMobile{ 
-    grid-column: 2; 
-    justify-self: center; 
-    position: static; 
-    transform: none; 
-    z-index: 10003;
+  /* Avoid wrapping on very small phones */
+  #siteHeader .logoText{
+    max-width: min(46vw, 220px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  #siteHeader .logo{ grid-column: 3; justify-self: end; }
 }
 
 /* When the Weglot widget is moved into a slot, neutralize any fixed positioning */
