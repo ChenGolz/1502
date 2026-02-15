@@ -1791,7 +1791,7 @@
     ],
     "isKids": false,
     "isMen": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 34,
     "image": "assets/img/products/B0DKPJG3GV.jpg"
   },
   {
@@ -1887,7 +1887,7 @@
     ],
     "isKids": false,
     "isMen": false,
-    "isDiscounted": true,
+    "isDiscounted": true,"discountPct": 34,
     "image": "assets/img/products/B0DHFR2JX9.jpg"
   },
   {
@@ -1932,7 +1932,7 @@
     ],
     "isKids": false,
     "isMen": false,
-    "isDiscounted": true,
+    "isDiscounted": true,"discountPct": 34,
     "image": "assets/img/products/B0DKPGH4GQ.jpg"
   },
   {
@@ -5272,7 +5272,7 @@
     ],
     "isKids": false,
     "isMen": false,
-    "isDiscounted": true,
+    "isDiscounted": true,"discountPct": 45,
     "image": "assets/img/products/B0CRLGX6S6.jpg"
   },
   {
@@ -8384,12 +8384,12 @@
         "url": "https://www.amazon.com/dp/B0BP4YDVM7?tag=nocrueltyil-20",
         "asin": "B0BP4YDVM7",
         "currency": "USD",
-        "priceUSD": 42.0,
+        "priceUSD": 70,
         "freeShipOver": 49
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": false,
     "image": "assets/img/products/B0BP4YDVM7.jpg"
   },
   {
@@ -9023,7 +9023,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true,"discountPct": 31,
     "image": "assets/img/products/B0DTWPKFJH.jpg"
   },
   {
@@ -11462,7 +11462,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 32,
     "image": "assets/img/products/B0BYR1PGGB.jpg"
   },
   {
@@ -11624,7 +11624,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 30,
     "image": "assets/img/products/B07ZLD8W13.jpg"
   },
   {
@@ -11753,7 +11753,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 37,
     "image": "assets/img/products/B084Z48BCF.jpg"
   },
   {
@@ -11784,7 +11784,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 31,
     "image": "assets/img/products/B00VU6D1QS.jpg"
   },
   {
@@ -12105,7 +12105,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 34,
     "image": "assets/img/products/B0C8Y1TSKZ.jpg"
   },
   {
@@ -12176,7 +12176,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 33,
     "image": "assets/img/products/B0CBQZXBTR.jpg"
   },
   {
@@ -12403,7 +12403,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": false,
     "image": "assets/img/products/B09P4JDD5Z.jpg"
   },
   {
@@ -12437,7 +12437,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": false,
     "image": "assets/img/products/B0CTZP5HD3.jpg"
   },
   {
@@ -12471,7 +12471,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": false,
     "image": "assets/img/products/B0DCWBYWK2.jpg"
   },
   {
@@ -14534,7 +14534,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 20,
     "image": "assets/img/products/B08X9X3XN8.jpg"
   },
   {
@@ -14924,7 +14924,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 21,
     "image": "assets/img/products/B0DFFT6VZV.jpg"
   },
   {
@@ -15866,7 +15866,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 48,
     "image": "assets/img/products/B086W38SXX.jpg"
   },
   {
@@ -16977,7 +16977,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 13,
     "image": "assets/img/products/B08HY9C5P6.jpg"
   },
   {
@@ -17457,7 +17457,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 28,
     "image": "assets/img/products/B0DQQDL7N2.jpg"
   },
   {
@@ -17489,7 +17489,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 15,
     "image": "assets/img/products/B0DSJPYFV3.jpg"
   },
   {
@@ -17767,7 +17767,7 @@
     "image": "assets/img/products/B08L463DZ6.jpg",
     "isKids": false,
     "isMen": true,
-    "isDiscounted": true
+    "isDiscounted": true, "discountPct": 41
   },
   {
     "id": "lilyana-b09h9hw2jr",
