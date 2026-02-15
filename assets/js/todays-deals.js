@@ -98,7 +98,7 @@
     style.textContent = [
             '.dealMedia{position:relative;display:block;overflow:hidden;border-radius:14px;}',
       '.dealCard{position:relative;}',
-      '.dealDiscountBadge{position:absolute;top:50%;inset-inline-start:12px;transform:translateY(-50%);z-index:5;padding:10px 15px;border-radius:999px;font-size:16px;font-weight:900;line-height:1;background:#22c55e;color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.18);pointer-events:none;}',
+      '.dealDiscountBadge{position:absolute;top:14px;left:14px;z-index:10;background:rgba(255,255,255,.92);color:#16a34a;font-size:30px;font-weight:900;line-height:1;padding:10px 12px;border-radius:14px;box-shadow:0 10px 25px rgba(0,0,0,.18);border:2px solid rgba(34,197,94,.22);transform:rotate(-10deg);transform-origin:top left;pointer-events:none;}.dealDiscountBadge::after{content:'';position:absolute;left:12px;bottom:-9px;width:14px;height:14px;background:rgba(255,255,255,.92);border-left:2px solid rgba(34,197,94,.22);border-bottom:2px solid rgba(34,197,94,.22);transform:rotate(45deg);border-bottom-left-radius:4px;}@media (max-width:520px){.dealDiscountBadge{font-size:24px;top:10px;left:10px;padding:8px 10px;}}',
       '.dealImg{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;}',
       '.dealPlaceholder{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;font-size:34px;}',
       '.dealCard .dealTop{margin-top:10px;}',
@@ -726,12 +726,16 @@ var labels = resolveLabels(p, brand);
         else if (pct > 99) pct = 99;
       }
 
-      if (pct != null) discountText = '-' + pct + '%';
+      if (pct != null) discountText = String(pct) + '%';
       else if (p && p.isDiscounted === true) discountText = 'מבצע';
     } catch (e) {
       if (p && p.isDiscounted === true) discountText = 'מבצע';
     }
-    var discountBadgeHtml = discountText ? ('<span class="dealDiscountBadge">' + esc(discountText) + '</span>') : '';
+    var discountBadgeHtml = '';
+    if (discountText) {
+      var dirAttr = (discountText.indexOf('%') !== -1) ? ' dir="ltr"' : '';
+      discountBadgeHtml = '<span class="dealDiscountBadge"' + dirAttr + '>' + esc(discountText) + '</span>';
+    }
 
     return (
       '<article class="dealCard">' +
