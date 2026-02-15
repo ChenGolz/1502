@@ -4,6 +4,66 @@
   // Build marker: use this to verify you loaded the latest JS
   window.KBWG_BUILD = window.KBWG_BUILD || '2026-02-14-v3';
   try { console.info('[KBWG] build', window.KBWG_BUILD); } catch(e) {}
+
+  // ---------------------------------------------------------
+  // Simple i18n helper (lang via ?lang=en|he, then localStorage)
+  // ---------------------------------------------------------
+  function kbwgNormalizeLang(l){
+    l = String(l || '').trim().toLowerCase();
+    if (!l) return 'he';
+    if (l === 'iw') l = 'he';
+    if (l.startsWith('he')) return 'he';
+    if (l.startsWith('en')) return 'en';
+    return l.slice(0, 2);
+  }
+
+  function kbwgGetLang(){
+    // 1) URL param (highest priority)
+    try {
+      var qs = new URLSearchParams(window.location.search || '');
+      var ql = qs.get('lang');
+      if (ql) return kbwgNormalizeLang(ql);
+    } catch(e) {}
+
+    // 2) Saved preference
+    try {
+      var saved = localStorage.getItem('kbwg_lang');
+      if (saved) return kbwgNormalizeLang(saved);
+    } catch(e) {}
+
+    // 3) <html lang="">
+    try {
+      var hl = document.documentElement.getAttribute('lang');
+      if (hl) return kbwgNormalizeLang(hl);
+    } catch(e) {}
+
+    return 'he';
+  }
+
+  function kbwgSetLang(lang){
+    var l = kbwgNormalizeLang(lang);
+    try { localStorage.setItem('kbwg_lang', l); } catch(e) {}
+    try { document.documentElement.setAttribute('lang', l); } catch(e) {}
+    return l;
+  }
+
+  // Turn "data/products.json" OR "data/products" into "data/products-he.json" / "-en.json"
+  function kbwgPickLangJson(jsonPath, lang){
+    var l = kbwgNormalizeLang(lang || kbwgGetLang());
+    var p = String(jsonPath || '');
+    if (!p) return p;
+    if (p.endsWith('.json')) p = p.slice(0, -5);
+    return p + '-' + l + '.json';
+  }
+
+  // Expose (so other scripts can reuse)
+  window.kbwgGetLang = kbwgGetLang;
+  window.kbwgSetLang = kbwgSetLang;
+  window.kbwgPickLangJson = kbwgPickLangJson;
+
+  // Apply URL param immediately (also saves to localStorage)
+  try { kbwgSetLang(kbwgGetLang()); } catch(e) {}
+
     
 function kbwgInjectFaqSchema(){
   try{
@@ -683,216 +743,17 @@ window.addEventListener('resize', () => {
 
 
 
-function fixEnglishNavLabels(){
-  try{
-    const normalize = () => {
-      const lang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
-      const translated = (document.documentElement.getAttribute('data-wg-translated') || '').toLowerCase();
-      const isEn = lang.startsWith('en') || translated.startsWith('en') || String(location.pathname || '').includes('/en/');
-      if (!isEn) return;
-
-      const anchors = document.querySelectorAll('.siteHeader a, .navDrawer a, nav a');
-      anchors.forEach((a) => {
-        if (!a) return;
-        const href = String(a.getAttribute('href') || '').toLowerCase();
-        const txt = String(a.textContent || '').trim();
-        const lower = txt.toLowerCase();
-
-        // Prefer href-based detection (robust against auto-translation glitches)
-        if (href.includes('contact')){
-          if (txt !== 'Contact us') a.textContent = 'Contact us';
-          return;
-        }
-
-        // Guard against weird auto-translator outputs like "Us Contact Us"
-        const usCount = (lower.match(/\bus\b/g) || []).length;
-        if (lower === 'us contact us' || lower === 'contact us us' || (lower.includes('contact') && usCount >= 2)){
-          if (txt !== 'Contact us') a.textContent = 'Contact us';
-        }
-      });
-    };
-
-    // Run now + a couple of delayed retries (catches late translator mutations)
-    normalize();
-    window.setTimeout(normalize, 400);
-    window.setTimeout(normalize, 1200);
-
-    // If Weglot is installed, hook into its lifecycle instead of using MutationObserver.
-    // MutationObserver + translators can cause infinite DOM-churn and heavy CPU usage.
-    if (window.Weglot && typeof window.Weglot.on === 'function' && !window.__KBWG_WEGLOT_NAV_FIX_BOUND){
-      window.__KBWG_WEGLOT_NAV_FIX_BOUND = true;
-      try { window.Weglot.on('initialized', normalize); } catch(e) {}
-      try {
-        window.Weglot.on('languageChanged', function(){
-          normalize();
-          window.setTimeout(normalize, 400);
-          window.setTimeout(normalize, 1200);
-        });
-      } catch(e) {}
-    }
-
-    // Some translators mutate late; run again after full load.
-    window.addEventListener('load', () => {
-      try { normalize(); } catch(e) {}
-    }, { once: true });
-  } catch(e) {}
-}
 
 
-function findWeglotWidget(){
-  // Weglot can render different wrappers depending on account config:
-  // - .wg-default / .wg-drop (classic)
-  // - #weglot_switcher (classic id)
-  // - #wg-switcher / #wg-switcher-container (newer)
-  // - .weglot-container (some embeds)
-  // We'll grab the *outermost* wrapper we can find.
-  const sel = [
-    '.weglot-container',
-    '#wg-switcher-container',
-    '#wg-switcher',
-    '#weglot_switcher',
-    '#weglot_here',
-    '.wg-default',
-    '.wg-drop',
-    '[id^="weglot_"]'
-  ].join(',');
-  let el = document.querySelector(sel);
-  if (!el) return null;
 
-  // Move outer wrapper if we found an inner node.
-  const outer =
-    (el.closest && (el.closest('.weglot-container') || el.closest('#wg-switcher-container') || el.closest('.wg-default'))) || null;
-  if (outer) el = outer;
 
-  return el;
-}
 
-function placeWeglotSwitcher(){
-  try{
-    const slotDesktop = document.getElementById('langSlotDesktop');
-    const slotMobile  = document.getElementById('langSlotMobile');
-    if (!slotDesktop && !slotMobile) return;
-
-    const isMobile = window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
-    const slot = (isMobile ? slotMobile : slotDesktop) || slotMobile || slotDesktop;
-    if (!slot) return;
-
-    const el = findWeglotWidget();
-    if (!el) return;
-
-    // If Weglot uses fixed positioning, moving into the header slot should still work.
-    if (el.parentElement !== slot){
-      slot.appendChild(el);
-    }
-
-    try { el.classList.add('kbwgWeglotMounted'); } catch(e) {}
-  } catch(e) {}
-}
-
-function initWeglotSwitcherPlacement(){
-  try{
-    if (window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_INIT) return;
-    window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_INIT = true;
-
-    const run = () => { try { placeWeglotSwitcher(); } catch(e) {} };
-
-    // Minimal observer: watch for Weglot injecting the widget, then disconnect.
-    let mo = null;
-    const startObserver = () => {
-      try{
-        if (mo || !document.body) return;
-        mo = new MutationObserver(() => {
-          run();
-          if (findWeglotWidget()){
-            try { mo.disconnect(); } catch(e) {}
-            mo = null;
-          }
-        });
-        mo.observe(document.body, { childList: true, subtree: true });
-        window.setTimeout(() => { try { mo && mo.disconnect(); } catch(e) {} mo = null; }, 20000);
-      }catch(e){}
-    };
-
-    // Keep trying for a short period to catch late async injection.
-    let ticks = 0;
-    const t = window.setInterval(() => {
-      ticks++;
-      run();
-      if (findWeglotWidget()){
-        window.setTimeout(run, 120);
-        window.setTimeout(run, 400);
-        window.clearInterval(t);
-      }
-      if (ticks > 120) window.clearInterval(t); // ~30s max
-    }, 250);
-
-    startObserver();
-
-    // Also try on resize (switching between desktop/mobile slots)
-    window.addEventListener('resize', () => { run(); }, { passive: true });
-
-    // If Weglot is installed, hook lifecycle events too.
-    if (window.Weglot && typeof window.Weglot.on === 'function' && !window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_BOUND){
-      window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_BOUND = true;
-      try { window.Weglot.on('initialized', run); } catch(e) {}
-      try { window.Weglot.on('languageChanged', function(){ run(); window.setTimeout(run, 200); }); } catch(e) {}
-    }
-
-    // A couple of immediate retries.
-    run();
-    window.setTimeout(run, 400);
-    window.setTimeout(run, 1200);
-    window.addEventListener('load', () => { run(); }, { once: true });
-  } catch(e) {}
-}
-
-function initWeglotSwitcherPlacement(){
-  try{
-    if (window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_INIT) return;
-    window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_INIT = true;
-
-    const run = () => { try { placeWeglotSwitcher(); } catch(e) {} };
-
-    // Keep trying for a short period to catch late async injection.
-    let ticks = 0;
-    const t = window.setInterval(() => {
-      ticks++;
-      run();
-      if (document.querySelector('.wg-default, .wg-drop, #weglot_switcher, #weglot_here') && (document.getElementById('langSlotDesktop') || document.getElementById('langSlotMobile'))){
-        // one extra run after it appears
-        window.setTimeout(run, 120);
-        window.setTimeout(run, 400);
-        window.clearInterval(t);
-      }
-      if (ticks > 40) window.clearInterval(t); // ~8s max
-    }, 200);
-
-    // Also try on resize (switching between desktop/mobile slots)
-    window.addEventListener('resize', () => { run(); }, { passive: true });
-
-    // If Weglot is installed, hook lifecycle events too.
-    if (window.Weglot && typeof window.Weglot.on === 'function' && !window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_BOUND){
-      window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_BOUND = true;
-      try { window.Weglot.on('initialized', run); } catch(e) {}
-      try { window.Weglot.on('languageChanged', function(){ run(); window.setTimeout(run, 200); }); } catch(e) {}
-    }
-
-    // A couple of immediate retries.
-    run();
-    window.setTimeout(run, 400);
-    window.setTimeout(run, 1200);
-    window.addEventListener('load', () => { run(); }, { once: true });
-  } catch(e) {}
-}
 
 
 // Initial run
 try { setupMobileFilterCollapse(); } catch(e) {}
 window.addEventListener('DOMContentLoaded', () => {
-  try { setupMobileFilterCollapse(); } catch(e) {}
-  try { fixEnglishNavLabels(); } catch(e) {}
-  try { initWeglotSwitcherPlacement(); } catch(e) {}
-  try {
+  try { setupMobileFilterCollapse(); } catch(e) {}  try {
     // Remove the old global notice banner (now shown inside the navy hero header).
     const legacy = document.getElementById('kbwgGlobalVeganNotice');
     if (legacy) legacy.remove();
@@ -928,111 +789,4 @@ window.addEventListener('DOMContentLoaded', () => {
   } catch(e) {}
 });
 
-
-/* ---------------------------------------------------------
-   KBWG Weglot switcher placer (v5)
-   - waits for header slots + Weglot widget
-   - works across pages even when header is injected later
-   --------------------------------------------------------- */
-(function(){
-  if (window.__KBWG_WEGLOT_PLACER_V5) return;
-  window.__KBWG_WEGLOT_PLACER_V5 = true;
-
-  var SELECTORS = [
-    '.weglot-container',
-    '#wg-switcher-container',
-    '#wg-switcher',
-    '#weglot_switcher',
-    '#weglot_here',
-    '.wg-default',
-    '.wg-drop'
-  ];
-
-  function findWidget(){
-    for (var i=0;i<SELECTORS.length;i++){
-      var sel = SELECTORS[i];
-      var el = document.querySelector(sel);
-      if (!el) continue;
-      // prefer outer wrapper if we hit an inner node
-      var outer = (el.closest && el.closest('.weglot-container,#wg-switcher-container,#wg-switcher,.wg-default,.wg-drop')) || el;
-      return outer;
-    }
-    return null;
-  }
-
-  function getSlots(){
-    return {
-      desktop: document.getElementById('langSlotDesktop'),
-      mobile:  document.getElementById('langSlotMobile')
-    };
-  }
-
-  function pickSlot(slots){
-    if (!slots.desktop && !slots.mobile) return null;
-    var isMobile = false;
-    try { isMobile = window.matchMedia && window.matchMedia('(max-width: 900px)').matches; } catch(e){}
-    return (isMobile ? slots.mobile : slots.desktop) || slots.mobile || slots.desktop;
-  }
-
-  function mount(){
-    var slots = getSlots();
-    var slot = pickSlot(slots);
-    var el = findWidget();
-    if (!slot || !el) return false;
-
-    if (el.parentElement !== slot) slot.appendChild(el);
-
-    try { el.classList.add('kbwgWeglotMounted'); } catch(e){}
-
-    // In case Weglot set inline fixed positioning, neutralize (CSS also covers this)
-    try{
-      el.style.position = 'static';
-      el.style.inset = 'auto';
-      el.style.top = el.style.right = el.style.bottom = el.style.left = '';
-      el.style.transform = 'none';
-    }catch(e){}
-
-    return true;
-  }
-
-  // Throttled runner
-  var t = null;
-  function schedule(){
-    if (t) return;
-    t = setTimeout(function(){
-      t = null;
-      mount();
-    }, 60);
-  }
-
-  // Run after DOM + after your header/footer injection event
-  if (document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', function(){ mount(); setTimeout(mount, 250); setTimeout(mount, 900); });
-  } else {
-    mount(); setTimeout(mount, 250); setTimeout(mount, 900);
-  }
-
-  window.addEventListener('kbwg:layout-ready', function(){ mount(); setTimeout(mount, 250); setTimeout(mount, 900); });
-  window.addEventListener('resize', schedule);
-
-  // If Weglot is available, re-mount on its lifecycle hooks
-  function bindWeglotHooks(){
-    try{
-      if (window.Weglot && typeof window.Weglot.on === 'function'){
-        try { window.Weglot.on('initialized', mount); } catch(e){}
-        try { window.Weglot.on('languageChanged', mount); } catch(e){}
-      }
-    }catch(e){}
-  }
-  bindWeglotHooks();
-  setTimeout(bindWeglotHooks, 800);
-
-  // Observe DOM mutations until mounted (kept throttled)
-  var obs = new MutationObserver(function(){ schedule(); });
-  try { obs.observe(document.documentElement, {childList:true, subtree:true}); } catch(e){}
-
-  // Final safety retries
-  setTimeout(mount, 1600);
-  setTimeout(mount, 3200);
-})();
 

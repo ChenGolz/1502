@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="assets/css/styles.css?v=2026-02-14-v3" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/>
 <link href="assets/img/logo.png" rel="icon" type="image/png"/>
 <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/>
 <style>
@@ -106,7 +106,7 @@
 <div class="heroCopy center-text">
 <h1>טבעוני בישראל</h1>
 <p>מפה אינטראקטיבית של מסעדות וחנויות טבעוניות בישראל + רעיונות למסלולים קצרים לטיול.</p>
-<p class="muted" style="margin-top:.65rem;">עדכון נתונים אחרון: <span id="dataStamp">2026-02-07</span></p>
+<p class="muted" style="margin-top:.65rem;">עדכון נתונים אחרון: <span id="dataStamp">2026-02-14</span></p>
 <div class="badgeRow center-badges">
 <div class="trust-badge"><span class="icon">📍</span> מפה</div>
 <div class="trust-badge"><span class="icon">🌿</span> 100% טבעוני</div>
@@ -237,35 +237,9 @@
 </main>
 <div id="siteFooterMount"></div>
 <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-14-v30"></script>
-<script src="assets/js/site.js?v=2026-02-14-v39"></script>
-<script src="assets/js/vegan-in-israel.js?v=2026-02-14-v3"></script>
-<script>
-    // Weglot refresh helper (kept consistent with your other pages)
-    function refreshWeglot(){ if(window.Weglot && Weglot.refresh){ Weglot.refresh(); } }
-    document.addEventListener('DOMContentLoaded', refreshWeglot);
-    </script>
-<script>
-(function(){
-  function wgRefresh(){
-    try{
-      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
-    }catch(e){}
-  }
-  // initial
-  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
+<script src="assets/js/site.js?v=2026-02-15-v559"></script>
+<script src="assets/js/vegan-in-israel.js?v=2026-02-15-v55"></script>
 
-  // optional: if your JS triggers this after rendering cards/lists
-  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
-
-  // watch for DOM changes (debounced)
-  var t=null;
-  var mo=new MutationObserver(function(){
-    clearTimeout(t);
-    t=setTimeout(wgRefresh, 250);
-  });
-  mo.observe(document.documentElement, { childList:true, subtree:true });
-})();
-</script>
 </body>
 </html>

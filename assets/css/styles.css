@@ -164,80 +164,6 @@ h3{ font-size: 18px; margin:0 0 8px; }
 .spaced{ margin: 14px 0; }
 
 
-/* ---------------------------------------------------------
-   Weglot language switcher placement (desktop + mobile)
-   --------------------------------------------------------- */
-#siteHeader .langSlot{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-}
-
-/* Show only one slot per breakpoint */
-@media (min-width: 901px){
-  #siteHeader #langSlotMobile{ display: none; }
-}
-@media (max-width: 900px){
-  #siteHeader #langSlotDesktop{ display: none; }
-}
-
-/* Keep the switcher sized like the other header controls */
-#siteHeader #langSlotMobile{ width: 44px; height: 44px; }
-
-/* Mobile: keep the switcher between the hamburger and the site title (centered) */
-@media (max-width: 900px){
-  #siteHeader .headerRow{ position: relative; }
-  #siteHeader #langSlotMobile{
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10003;
-  }
-}
-
-/* When the Weglot widget is moved into a slot, neutralize any fixed positioning */
-#siteHeader .langSlot .wg-default,
-#siteHeader .langSlot .wg-drop,
-#siteHeader .langSlot .weglot-container,
-#siteHeader .langSlot #wg-switcher-container,
-#siteHeader .langSlot #wg-switcher,
-#siteHeader .langSlot #weglot_switcher,
-#siteHeader .langSlot #weglot_here,
-#siteHeader .langSlot .kbwgWeglotMounted{
-  position: static !important;
-  inset: auto !important;
-  top: auto !important;
-  left: auto !important;
-  right: auto !important;
-  bottom: auto !important;
-  margin: 0 !important;
-  transform: none !important;
-}
-
-#siteHeader .langSlot .wg-default,
-#siteHeader .langSlot .wg-drop,
-#siteHeader .langSlot .weglot-container,
-#siteHeader .langSlot #wg-switcher-container,
-#siteHeader .langSlot #wg-switcher,
-#siteHeader .langSlot .kbwgWeglotMounted{
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  max-height: 44px;
-}
-
-/* Slightly tighten the widget so it doesn't steal space on small screens */
-@media (max-width: 420px){
-  #siteHeader .langSlot .wg-default,
-  #siteHeader .langSlot .wg-drop{
-    transform: scale(.92) !important;
-    transform-origin: center;
-  }
-}
-
-
 /* Hero */
 .hero{
   position: relative;
@@ -3420,7 +3346,7 @@ table{ width: 100%; border-collapse: collapse; }
 
 /* --- January 2026 UI fixes --- */
 
-/* Fix LTR word order inside RTL nav (helps Weglot /en pages) */
+/* Fix LTR word order inside RTL nav */
 .nav a{ unicode-bidi: plaintext; }
 
 /* מוצרים filter panel: prevent overlap + horizontal scroll */
@@ -5356,26 +5282,6 @@ html, body, main, button, input, select, textarea {
 }
 
 
-/* ---------------------------------------------------------
-   KBWG Weglot visibility guard
-   If you hid the default floating widget via Weglot "Custom CSS",
-   use :not(.kbwgWeglotMounted) so the header-mounted one still shows.
-   --------------------------------------------------------- */
-#siteHeader .langSlot .kbwgWeglotMounted,
-#siteHeader .langSlot .kbwgWeglotMounted *{
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-/* If Weglot custom CSS used display:none !important on the default containers,
-   this makes the mounted one show when inside the header slot. */
-#siteHeader .langSlot .weglot-container.kbwgWeglotMounted,
-#siteHeader .langSlot #wg-switcher-container.kbwgWeglotMounted,
-#siteHeader .langSlot #wg-switcher.kbwgWeglotMounted,
-#siteHeader .langSlot .wg-default.kbwgWeglotMounted,
-#siteHeader .langSlot .wg-drop.kbwgWeglotMounted{
-  display: inline-flex !important;
-}
 /* DEALS: make the product images much smaller */
 .page-deals .dealCard > a.dealMedia{
   width: 80px !important;        /* <-- change this (60–110) */

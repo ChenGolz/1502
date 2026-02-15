@@ -107,9 +107,7 @@ const scriptEl = document.currentScript;
 
   function fireReady() {
     try { window.dispatchEvent(new CustomEvent('kbwg:layout-ready')); } catch (e) {}
-    try { window.dispatchEvent(new CustomEvent('kbwg:content-rendered')); } catch (e) {}
-    try { if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh(); } catch (e) {}
-  }
+    try { window.dispatchEvent(new CustomEvent('kbwg:content-rendered')); } catch (e) {}  }
 
   Promise.all([
     inject(HEADER_URL, '#siteHeaderMount'),

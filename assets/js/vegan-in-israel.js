@@ -61,14 +61,18 @@
   };
 
   function getLang() {
-    // Prefer Weglot if available
+    // Prefer shared site helper if present (lang via ?lang=... or saved setting)
     try {
-      if (window.Weglot && typeof Weglot.getCurrentLang === 'function') {
-        const wl = String(Weglot.getCurrentLang() || '').toLowerCase();
-        if (wl.startsWith('en')) return 'en';
-        if (wl.startsWith('he')) return 'he';
+      if (typeof window.kbwgGetLang === 'function') {
+        var gl = String(window.kbwgGetLang() || 'he').toLowerCase();
+        return gl.startsWith('en') ? 'en' : 'he';
       }
-    } catch {}
+    } catch (e) {}
+    try {
+      var qs = new URLSearchParams(window.location.search || '');
+      var ql = qs.get('lang');
+      if (ql) return String(ql).toLowerCase().startsWith('en') ? 'en' : 'he';
+    } catch (e) {}
     const l = String(document.documentElement.getAttribute('lang') || 'he').toLowerCase();
     return l.startsWith('en') ? 'en' : 'he';
   }
@@ -600,7 +604,7 @@ function wireViewToggle() {
 
     if (shouldRenderMapNow() && !STATE.map) renderMap({ fit: true });
 
-    // Re-render dynamic content when language changes (e.g. Weglot switch)
+    // Re-render dynamic content when language changes
     let __lastLang = getLang();
     const __langObserver = new MutationObserver(() => {
       const now = getLang();

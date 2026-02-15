@@ -133,7 +133,7 @@
           '<div class="dealTop">' +
             '<div class="dealBrandRow">' +
               '<div>' +
-                (brand ? '<div class="dealBrand wg-notranslate" data-wg-notranslate="true">' + brand + '</div>' : '') +
+                (brand ? '<div class="dealBrand">' + brand + '</div>' : '') +
                 '<div class="dealName">' + name + '</div>' +
               '</div>' +
             '</div>' +
