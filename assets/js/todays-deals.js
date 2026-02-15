@@ -406,6 +406,42 @@
     return symbol + amount.toFixed(2).replace(/\.00$/, '');
   }
 
+  function formatMoneyWithIls(amount, currency, offer) {
+    var main = formatMoney(amount, currency);
+    if (!main) return '';
+
+    var cur = safeText(currency).toUpperCase();
+
+    // If the offer explicitly provides an ILS price, prefer it.
+    try {
+      if (offer && typeof offer.priceILS === 'number' && isFinite(offer.priceILS)) {
+        return main + ' (₪' + Math.round(offer.priceILS) + ')';
+      }
+    } catch (e) {}
+
+    // If already ILS, don't duplicate.
+    if (cur === 'ILS' || cur === 'NIS') return main;
+
+    // To avoid misleading conversions, we only auto-convert USD -> ILS by default.
+    if (cur !== 'USD') return main;
+
+    // Stable, approximate rate used across the site copy (also used for free-shipping thresholds).
+    var ILS_PER_USD = 3.27;
+
+    // Optional override: add ?ilsPerUsd=3.6 in the URL.
+    try {
+      var params = new URLSearchParams(location.search || '');
+      var r = parseFloat(params.get('ilsPerUsd') || '');
+      if (isFinite(r) && r > 1 && r < 10) ILS_PER_USD = r;
+    } catch (e) {}
+
+    var ils = Math.round(amount * ILS_PER_USD);
+    if (!isFinite(ils)) return main;
+    return main + ' (₪' + ils + ')';
+  }
+
+
+
   function ensureAmazonTag(url) {
     try {
       var u = new URL(url, location.href);
@@ -588,12 +624,18 @@ function formatFreeShipText(o) {
     var url = ensureAmazonTag(safeText(offer.url || ''));
     var imgSrc = resolveProductImage(p, offer);
     var price = null;
-    var currency = offer.currency || 'USD';
+    var currency = 'USD';
     // Prefer explicit offer priceUSD (site convention)
-    if (typeof offer.priceUSD === 'number' && isFinite(offer.priceUSD)) price = offer.priceUSD;
-    else if (typeof offer.price === 'number' && isFinite(offer.price)) price = offer.price;
-
-    var labels = resolveLabels(p, brand);
+    if (typeof offer.priceUSD === 'number' && isFinite(offer.priceUSD)) {
+      price = offer.priceUSD;
+      currency = 'USD';
+    } else if (typeof offer.price === 'number' && isFinite(offer.price)) {
+      price = offer.price;
+      currency = offer.currency || 'USD';
+    } else {
+      currency = offer.currency || 'USD';
+    }
+var labels = resolveLabels(p, brand);
 
     // Meta pills like products page (category / size / free ship)
     var pills = [];
@@ -601,6 +643,19 @@ function formatFreeShipText(o) {
     if (catLabel) pills.push('<span class="pMetaPill">' + esc(catLabel) + '</span>');
     var sizeText = formatSizeForIsrael(p && p.size);
     if (sizeText) pills.push('<span class="pMetaPill">' + esc(sizeText) + '</span>');
+    // Optional: show number of units in the deal (e.g., multipack).
+    // Supports: product.dealPcs, product.pcs, offer.pcs
+    var dealPcs = null;
+    try {
+      if (p && typeof p.dealPcs === 'number' && isFinite(p.dealPcs)) dealPcs = p.dealPcs;
+      else if (p && typeof p.pcs === 'number' && isFinite(p.pcs)) dealPcs = p.pcs;
+      else if (offer && typeof offer.pcs === 'number' && isFinite(offer.pcs)) dealPcs = offer.pcs;
+      else if (p && typeof p.dealPcs === 'string') {
+        var nn = parseInt(p.dealPcs, 10);
+        if (isFinite(nn) && nn > 0) dealPcs = nn;
+      }
+    } catch (e) {}
+    if (dealPcs != null && dealPcs > 0) pills.push('<span class="pMetaPill">' + esc('מארז ' + dealPcs + ' יח׳') + '</span>');
     var fsOffer = getOfferWithMinFreeShip(p);
     var fsText = formatFreeShipText(fsOffer);
     if (fsText) pills.push('<span class="pMetaPill pMetaPill--freeShip">' + esc(fsText) + '</span>');
@@ -626,7 +681,7 @@ function formatFreeShipText(o) {
         '</div>' +
         '<div class="dealMeta tags">' + buildTags(p, labels) + '</div>' +
         '<div class="dealCta">' +
-          '<div class="dealPrice">' + esc(formatMoney(price, currency) || '') + '</div>' +
+          '<div class="dealPrice">' + esc(formatMoneyWithIls(price, currency, offer) || '') + '</div>' +
           (url
             ? '<a class="dealBtn" href="' + esc(url) + '" rel="noopener" target="_blank">קנו באמזון</a>'
             : ''
