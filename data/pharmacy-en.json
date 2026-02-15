@@ -1,0 +1,271 @@
+{
+  "updated": "2026-02-04",
+  "stores": [
+    {
+      "id": "superpharm",
+      "name": "סופר-פארם"
+    },
+    {
+      "id": "be",
+      "name": "Be"
+    },
+    {
+      "id": "goodpharm",
+      "name": "Good Pharm"
+    }
+  ],
+  "items": [
+    {
+      "name": "מייקאפ/פאונדיישן Vegan — Choose by shade",
+      "brand": "(add brand)",
+      "category": "מייקאפ",
+      "stores": [
+        "superpharm",
+        "be",
+        "goodpharm"
+      ],
+      "notes": "Tip: Look for on the packaging 'Vegan' or check ingredients.",
+      "tags": [
+        "Recommended"
+      ],
+      "link": "products.html?q=foundation"
+    },
+    {
+      "name": "מסקרה Veganת לעיניים רגישות",
+      "brand": "(add brand)",
+      "category": "איפור",
+      "stores": [
+        "superpharm",
+        "be",
+        "goodpharm"
+      ],
+      "notes": "Tip: הימנעי מ־Beeswax/Lanolin/Collagen.",
+      "tags": [],
+      "link": "products.html?q=mascara"
+    },
+    {
+      "name": "דאודורנט Vegan No אלומיניום",
+      "brand": "(add brand)",
+      "category": "דאודורנט",
+      "stores": [
+        "superpharm",
+        "be",
+        "goodpharm"
+      ],
+      "notes": "Tip: בדקי אם יש 'stearic acid' ממקור צמחי.",
+      "tags": [],
+      "link": "products.html?q=deodorant"
+    },
+    {
+      "name": "Cream הגנה Vegan לפנים",
+      "brand": "(add brand)",
+      "category": "SPF",
+      "stores": [
+        "superpharm",
+        "be"
+      ],
+      "notes": "Tip: Cream הגנה הוא מוצר שחוזרים אליו — שווה Choose אחד שאת אוהבת.",
+      "tags": [
+        "פופולרי"
+      ],
+      "link": "products.html?q=spf"
+    },
+    {
+      "name": "Shampoo Vegan לשיער יבש",
+      "brand": "(add brand)",
+      "category": "Hair",
+      "stores": [
+        "superpharm",
+        "be",
+        "goodpharm"
+      ],
+      "notes": "Tip: העדיפי No Keratin/Collagen.",
+      "tags": [],
+      "link": "products.html?q=shampoo"
+    },
+    {
+      "name": "Soap Face עדין Vegan",
+      "brand": "(add brand)",
+      "category": "Tipוח",
+      "stores": [
+        "superpharm",
+        "be",
+        "goodpharm"
+      ],
+      "notes": "Tip: לפעמים המפתח הוא פשטות — פחות Ingredients.",
+      "tags": [],
+      "link": "products.html?q=cleanser"
+    },
+    {
+      "name": "שפתון/ליפסטיק Vegan",
+      "brand": "(add brand)",
+      "category": "איפור",
+      "stores": [
+        "superpharm",
+        "be"
+      ],
+      "notes": "Tip: הימנעי מ־Carmine (E120).",
+      "tags": [],
+      "link": "products.html?q=lipstick"
+    },
+    {
+      "name": "Cream לחות Vegan לעור רגיש",
+      "brand": "(add brand)",
+      "category": "Tipוח",
+      "stores": [
+        "superpharm",
+        "be",
+        "goodpharm"
+      ],
+      "notes": "Tip: בדקי שאין Lanolin/Collagen.",
+      "tags": [],
+      "link": "products.html?q=moisturizer"
+    },
+    {
+      "name": "משחת שיניים Veganת",
+      "brand": "(add brand)",
+      "category": "היגיינה",
+      "stores": [
+        "superpharm",
+        "be",
+        "goodpharm"
+      ],
+      "notes": "Tip: בדקי שאין Propolis.",
+      "tags": [],
+      "link": "products.html?q=toothpaste"
+    },
+    {
+      "name": "Cream Hands Vegan",
+      "brand": "(add brand)",
+      "category": "Tipוח",
+      "stores": [
+        "superpharm",
+        "be",
+        "goodpharm"
+      ],
+      "notes": "Tip: Look for תו 'Vegan' / 'Cruelty-Free'.",
+      "tags": [],
+      "link": "products.html?q=hand%20cream"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Is everything here 100% vegan and cruelty-free?",
+      "a": "Yes — the goal is to show only vegan, cruelty-free options. If in doubt, it's better not to add it until verified."
+    },
+    {
+      "q": "איך בודקים מוצר בפארם במהירות?",
+      "a": "הדביקי רשימת Ingredients בבודק הIngredients באתר, וLook for גם תוויות כמו Vegan / Cruelty‑Free on the packaging."
+    },
+    {
+      "q": "למה יש כאן 'Top 10' כתבנית?",
+      "a": "כדי שתוכלי לערוך בקלות: כל הרשימה יושבת בקובץ JSON אחד. אפשר להתחיל עם התבנית ולהחליף לפריטים שאת מאשרת."
+    }
+  ],
+  "brands": [
+    {
+      "id": "catrice",
+      "name": "CATRICE",
+      "nameHe": "קטריס (CATRICE)",
+      "categories": [
+        "איפור Face",
+        "איפור עיניים",
+        "איפור Lips",
+        "ציפורניים"
+      ],
+      "crueltyFree": true,
+      "vegan": true,
+      "veganNotes": "המותג מצהיר שכל המוצרים Veganים (100% Ingredients מהצומח) מאז 2023.",
+      "notes": "מותג איפור אירופאי במחירים נגישים.",
+      "stores": [
+        "shufersal"
+      ],
+      "storePages": {
+        "shufersal": "https://www.shufersal.co.il/online/he/search?q=CATRICE%3Arelevance%3Abrand%3A4413"
+      },
+      "sources": [
+        "https://www.catrice.eu/en-de/sustainability/vegan",
+        "https://crueltyfree.peta.org/company/catrice/"
+      ]
+    },
+    {
+      "id": "ofra",
+      "name": "OFRA",
+      "nameHe": "עופרה (OFRA)",
+      "categories": [
+        "איפור Face",
+        "איפור עיניים",
+        "איפור Lips",
+        "Tipוח עור"
+      ],
+      "crueltyFree": true,
+      "vegan": "claimed",
+      "veganNotes": "האתר הרשמי מצהיר שהמותג 100% Vegan; קיימים מקורות צד-ג׳ שמציינים שלא כל המוצרים Veganים—Recommended לבדוק מוצר ספציפי.",
+      "notes": "מותג איפור מקצועי; זמין במבחר מוצרים בשופרסל אונליין.",
+      "stores": [
+        "shufersal"
+      ],
+      "storePages": {
+        "shufersal": "https://www.shufersal.co.il/online/he/search?q=OFRA%3Arelevance%3Abrand%3A4412"
+      },
+      "sources": [
+        "https://crueltyfree.peta.org/company/ofra-cosmetics/",
+        "https://ofrabeauty.com/pages/about/",
+        "https://www.crueltyfreekitty.com/brands/ofra-cosmetics/"
+      ]
+    },
+    {
+      "id": "fre",
+      "name": "FRÉ",
+      "nameHe": "פרי (FRÉ)",
+      "categories": [
+        "Tipוח Face",
+        "ניקוי Face",
+        "סרומים",
+        "לחות",
+        "Cream הגנה"
+      ],
+      "crueltyFree": true,
+      "vegan": true,
+      "veganNotes": "המותג מצהיר על מוצרים Veganים ו-cruelty-free.",
+      "notes": "מותג Tipוח עם דגש על פעילות וספורט; קיים גם אתר ישראלי.",
+      "stores": [
+        "shufersal"
+      ],
+      "storePages": {
+        "shufersal": "https://www.shufersal.co.il/online/he/search?q=FRE"
+      },
+      "website": "https://freskincare.co.il/",
+      "sources": [
+        "https://www.freskincare.com/",
+        "https://crueltyfree.peta.org/company/fre-skincare/",
+        "https://freskincare.co.il/"
+      ]
+    },
+    {
+      "id": "bali-body",
+      "name": "BALI BODY",
+      "nameHe": "באלי בודי (BALI BODY)",
+      "categories": [
+        "שיזוף עצמי",
+        "Tipוח Body",
+        "הגנה מהשמש",
+        "אביזרים לשיזוף"
+      ],
+      "crueltyFree": true,
+      "vegan": "mostly",
+      "veganNotes": "לפי האתר הרשמי, רוב המוצרים Veganים (מעל ~98%), עם חריגים בודדים (למשל מוצר SPF עם דונג דבורים).",
+      "notes": "מותג אוסטרלי לשיזוף עצמי וTipוח Body.",
+      "stores": [
+        "shufersal"
+      ],
+      "storePages": {
+        "shufersal": "https://www.shufersal.co.il/online/he/search?q=BALI%20BODY"
+      },
+      "sources": [
+        "https://crueltyfree.peta.org/company/bali-body/",
+        "https://balibodyco.com/pages/sustainability"
+      ]
+    }
+  ]
+}
