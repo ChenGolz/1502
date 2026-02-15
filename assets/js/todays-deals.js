@@ -96,8 +96,9 @@
     var style = document.createElement('style');
     style.id = STYLE_ID;
     style.textContent = [
-      '.dealMedia{position:relative;display:block;overflow:hidden;border-radius:14px;}',
-      '.dealDiscountBadge{position:absolute;top:10px;inset-inline-start:10px;z-index:2;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;line-height:1;background:rgba(255,255,255,.92);color:#0b2a3a;box-shadow:0 6px 18px rgba(0,0,0,.12);}',
+            '.dealMedia{position:relative;display:block;overflow:hidden;border-radius:14px;}',
+      '.dealCard{position:relative;}',
+      '.dealDiscountBadge{position:absolute;top:50%;inset-inline-start:12px;transform:translateY(-50%);z-index:5;padding:10px 15px;border-radius:999px;font-size:16px;font-weight:900;line-height:1;background:#22c55e;color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.18);pointer-events:none;}',
       '.dealImg{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;}',
       '.dealPlaceholder{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;font-size:34px;}',
       '.dealCard .dealTop{margin-top:10px;}',
@@ -734,9 +735,9 @@ var labels = resolveLabels(p, brand);
 
     return (
       '<article class="dealCard">' +
+        discountBadgeHtml +
         // Image (clickable)
         '<a class="dealMedia" href="' + esc(url || '#') + '" rel="noopener" target="_blank">' +
-          discountBadgeHtml +
           (imgSrc
             ? '<img class="dealImg" src="' + esc(imgSrc) + '" alt="' + esc(safeText(p.name)) + '" loading="lazy" decoding="async" width="640" height="640" onerror="this.onerror=null;this.src=\'assets/img/icons/bag-heart.png\';" />'
             : '<img class="dealImg" src="assets/img/icons/bag-heart.png" alt="" loading="lazy" decoding="async" width="640" height="640" />'
