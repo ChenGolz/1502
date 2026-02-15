@@ -1,4 +1,4 @@
-// KBWG Language + i18n helper. Build: 2026-02-15-v4
+// KBWG Language + i18n helper. Build: 2026-02-15-v2
 (function(){
   'use strict';
 
@@ -18,52 +18,6 @@
     }catch(e){ return ''; }
   }
 
-  function getPathLang(){
-    try{
-      var p = (location.pathname || '').toLowerCase();
-      if (p.endsWith('-en.html')) return 'en';
-      if (p.includes('/en/')) return 'en';
-      return 'he';
-    }catch(e){ return 'he'; }
-  }
-
-  function getLang(){
-    // Prefer the file-based language (index.html vs index-en.html).
-    // Keep ?lang=en as an optional override/back-compat.
-    var q = getQueryLang();
-    if (q) return q;
-    return getPathLang();
-  }
-
-  // If someone lands on a Hebrew file with ?lang=en (or vice versa),
-  // redirect to the correct file variant so dir/lang match the actual page.
-  function reconcileQueryLang(){
-    var q = getQueryLang();
-    if (!q) return;
-    var pathLang = getPathLang();
-    // Only redirect when the query disagrees with the file variant.
-    if (q === pathLang) {
-      // Still clean the URL by removing ?lang=...
-      try{
-        var u0 = new URL(location.href);
-        u0.searchParams.delete('lang');
-        if (u0.toString() !== location.href) location.replace(u0.toString());
-      }catch(e){}
-      return;
-    }
-
-    try{
-      var u = new URL(location.href);
-      u.searchParams.delete('lang');
-      u.pathname = switchPathForLang(u.pathname, q);
-      location.replace(u.toString());
-    }catch(e){
-      // best-effort
-      var p = switchPathForLang(location.pathname, q);
-      location.replace(p + (location.hash || ''));
-    }
-  }
-
   function setHtmlLangDir(lang){
     try{
       var html = document.documentElement;
@@ -74,60 +28,76 @@
     }catch(e){}
   }
 
-  function switchPathForLang(pathname, lang){
-    pathname = pathname || '';
-    // Normalize directory URLs to index.html
-    if (pathname.endsWith('/')) pathname = pathname + 'index.html';
-    if (!pathname.endsWith('.html')) return pathname; // best-effort
-    if (lang === 'en'){
-      if (pathname.endsWith('-en.html')) return pathname;
-      return pathname.replace(/\.html$/i, '-en.html');
-    }
-    // he
-    return pathname.replace(/-en\.html$/i, '.html');
+  function getLang(){
+    // Default is Hebrew/RTL unless the URL explicitly asks for English.
+    var q = getQueryLang();
+    return (q === 'en') ? 'en' : 'he';
   }
 
-  function withLangFile(url, lang){
+  function withLangParam(url, lang){
     try{
       lang = normLang(lang) || getLang();
       if (!url) return url;
+
+      // External / special schemes / anchors
       if (/^(https?:)?\/\//i.test(url) || /^mailto:/i.test(url) || /^tel:/i.test(url) || url.startsWith('#')) return url;
       if (url.startsWith('assets/') || url.startsWith('data/')) return url;
 
-      var u = new URL(url, location.href);
-      u.searchParams.delete('lang'); // prefer file-based
-      u.pathname = switchPathForLang(u.pathname, lang);
+      // Compute GitHub Pages project base (e.g. "/1502/") so we can generate absolute paths safely.
+      var baseDir = location.pathname.replace(/\/[^\/]*$/, '/'); // "/1502/"
+      var parts = baseDir.split('/').filter(Boolean);
+      var project = parts.length ? parts[0] : ''; // "1502" (empty on root domain)
 
-      return u.pathname.replace(/^\//,'') + (u.search ? u.search : '') + (u.hash || '');
-    }catch(e){
-      // fallback: naive replace
-      if (lang === 'en'){
-        return url.replace(/\.html(\b|[?#])/i, '-en.html$1');
+      // If href accidentally includes the project folder ("1502/..."), strip it to avoid "/1502/1502/...".
+      var cleaned = url;
+      if (project){
+        if (cleaned.startsWith(project + '/')) cleaned = cleaned.slice(project.length + 1);
+        if (cleaned.startsWith('/' + project + '/')) cleaned = cleaned.slice(project.length + 2);
       }
-      return url.replace(/-en\.html(\b|[?#])/i, '.html$1');
-    }
-  }
 
-  function setLang(lang){
-    lang = normLang(lang) || 'he';
-    var current = getLang();
-    if (lang === current) return;
+      // Resolve against the project base directory (not against the current file URL)
+      var u = new URL(cleaned, location.origin + baseDir);
 
-    try{
-      var u = new URL(location.href);
-      u.searchParams.delete('lang');
-      u.pathname = switchPathForLang(u.pathname, lang);
-      location.href = u.toString();
+      if (lang === 'en') u.searchParams.set('lang', 'en');
+      else u.searchParams.delete('lang');
+
+      // Use an ABSOLUTE path so it never becomes "/1502/1502/..." when clicked.
+      return u.pathname + (u.search ? u.search : '') + (u.hash || '');
     }catch(e){
-      // best-effort
-      var p = switchPathForLang(location.pathname, lang);
-      location.href = p + (location.hash || '');
+      // Minimal fallback string ops (best-effort)
+      if (lang === 'en'){
+        if (url.indexOf('lang=') !== -1){
+          return url.replace(/([?&])lang=[^&]*/,'$1lang=en').replace(/[?&]$/,'');
+        }
+        return url + (url.indexOf('?') === -1 ? '?lang=en' : '&lang=en');
+      }
+      // remove lang param
+      return url
+        .replace(/([?&])lang=[^&]*&?/,'$1')
+        .replace(/\?&/,'?')
+        .replace(/[?&]$/,'');
     }
   }
 
-  // Apply ASAP based on current page language.
-  // First, reconcile any legacy ?lang=... URLs to the correct file.
-  reconcileQueryLang();
+
+  function setLang(lang, opts){
+    lang = normLang(lang) || 'he';
+    opts = opts || {};
+    try{ localStorage.setItem('kbwg_lang', lang); }catch(e){}
+    setHtmlLangDir(lang);
+
+    if (opts.updateUrl !== false){
+      try{
+        var u = new URL(location.href);
+        if (lang === 'en') u.searchParams.set('lang', 'en');
+        else u.searchParams.delete('lang');
+        location.href = u.toString();
+        return;
+      }catch(e){}
+    }
+  }
+
+  // Apply ASAP
   setHtmlLangDir(getLang());
 
   // ---- JSON helpers ----
@@ -151,57 +121,75 @@
     });
   }
 
-  // ---- Auto-rewrite internal links to the current language file variant ----
+  
+  // ---- Fix accidental "1502/..." relative links on GitHub Pages (prevents /1502/1502/...) ----
+  function sanitizeProjectRelativeLinks(){
+    try{
+      var baseDir = location.pathname.replace(/\/[^\/]*$/, '/'); // "/1502/"
+      var parts = baseDir.split('/').filter(Boolean);
+      var project = parts.length ? parts[0] : '';
+      if (!project) return;
+
+      var links = document.querySelectorAll('a[href]');
+      links.forEach(function(a){
+        var href = a.getAttribute('href');
+        if (!href) return;
+        if (/^(https?:)?\/\//i.test(href) || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('#')) return;
+
+        // If it's "1502/xyz.html" make it "/1502/xyz.html" (absolute) to avoid duplication.
+        if (href.startsWith(project + '/')){
+          a.setAttribute('href', '/' + href);
+        }
+        // If it's already "/1502/1502/xyz", collapse it.
+        if (href.startsWith('/' + project + '/' + project + '/')){
+          a.setAttribute('href', '/' + project + '/' + href.slice(('/' + project + '/' + project + '/').length));
+        }
+      });
+    }catch(e){}
+  }
+
+// ---- Auto-append lang param to internal links ----
   function patchLinks(){
     try{
       var lang = getLang();
+      if (lang !== 'en') return;
       var links = document.querySelectorAll('a[href]');
       links.forEach(function(a){
         var href = a.getAttribute('href');
         if (!href) return;
         if (/^(https?:)?\/\//i.test(href) || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('#')) return;
         if (href.startsWith('assets/') || href.startsWith('data/')) return;
+        if (href.includes('lang=')) return;
 
-        if (href.endsWith('.html') || href.includes('.html?') || href.includes('.html#') || href.endsWith('-en.html')){
-          a.setAttribute('href', withLangFile(href, lang));
+        if (href.endsWith('.html') || href.includes('.html?') || href === './' || href === '.' || href === 'index.html'){
+          a.setAttribute('href', withLangParam(href, lang));
         }
       });
     }catch(e){}
   }
 
-  // ---- Language toggle UI ----
-  // We render a compact segmented control (HE | EN) that aligns nicely with the nav
-  // and stays small enough on mobile.
+  // ---- Simple language toggle UI ----
   function renderToggle(slot){
-    if (!slot) return;
+    if (!slot || slot.__kbwgLangRendered) return;
+    slot.__kbwgLangRendered = true;
 
     var lang = getLang();
-    var existing = slot.querySelector && slot.querySelector('.kbwgLangToggle');
-    if (!existing){
-      var wrap = document.createElement('div');
-      wrap.className = 'kbwgLangToggle';
+    var wrap = document.createElement('div');
+    wrap.className = 'kbwgLangToggle';
+    wrap.innerHTML =
+      '<button type="button" class="kbwgLangBtn" data-lang="he" aria-label="עברית">HE</button>' +
+      '<button type="button" class="kbwgLangBtn" data-lang="en" aria-label="English">EN</button>';
 
-      // Short labels for tight spaces + full labels for desktop polish.
-      wrap.innerHTML =
-        '<button type="button" class="kbwgLangBtn" data-lang="he" aria-label="עברית">'
-          + '<span class="kbwgLangShort">HE</span><span class="kbwgLangFull">עברית</span>'
-        + '</button>'
-        + '<button type="button" class="kbwgLangBtn" data-lang="en" aria-label="English">'
-          + '<span class="kbwgLangShort">EN</span><span class="kbwgLangFull">English</span>'
-        + '</button>';
+    wrap.addEventListener('click', function(e){
+      var btn = e.target && e.target.closest && e.target.closest('.kbwgLangBtn');
+      if(!btn) return;
+      var next = btn.getAttribute('data-lang');
+      setLang(next, { updateUrl: true });
+    });
 
-      wrap.addEventListener('click', function(e){
-        var btn = e.target && e.target.closest && e.target.closest('.kbwgLangBtn');
-        if(!btn) return;
-        var next = btn.getAttribute('data-lang');
-        setLang(next);
-      });
+    slot.innerHTML = '';
+    slot.appendChild(wrap);
 
-      slot.innerHTML = '';
-      slot.appendChild(wrap);
-    }
-
-    // Update active state (important because the header can be injected after load)
     try{
       var buttons = slot.querySelectorAll('.kbwgLangBtn');
       buttons.forEach(function(b){
@@ -210,7 +198,44 @@
     }catch(e){}
   }
 
-  function initLangUi(){
+  
+  function placeDesktopSlotAfterAbout(){
+    try{
+      var slot = document.getElementById('langSlotDesktop');
+      if (!slot) return;
+
+      // Prefer the "About" top-level group (details/summary)
+      var aboutGroup = null;
+      var summaries = document.querySelectorAll('#siteHeader .navGroup > summary');
+      summaries.forEach(function(s){
+        var t = (s.textContent || '').trim();
+        if (t === 'אודות' || t.toLowerCase() === 'about'){
+          aboutGroup = s.closest('.navGroup');
+        }
+      });
+
+      // Fallback: some headers use plain links
+      if (!aboutGroup){
+        var links = document.querySelectorAll('#siteHeader nav.nav > a, #siteHeader nav.nav a');
+        links.forEach(function(a){
+          var t = (a.textContent || '').trim();
+          if (t === 'אודות' || t.toLowerCase() === 'about'){
+            aboutGroup = a;
+          }
+        });
+      }
+
+      if (!aboutGroup) return;
+
+      // Only move if it's not already right after
+      if (aboutGroup.nextElementSibling === slot) return;
+
+      aboutGroup.insertAdjacentElement('afterend', slot);
+    }catch(e){}
+  }
+
+
+function initLangUi(){
     renderToggle(document.getElementById('langSlotDesktop'));
     renderToggle(document.getElementById('langSlotMobile'));
   }
@@ -218,19 +243,9 @@
   function injectToggleStyles(){
     if (document.getElementById('kbwgLangToggleStyle')) return;
     var css = ''
-      + '.kbwgLangToggle{display:inline-flex;align-items:center;gap:0;border:1px solid rgba(15,23,42,.16);background:rgba(255,255,255,.75);border-radius:999px;padding:2px;box-shadow:0 1px 2px rgba(0,0,0,.04);}'
-      + '.kbwgLangBtn{appearance:none;border:0;background:transparent;border-radius:999px;padding:7px 10px;font-weight:800;cursor:pointer;line-height:1;display:inline-flex;align-items:center;gap:6px;color:rgba(15,23,42,.78);}'
-      + '.kbwgLangBtn:focus{outline:none;}'
-      + '.kbwgLangBtn:focus-visible{box-shadow:0 0 0 3px rgba(42,91,154,.18);}'
-      + '.kbwgLangBtn.isActive{background:rgba(0,200,83,.18);color:rgba(10,80,40,.92);}'
-      + '.kbwgLangShort{display:none;}'
-      + '.kbwgLangFull{display:inline; font-size:12.5px;}'
-      + '@media (max-width: 900px){'
-        + '.kbwgLangBtn{padding:6px 8px;}'
-        + '.kbwgLangFull{display:none;}'
-        + '.kbwgLangShort{display:inline; font-size:12px; letter-spacing:.2px;}'
-      + '}'
-      + '@media (max-width: 360px){.kbwgLangBtn{padding:6px 7px;}}';
+      + '.kbwgLangToggle{display:inline-flex;gap:6px;align-items:center;}'
+      + '.kbwgLangBtn{border:1px solid rgba(15,23,42,.18);background:rgba(255,255,255,.75);border-radius:10px;padding:6px 8px;font-weight:800;cursor:pointer;line-height:1;font-size:12px;}'
+      + '.kbwgLangBtn.isActive{background:rgba(0,200,83,.14);border-color:rgba(0,200,83,.45);}';
     var st = document.createElement('style');
     st.id = 'kbwgLangToggleStyle';
     st.textContent = css;
@@ -240,12 +255,14 @@
   injectToggleStyles();
 
   document.addEventListener('DOMContentLoaded', function(){
+    sanitizeProjectRelativeLinks();
     patchLinks();
     initLangUi();
     // In case header is injected after DOMContentLoaded
     var tries = 0;
     var t = setInterval(function(){
       tries++;
+      sanitizeProjectRelativeLinks();
       initLangUi();
       if (document.getElementById('langSlotMobile') || tries > 40) clearInterval(t);
     }, 250);
@@ -254,7 +271,7 @@
   // Expose API
   window.kbwgGetLang = getLang;
   window.kbwgSetLang = setLang;
-  window.kbwgWithLang = withLangFile;
+  window.kbwgWithLang = withLangParam;
   window.kbwgJsonPath = jsonPath;
   window.kbwgFetchLangJson = fetchLangJson;
 })();

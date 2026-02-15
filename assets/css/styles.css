@@ -165,7 +165,7 @@ h3{ font-size: 18px; margin:0 0 8px; }
 
 
 /* ---------------------------------------------------------
-   Language toggle placement (desktop + mobile)
+   Weglot language switcher placement (desktop + mobile)
    --------------------------------------------------------- */
 #siteHeader .langSlot{
   display: inline-flex;
@@ -182,23 +182,59 @@ h3{ font-size: 18px; margin:0 0 8px; }
   #siteHeader #langSlotDesktop{ display: none; }
 }
 
-/* Keep the switcher aligned like other header controls */
-#siteHeader #langSlotMobile{ width: auto; height: auto; min-height: 44px; }
+/* Keep the switcher sized like the other header controls */
+#siteHeader #langSlotMobile{ width: 44px; height: 44px; }
 
-/* Mobile: keep the switcher inline with the hamburger (no absolute positioning) */
+/* Mobile: keep the switcher between the hamburger and the site title (centered) */
 @media (max-width: 900px){
-  #siteHeader #langSlotMobile{ position: static; }
+  #siteHeader .headerRow{ position: relative; }
+  #siteHeader #langSlotMobile{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10003;
+  }
 }
 
-/* Keep the slots compact and aligned with other header controls */
-#siteHeader #langSlotDesktop,
-#siteHeader #langSlotMobile{
-  padding-inline: 4px;
+/* When the Weglot widget is moved into a slot, neutralize any fixed positioning */
+#siteHeader .langSlot .wg-default,
+#siteHeader .langSlot .wg-drop,
+#siteHeader .langSlot .weglot-container,
+#siteHeader .langSlot #wg-switcher-container,
+#siteHeader .langSlot #wg-switcher,
+#siteHeader .langSlot #weglot_switcher,
+#siteHeader .langSlot #weglot_here,
+#siteHeader .langSlot .kbwgWeglotMounted{
+  position: static !important;
+  inset: auto !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  margin: 0 !important;
+  transform: none !important;
 }
 
-/* Optional: give desktop toggle a bit of breathing room from the last nav item */
-@media (min-width: 901px){
-  #siteHeader #langSlotDesktop{ margin-inline: 6px; }
+#siteHeader .langSlot .wg-default,
+#siteHeader .langSlot .wg-drop,
+#siteHeader .langSlot .weglot-container,
+#siteHeader .langSlot #wg-switcher-container,
+#siteHeader .langSlot #wg-switcher,
+#siteHeader .langSlot .kbwgWeglotMounted{
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  max-height: 44px;
+}
+
+/* Slightly tighten the widget so it doesn't steal space on small screens */
+@media (max-width: 420px){
+  #siteHeader .langSlot .wg-default,
+  #siteHeader .langSlot .wg-drop{
+    transform: scale(.92) !important;
+    transform-origin: center;
+  }
 }
 
 
