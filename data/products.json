@@ -1744,7 +1744,7 @@
     ],
     "isKids": false,
     "isMen": false,
-    "isDiscounted": true, "dealPcs": 34,
+    "isDiscounted": true, "discountPct": 34,
     "image": "assets/img/products/B0DHFRC7N3.jpg"
   },
   {
