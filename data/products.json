@@ -12211,7 +12211,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": false,
     "image": "assets/img/products/B0CY75FZT5.jpg"
   },
   {
@@ -18548,7 +18548,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 57,
     "image": "assets/img/products/B0CQKGQFPF.jpg"
   },
   {
@@ -18612,7 +18612,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": true, "discountPct": 36,
     "image": "assets/img/products/B0CRF9V9PM.jpg"
   },
   {
@@ -18678,7 +18678,7 @@
     ],
     "isKids": false,
     "image": "assets/img/products/B0CX67MN53.jpg",
-    "isDiscounted": true
+    "isDiscounted": true, "discountPct": 57
   },
   {
     "id": "naked-sundays-b0fwrpxw8r",
