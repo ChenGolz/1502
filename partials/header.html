@@ -5,14 +5,15 @@
       <span class="logoText">לקנות ללא אכזריות</span>
     </a>
 
+    <div class="langSlot langSlotDesktop" id="langSlotDesktop" aria-label="בחירת שפה"></div>
+
+
     <!-- Mobile hamburger (required for the drawer nav) -->
-    <div class="navMobileActions">
-      <div class="langSlot langSlotMobile" id="langSlotMobile" aria-label="בחירת שפה"></div>
-      <button class="navToggle" type="button" aria-label="פתח תפריט" aria-expanded="false">
-        <span class="navToggleIcon" aria-hidden="true">☰</span>
-        <span class="navToggleText">תפריט</span>
-      </button>
-    </div>
+        <button class="navToggle" type="button" aria-label="פתח תפריט" aria-expanded="false">
+            <span class="navToggleIcon" aria-hidden="true">☰</span>
+            <span class="navToggleText">תפריט</span>
+          </button>
+        <div class="langSlot langSlotMobile" id="langSlotMobile" aria-label="בחירת שפה"></div>
 
     <nav aria-label="ניווט ראשי" class="nav">
       <div class="navDrawerHeader">
@@ -88,9 +89,6 @@
           <a href="wall-of-kindness.html" role="menuitem"><span class="navItemIcon" aria-hidden="true">🤝</span><span class="navItemLabel">Wall of Kindness</span></a>
         </div>
       </details>
-      <div class="langSlot langSlotDesktop" id="langSlotDesktop" aria-label="בחירת שפה"></div>
-
-
       <details class="navGroup">
         <summary>
           אודות
@@ -198,8 +196,6 @@
       min-height: 44px;
       line-height: 1;
     }
-    /* Mobile action row (hamburger + quick search) */
-    #siteHeader .navMobileActions{ display: inline-flex; gap: 10px; align-items: center; }
     #siteHeader .quickSearch{
       display: none;
       width: 44px;
