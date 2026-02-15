@@ -1,4 +1,4 @@
-// Build: 2026-02-04-v20
+// Build: 2026-02-15-v56
 // Shared layout injector (header + footer) for KBWG static pages
 // Loads partials/header.html into #siteHeaderMount and partials/footer.html into #siteFooterMount
 (function () {
@@ -60,15 +60,25 @@ try {
   const keys = Object.keys(sessionStorage || {});
   keys.forEach(k => {
     if (!k.startsWith('kbwg:partial:')) return;
-    const isLayoutPartial = (k.includes('partials/header.html') || k.includes('partials/footer.html'));
+    const isLayoutPartial = (k.includes('partials/header.html') || k.includes('partials/footer.html') || k.includes('partials/header-en.html') || k.includes('partials/footer-en.html'));
     const isCurrentBuild = k.includes('v=' + KBWG_LAYOUT_BUILD);
     if (isLayoutPartial && !isCurrentBuild) sessionStorage.removeItem(k);
   });
 } catch (e) {}
 const scriptEl = document.currentScript;
   const base = (scriptEl && scriptEl.dataset && scriptEl.dataset.base) ? scriptEl.dataset.base : '';
-  const HEADER_URL = base + 'partials/header.html?v=' + KBWG_LAYOUT_BUILD;
-  const FOOTER_URL = base + 'partials/footer.html?v=' + KBWG_LAYOUT_BUILD;
+
+  // Language-aware header/footer (header.html vs header-en.html)
+  let KBWG_LANG = 'he';
+  try{
+    KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) ? window.kbwgGetLang() : ((location.pathname || '').toLowerCase().endsWith('-en.html') ? 'en' : 'he');
+  }catch(e){ KBWG_LANG = 'he'; }
+
+  const headerFile = (KBWG_LANG === 'en') ? 'partials/header-en.html' : 'partials/header.html';
+  const footerFile = (KBWG_LANG === 'en') ? 'partials/footer-en.html' : 'partials/footer.html';
+
+  const HEADER_URL = base + headerFile + '?v=' + KBWG_LAYOUT_BUILD;
+  const FOOTER_URL = base + footerFile + '?v=' + KBWG_LAYOUT_BUILD;
 
   function cacheKey(url){ return 'kbwg:partial:' + url; }
 

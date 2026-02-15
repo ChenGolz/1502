@@ -3,7 +3,7 @@
   "stores": [
     {
       "id": "superpharm",
-      "name": "סופר-פארם"
+      "name": "svpr-prm"
     },
     {
       "id": "be",
@@ -16,167 +16,167 @@
   ],
   "items": [
     {
-      "name": "מייקאפ/פאונדיישן Vegan — Choose by shade",
-      "brand": "(add brand)",
-      "category": "מייקאפ",
+      "name": "myykp/pvndyyshn Vegan — lbkhvr lpy gvvn",
+      "brand": "(hvsypy mvtg)",
+      "category": "myykp",
       "stores": [
         "superpharm",
         "be",
         "goodpharm"
       ],
-      "notes": "Tip: Look for on the packaging 'Vegan' or check ingredients.",
+      "notes": "typ: khpshy l hryzh 'Vegan' v bdky Ingredients.",
       "tags": [
-        "Recommended"
+        "mvmlts"
       ],
       "link": "products.html?q=foundation"
     },
     {
-      "name": "מסקרה Veganת לעיניים רגישות",
-      "brand": "(add brand)",
-      "category": "איפור",
+      "name": "mskrh Vegant lynyym rgyshvt",
+      "brand": "(hvsypy mvtg)",
+      "category": "ypvr",
       "stores": [
         "superpharm",
         "be",
         "goodpharm"
       ],
-      "notes": "Tip: הימנעי מ־Beeswax/Lanolin/Collagen.",
+      "notes": "typ: hymny m-Beeswax/Lanolin/Collagen.",
       "tags": [],
       "link": "products.html?q=mascara"
     },
     {
-      "name": "דאודורנט Vegan No אלומיניום",
-      "brand": "(add brand)",
-      "category": "דאודורנט",
+      "name": "Deodorant Vegan ll lvmynyvm",
+      "brand": "(hvsypy mvtg)",
+      "category": "Deodorant",
       "stores": [
         "superpharm",
         "be",
         "goodpharm"
       ],
-      "notes": "Tip: בדקי אם יש 'stearic acid' ממקור צמחי.",
+      "notes": "typ: bdky m ysh 'stearic acid' mmkvr tsmkhy.",
       "tags": [],
       "link": "products.html?q=deodorant"
     },
     {
-      "name": "Cream הגנה Vegan לפנים",
-      "brand": "(add brand)",
+      "name": "Cream hgnh Vegan lpnym",
+      "brand": "(hvsypy mvtg)",
       "category": "SPF",
       "stores": [
         "superpharm",
         "be"
       ],
-      "notes": "Tip: Cream הגנה הוא מוצר שחוזרים אליו — שווה Choose אחד שאת אוהבת.",
+      "notes": "typ: Cream hgnh hv mvtsr shkhvzrym lyv — shvvh lbkhvr khd sht vhbt.",
       "tags": [
-        "פופולרי"
+        "pvpvlry"
       ],
       "link": "products.html?q=spf"
     },
     {
-      "name": "Shampoo Vegan לשיער יבש",
-      "brand": "(add brand)",
-      "category": "Hair",
+      "name": "Shampoo Vegan lshyr ybsh",
+      "brand": "(hvsypy mvtg)",
+      "category": "shyr",
       "stores": [
         "superpharm",
         "be",
         "goodpharm"
       ],
-      "notes": "Tip: העדיפי No Keratin/Collagen.",
+      "notes": "typ: hdypy ll Keratin/Collagen.",
       "tags": [],
       "link": "products.html?q=shampoo"
     },
     {
-      "name": "Soap Face עדין Vegan",
-      "brand": "(add brand)",
-      "category": "Tipוח",
+      "name": "Soap pnym dyn Vegan",
+      "brand": "(hvsypy mvtg)",
+      "category": "typvkh",
       "stores": [
         "superpharm",
         "be",
         "goodpharm"
       ],
-      "notes": "Tip: לפעמים המפתח הוא פשטות — פחות Ingredients.",
+      "notes": "typ: lpmym hmptkh hv pshtvt — pkhvt Ingredients.",
       "tags": [],
       "link": "products.html?q=cleanser"
     },
     {
-      "name": "שפתון/ליפסטיק Vegan",
-      "brand": "(add brand)",
-      "category": "איפור",
+      "name": "shptvn/lypstyk Vegan",
+      "brand": "(hvsypy mvtg)",
+      "category": "ypvr",
       "stores": [
         "superpharm",
         "be"
       ],
-      "notes": "Tip: הימנעי מ־Carmine (E120).",
+      "notes": "typ: hymny m-Carmine (E120).",
       "tags": [],
       "link": "products.html?q=lipstick"
     },
     {
-      "name": "Cream לחות Vegan לעור רגיש",
-      "brand": "(add brand)",
-      "category": "Tipוח",
+      "name": "Cream lkhvt Vegan lvr rgysh",
+      "brand": "(hvsypy mvtg)",
+      "category": "typvkh",
       "stores": [
         "superpharm",
         "be",
         "goodpharm"
       ],
-      "notes": "Tip: בדקי שאין Lanolin/Collagen.",
+      "notes": "typ: bdky shyn Lanolin/Collagen.",
       "tags": [],
       "link": "products.html?q=moisturizer"
     },
     {
-      "name": "משחת שיניים Veganת",
-      "brand": "(add brand)",
-      "category": "היגיינה",
+      "name": "mshkht shynyym Vegant",
+      "brand": "(hvsypy mvtg)",
+      "category": "hygyynh",
       "stores": [
         "superpharm",
         "be",
         "goodpharm"
       ],
-      "notes": "Tip: בדקי שאין Propolis.",
+      "notes": "typ: bdky shyn Propolis.",
       "tags": [],
       "link": "products.html?q=toothpaste"
     },
     {
-      "name": "Cream Hands Vegan",
-      "brand": "(add brand)",
-      "category": "Tipוח",
+      "name": "Cream ydyym Vegan",
+      "brand": "(hvsypy mvtg)",
+      "category": "typvkh",
       "stores": [
         "superpharm",
         "be",
         "goodpharm"
       ],
-      "notes": "Tip: Look for תו 'Vegan' / 'Cruelty-Free'.",
+      "notes": "typ: khpshy tv 'Vegan' / 'Cruelty-Free'.",
       "tags": [],
       "link": "products.html?q=hand%20cream"
     }
   ],
   "faqs": [
     {
-      "q": "Is everything here 100% vegan and cruelty-free?",
-      "a": "Yes — the goal is to show only vegan, cruelty-free options. If in doubt, it's better not to add it until verified."
+      "q": "hm kl mh shmvpy kn 100% Vegan vl nvsh l bly khyym?",
+      "a": "kn — hmtrh hy lhtsyg rk pshrvyvt Veganvt vshynn nvsv l bly khyym. m ysh spk, dyp l lhknys d shnbdk."
     },
     {
-      "q": "איך בודקים מוצר בפארם במהירות?",
-      "a": "הדביקי רשימת Ingredients בבודק הIngredients באתר, וLook for גם תוויות כמו Vegan / Cruelty‑Free on the packaging."
+      "q": "yk bvdkym mvtsr In drugstores bmhyrvt?",
+      "a": "hdbyky rshymt Ingredients bbvdk hIngredients btr, vkhpshy gm tvvyvt kmv Vegan / Cruelty‑Free l hryzh."
     },
     {
-      "q": "למה יש כאן 'Top 10' כתבנית?",
-      "a": "כדי שתוכלי לערוך בקלות: כל הרשימה יושבת בקובץ JSON אחד. אפשר להתחיל עם התבנית ולהחליף לפריטים שאת מאשרת."
+      "q": "lmh ysh kn 'Top 10' ktbnyt?",
+      "a": "kdy shtvkly lrvk bklvt: kl hrshymh yvshbt bkvbts JSON khd. pshr lhtkhyl m htbnyt vlhkhlyp lprytym sht mshrt."
     }
   ],
   "brands": [
     {
       "id": "catrice",
       "name": "CATRICE",
-      "nameHe": "קטריס (CATRICE)",
+      "nameHe": "ktrys (CATRICE)",
       "categories": [
-        "איפור Face",
-        "איפור עיניים",
-        "איפור Lips",
-        "ציפורניים"
+        "ypvr pnym",
+        "ypvr ynyym",
+        "ypvr shptyym",
+        "tsypvrnyym"
       ],
       "crueltyFree": true,
       "vegan": true,
-      "veganNotes": "המותג מצהיר שכל המוצרים Veganים (100% Ingredients מהצומח) מאז 2023.",
-      "notes": "מותג איפור אירופאי במחירים נגישים.",
+      "veganNotes": "hmvtg mtshyr shkl hProducts Veganym (100% Ingredients mhtsvmkh) mz 2023.",
+      "notes": "mvtg ypvr yrvpy bPriceym ngyshym.",
       "stores": [
         "shufersal"
       ],
@@ -191,17 +191,17 @@
     {
       "id": "ofra",
       "name": "OFRA",
-      "nameHe": "עופרה (OFRA)",
+      "nameHe": "vprh (OFRA)",
       "categories": [
-        "איפור Face",
-        "איפור עיניים",
-        "איפור Lips",
-        "Tipוח עור"
+        "ypvr pnym",
+        "ypvr ynyym",
+        "ypvr shptyym",
+        "typvkh vr"
       ],
       "crueltyFree": true,
       "vegan": "claimed",
-      "veganNotes": "האתר הרשמי מצהיר שהמותג 100% Vegan; קיימים מקורות צד-ג׳ שמציינים שלא כל המוצרים Veganים—Recommended לבדוק מוצר ספציפי.",
-      "notes": "מותג איפור מקצועי; זמין במבחר מוצרים בשופרסל אונליין.",
+      "veganNotes": "htr hrshmy mtshyr shhmvtg 100% Vegan; kyymym mkvrvt tsd-g' shmtsyynym shl kl hProducts Veganym—mvmlts lbdvk mvtsr sptsypy.",
+      "notes": "mvtg ypvr mktsvy; zmyn bmbkhr Products bshvprsl vnlyyn.",
       "stores": [
         "shufersal"
       ],
@@ -217,18 +217,18 @@
     {
       "id": "fre",
       "name": "FRÉ",
-      "nameHe": "פרי (FRÉ)",
+      "nameHe": "pry (FRÉ)",
       "categories": [
-        "Tipוח Face",
-        "ניקוי Face",
-        "סרומים",
-        "לחות",
-        "Cream הגנה"
+        "typvkh pnym",
+        "nykvy pnym",
+        "srvmym",
+        "lkhvt",
+        "Cream hgnh"
       ],
       "crueltyFree": true,
       "vegan": true,
-      "veganNotes": "המותג מצהיר על מוצרים Veganים ו-cruelty-free.",
-      "notes": "מותג Tipוח עם דגש על פעילות וספורט; קיים גם אתר ישראלי.",
+      "veganNotes": "hmvtg mtshyr l Products Veganym v-cruelty-free.",
+      "notes": "mvtg typvkh m dgsh l pylvt vspvrt; kyym gm tr yshrly.",
       "stores": [
         "shufersal"
       ],
@@ -245,17 +245,17 @@
     {
       "id": "bali-body",
       "name": "BALI BODY",
-      "nameHe": "באלי בודי (BALI BODY)",
+      "nameHe": "bly bvdy (BALI BODY)",
       "categories": [
-        "שיזוף עצמי",
-        "Tipוח Body",
-        "הגנה מהשמש",
-        "אביזרים לשיזוף"
+        "shyzvp tsmy",
+        "typvkh gvp",
+        "hgnh mhshmsh",
+        "byzrym lshyzvp"
       ],
       "crueltyFree": true,
       "vegan": "mostly",
-      "veganNotes": "לפי האתר הרשמי, רוב המוצרים Veganים (מעל ~98%), עם חריגים בודדים (למשל מוצר SPF עם דונג דבורים).",
-      "notes": "מותג אוסטרלי לשיזוף עצמי וTipוח Body.",
+      "veganNotes": "lpy htr hrshmy, rvb hProducts Veganym (ml ~98%), m khrygym bvddym (lmshl mvtsr SPF m dvng dbvrym).",
+      "notes": "mvtg vstrly lshyzvp tsmy vtypvkh gvp.",
       "stores": [
         "shufersal"
       ],

@@ -1,4 +1,4 @@
-// KBWG Language + i18n helper. Build: 2026-02-15-v2
+// KBWG Language + i18n helper. Build: 2026-02-15-v3
 (function(){
   'use strict';
 
@@ -18,6 +18,23 @@
     }catch(e){ return ''; }
   }
 
+  function getPathLang(){
+    try{
+      var p = (location.pathname || '').toLowerCase();
+      if (p.endsWith('-en.html')) return 'en';
+      if (p.includes('/en/')) return 'en';
+      return 'he';
+    }catch(e){ return 'he'; }
+  }
+
+  function getLang(){
+    // Prefer the file-based language (index.html vs index-en.html).
+    // Keep ?lang=en as an optional override/back-compat.
+    var q = getQueryLang();
+    if (q) return q;
+    return getPathLang();
+  }
+
   function setHtmlLangDir(lang){
     try{
       var html = document.documentElement;
@@ -28,13 +45,20 @@
     }catch(e){}
   }
 
-  function getLang(){
-    // Default is Hebrew/RTL unless the URL explicitly asks for English.
-    var q = getQueryLang();
-    return (q === 'en') ? 'en' : 'he';
+  function switchPathForLang(pathname, lang){
+    pathname = pathname || '';
+    // Normalize directory URLs to index.html
+    if (pathname.endsWith('/')) pathname = pathname + 'index.html';
+    if (!pathname.endsWith('.html')) return pathname; // best-effort
+    if (lang === 'en'){
+      if (pathname.endsWith('-en.html')) return pathname;
+      return pathname.replace(/\.html$/i, '-en.html');
+    }
+    // he
+    return pathname.replace(/-en\.html$/i, '.html');
   }
 
-  function withLangParam(url, lang){
+  function withLangFile(url, lang){
     try{
       lang = normLang(lang) || getLang();
       if (!url) return url;
@@ -42,45 +66,37 @@
       if (url.startsWith('assets/') || url.startsWith('data/')) return url;
 
       var u = new URL(url, location.href);
-      if (lang === 'en') u.searchParams.set('lang', 'en');
-      else u.searchParams.delete('lang');
+      u.searchParams.delete('lang'); // prefer file-based
+      u.pathname = switchPathForLang(u.pathname, lang);
 
-      var out = u.pathname.replace(/^\//,'') + (u.search ? u.search : '') + (u.hash || '');
-      return out;
+      return u.pathname.replace(/^\//,'') + (u.search ? u.search : '') + (u.hash || '');
     }catch(e){
-      // Minimal fallback string ops (best-effort)
+      // fallback: naive replace
       if (lang === 'en'){
-        if (url.indexOf('lang=') !== -1){
-          return url.replace(/([?&])lang=[^&]*/,'$1lang=en').replace(/[?&]$/,'');
-        }
-        return url + (url.indexOf('?') === -1 ? '?lang=en' : '&lang=en');
+        return url.replace(/\.html(\b|[?#])/i, '-en.html$1');
       }
-      // remove lang param
-      return url
-        .replace(/([?&])lang=[^&]*&?/,'$1')
-        .replace(/\?&/,'?')
-        .replace(/[?&]$/,'');
+      return url.replace(/-en\.html(\b|[?#])/i, '.html$1');
     }
   }
 
-  function setLang(lang, opts){
+  function setLang(lang){
     lang = normLang(lang) || 'he';
-    opts = opts || {};
-    try{ localStorage.setItem('kbwg_lang', lang); }catch(e){}
-    setHtmlLangDir(lang);
+    var current = getLang();
+    if (lang === current) return;
 
-    if (opts.updateUrl !== false){
-      try{
-        var u = new URL(location.href);
-        if (lang === 'en') u.searchParams.set('lang', 'en');
-        else u.searchParams.delete('lang');
-        location.href = u.toString();
-        return;
-      }catch(e){}
+    try{
+      var u = new URL(location.href);
+      u.searchParams.delete('lang');
+      u.pathname = switchPathForLang(u.pathname, lang);
+      location.href = u.toString();
+    }catch(e){
+      // best-effort
+      var p = switchPathForLang(location.pathname, lang);
+      location.href = p + (location.hash || '');
     }
   }
 
-  // Apply ASAP
+  // Apply ASAP based on current page language
   setHtmlLangDir(getLang());
 
   // ---- JSON helpers ----
@@ -104,21 +120,19 @@
     });
   }
 
-  // ---- Auto-append lang param to internal links ----
+  // ---- Auto-rewrite internal links to the current language file variant ----
   function patchLinks(){
     try{
       var lang = getLang();
-      if (lang !== 'en') return;
       var links = document.querySelectorAll('a[href]');
       links.forEach(function(a){
         var href = a.getAttribute('href');
         if (!href) return;
         if (/^(https?:)?\/\//i.test(href) || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('#')) return;
         if (href.startsWith('assets/') || href.startsWith('data/')) return;
-        if (href.includes('lang=')) return;
 
-        if (href.endsWith('.html') || href.includes('.html?') || href === './' || href === '.' || href === 'index.html'){
-          a.setAttribute('href', withLangParam(href, lang));
+        if (href.endsWith('.html') || href.includes('.html?') || href.includes('.html#') || href.endsWith('-en.html')){
+          a.setAttribute('href', withLangFile(href, lang));
         }
       });
     }catch(e){}
@@ -140,7 +154,7 @@
       var btn = e.target && e.target.closest && e.target.closest('.kbwgLangBtn');
       if(!btn) return;
       var next = btn.getAttribute('data-lang');
-      setLang(next, { updateUrl: true });
+      setLang(next);
     });
 
     slot.innerHTML = '';
@@ -188,7 +202,7 @@
   // Expose API
   window.kbwgGetLang = getLang;
   window.kbwgSetLang = setLang;
-  window.kbwgWithLang = withLangParam;
+  window.kbwgWithLang = withLangFile;
   window.kbwgJsonPath = jsonPath;
   window.kbwgFetchLangJson = fetchLangJson;
 })();
