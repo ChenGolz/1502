@@ -276,7 +276,6 @@
       el.feedCount.textContent = list.length ? kbRangeText(state.page, list.length, state.per) : 'אין תוצאות';
     }
 
-    // Notify dynamic content rendered
     try { window.dispatchEvent(new Event('kbwg:content-rendered')); } catch (e) {}
 
     // focus deep-link if present

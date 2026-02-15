@@ -1,3 +1,4 @@
+var KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) || 'he';
 /* Pharmacy page (2026-02-04-v16) */
 (function(){
   const state = { q: '', store: 'all' };

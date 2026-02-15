@@ -1491,7 +1491,7 @@ function sortList(list) {
   function tag(label) {
     const s = document.createElement("span");
     s.className = "tag";
-    s.textContent = label;
+    s.textContent = label;    if (/(Leaping Bunny|PETA|Vegan|INTL)/i.test(String(label))) {    }
     return s;
   }
 
@@ -1684,7 +1684,6 @@ const frag = document.createDocumentFragment();
     });
 
     grid.replaceChildren(frag);
-    // Notify after dynamic content renders.
     try { window.dispatchEvent(new Event('kbwg:content-rendered')); } catch (e) {}
 
 if (liveCount)     if (liveCount) {

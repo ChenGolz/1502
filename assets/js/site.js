@@ -4,66 +4,6 @@
   // Build marker: use this to verify you loaded the latest JS
   window.KBWG_BUILD = window.KBWG_BUILD || '2026-02-14-v3';
   try { console.info('[KBWG] build', window.KBWG_BUILD); } catch(e) {}
-
-  // ---------------------------------------------------------
-  // Simple i18n helper (lang via ?lang=en|he, then localStorage)
-  // ---------------------------------------------------------
-  function kbwgNormalizeLang(l){
-    l = String(l || '').trim().toLowerCase();
-    if (!l) return 'he';
-    if (l === 'iw') l = 'he';
-    if (l.startsWith('he')) return 'he';
-    if (l.startsWith('en')) return 'en';
-    return l.slice(0, 2);
-  }
-
-  function kbwgGetLang(){
-    // 1) URL param (highest priority)
-    try {
-      var qs = new URLSearchParams(window.location.search || '');
-      var ql = qs.get('lang');
-      if (ql) return kbwgNormalizeLang(ql);
-    } catch(e) {}
-
-    // 2) Saved preference
-    try {
-      var saved = localStorage.getItem('kbwg_lang');
-      if (saved) return kbwgNormalizeLang(saved);
-    } catch(e) {}
-
-    // 3) <html lang="">
-    try {
-      var hl = document.documentElement.getAttribute('lang');
-      if (hl) return kbwgNormalizeLang(hl);
-    } catch(e) {}
-
-    return 'he';
-  }
-
-  function kbwgSetLang(lang){
-    var l = kbwgNormalizeLang(lang);
-    try { localStorage.setItem('kbwg_lang', l); } catch(e) {}
-    try { document.documentElement.setAttribute('lang', l); } catch(e) {}
-    return l;
-  }
-
-  // Turn "data/products.json" OR "data/products" into "data/products-he.json" / "-en.json"
-  function kbwgPickLangJson(jsonPath, lang){
-    var l = kbwgNormalizeLang(lang || kbwgGetLang());
-    var p = String(jsonPath || '');
-    if (!p) return p;
-    if (p.endsWith('.json')) p = p.slice(0, -5);
-    return p + '-' + l + '.json';
-  }
-
-  // Expose (so other scripts can reuse)
-  window.kbwgGetLang = kbwgGetLang;
-  window.kbwgSetLang = kbwgSetLang;
-  window.kbwgPickLangJson = kbwgPickLangJson;
-
-  // Apply URL param immediately (also saves to localStorage)
-  try { kbwgSetLang(kbwgGetLang()); } catch(e) {}
-
     
 function kbwgInjectFaqSchema(){
   try{
@@ -743,6 +683,59 @@ window.addEventListener('resize', () => {
 
 
 
+function fixEnglishNavLabels(){
+  try{
+    const lang = (window.kbwgGetLang && window.kbwgGetLang()) || (document.documentElement.getAttribute('lang') || 'he');
+    const isEn = String(lang).toLowerCase().startsWith('en');
+    if (!isEn) return;
+
+    const map = new Map([
+      ['index.html','Home'],
+      ['products.html','Products'],
+      ['bundles.html','Bundles'],
+      ['todays-top-deals.html',"Today's Deals"],
+      ['ingredient-detective.html','Ingredient Checker'],
+      ['hidden-gems-map.html','Hidden Gems Map'],
+      ['recommended-brands.html','Recommended Brands'],
+      ['israeli-brands.html','Israeli Brands'],
+      ['vegan-in-israel.html','Vegan in Israel'],
+      ['about.html','About'],
+      ['contact.html','Contact'],
+      ['learn.html','Learn'],
+      ['guides.html','Guides'],
+      ['community.html','Community']
+    ]);
+
+    // Logo text
+    try{
+      const logoText = document.querySelector('.logoText');
+      if (logoText) logoText.textContent = 'Shop Cruelty-Free';
+    }catch(e){}
+
+    // Header / nav / footer link labels
+    const anchors = document.querySelectorAll('.siteHeader a, .navDrawer a, nav a, .siteFooter a, .bottomBar a');
+    anchors.forEach(a => {
+      const href = (a.getAttribute('href') || '').split('#')[0];
+      const clean = href.split('?')[0];
+      if (map.has(clean)){
+        const t = (a.textContent || '').trim();
+        if (/[\u0590-\u05FF]/.test(t) || t.length <= 14){
+          a.textContent = map.get(clean);
+        }
+      }
+    });
+
+    // Bottom bar labels (icons+text)
+    try{
+      const pills = document.querySelectorAll('.bottomBar .label');
+      pills.forEach(el=>{
+        const t=(el.textContent||'').trim();
+        const dict = {'בית':'Home','חיפוש':'Search','רכיבים':'Ingredients','דילים':'Deals','קהילה':'Community'};
+        if (dict[t]) el.textContent=dict[t];
+      });
+    }catch(e){}
+  } catch(e) {}
+}
 
 
 
@@ -753,7 +746,8 @@ window.addEventListener('resize', () => {
 // Initial run
 try { setupMobileFilterCollapse(); } catch(e) {}
 window.addEventListener('DOMContentLoaded', () => {
-  try { setupMobileFilterCollapse(); } catch(e) {}  try {
+  try { setupMobileFilterCollapse(); } catch(e) {}
+  try { fixEnglishNavLabels(); } catch(e) {}try {
     // Remove the old global notice banner (now shown inside the navy hero header).
     const legacy = document.getElementById('kbwgGlobalVeganNotice');
     if (legacy) legacy.remove();
@@ -790,3 +784,88 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 
+/* ---------------------------------------------------------
+   - works across pages even when header is injected later
+   --------------------------------------------------------- */
+(function(){
+
+  var SELECTORS = [
+    '#wg-switcher-container',
+    '#wg-switcher',
+    '.wg-default',
+    '.wg-drop'
+  ];
+
+  function findWidget(){
+    for (var i=0;i<SELECTORS.length;i++){
+      var sel = SELECTORS[i];
+      var el = document.querySelector(sel);
+      if (!el) continue;
+      // prefer outer wrapper if we hit an inner node
+      return outer;
+    }
+    return null;
+  }
+
+  function getSlots(){
+    return {
+      desktop: document.getElementById('langSlotDesktop'),
+      mobile:  document.getElementById('langSlotMobile')
+    };
+  }
+
+  function pickSlot(slots){
+    if (!slots.desktop && !slots.mobile) return null;
+    var isMobile = false;
+    try { isMobile = window.matchMedia && window.matchMedia('(max-width: 900px)').matches; } catch(e){}
+    return (isMobile ? slots.mobile : slots.desktop) || slots.mobile || slots.desktop;
+  }
+
+  function mount(){
+    var slots = getSlots();
+    var slot = pickSlot(slots);
+    var el = findWidget();
+    if (!slot || !el) return false;
+
+    if (el.parentElement !== slot) slot.appendChild(el);
+
+
+    try{
+      el.style.position = 'static';
+      el.style.inset = 'auto';
+      el.style.top = el.style.right = el.style.bottom = el.style.left = '';
+      el.style.transform = 'none';
+    }catch(e){}
+
+    return true;
+  }
+
+  // Throttled runner
+  var t = null;
+  function schedule(){
+    if (t) return;
+    t = setTimeout(function(){
+      t = null;
+      mount();
+    }, 60);
+  }
+
+  // Run after DOM + after your header/footer injection event
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){ mount(); setTimeout(mount, 250); setTimeout(mount, 900); });
+  } else {
+    mount(); setTimeout(mount, 250); setTimeout(mount, 900);
+  }
+
+  window.addEventListener('kbwg:layout-ready', function(){ mount(); setTimeout(mount, 250); setTimeout(mount, 900); });
+  window.addEventListener('resize', schedule);
+
+
+  // Observe DOM mutations until mounted (kept throttled)
+  var obs = new MutationObserver(function(){ schedule(); });
+  try { obs.observe(document.documentElement, {childList:true, subtree:true}); } catch(e){}
+
+  // Final safety retries
+  setTimeout(mount, 1600);
+  setTimeout(mount, 3200);
+})();

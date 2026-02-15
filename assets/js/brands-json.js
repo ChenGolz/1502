@@ -1,7 +1,6 @@
 // // Build: 2026-02-11-v23
 try { window.KBWG_BRANDS_BUILD = String(window.KBWG_BUILD || '2026-02-11-v1'); console.info('[KBWG] KBWG_BRANDS_BUILD ' + window.KBWG_BRANDS_BUILD); } catch(e) {}
 
-// Resolve URLs correctly when hosted under a subpath (e.g. GitHub Pages).
 // If you window.kbwgFetch("data/...") from /en/page.html the browser will request /en/data/... (404). We normalize to the true site base.
 function __kbwgSiteBaseFromScript(scriptName) {
   try {
@@ -84,6 +83,9 @@ function __kbwgResolveFromSiteBase(relPath, scriptName) {
 */
 (function () {
   'use strict';
+
+  var KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) || 'he';
+
 
   var PT = (window.KBWGPriceTier || {});
 
@@ -882,7 +884,9 @@ function stopLinkPropagation(el) {
     titleBlock.className = 'brandTitleBlock';
 
     var nameLink = document.createElement('a');
-    nameLink.className = 'brandName';    nameLink.textContent = brand.name || '';
+    nameLink.className = 'brandName';
+    nameLink.setAttribute('data-', 'true');
+    nameLink.textContent = brand.name || '';
     nameLink.href = brand.website || targetUrl || '#';
     nameLink.target = '_blank';
     nameLink.rel = 'nofollow noopener';
@@ -915,6 +919,10 @@ function stopLinkPropagation(el) {
       var s = document.createElement('span');
       s.className = 'brandBadge' + (cls ? (' ' + cls) : '');
       s.textContent = text;
+      if (/\bLeaping\s*Bunny\b/i.test(text) || /\bPETA\b/i.test(text)) {
+        s.setAttribute('data-', 'true');
+        s.classList.add('');
+      }
       badgesWrap.appendChild(s);
     }
 
@@ -987,7 +995,6 @@ function stopLinkPropagation(el) {
     var jsonPath = grid.getAttribute('data-json');
     if (!jsonPath) return;
 
-    // Normalize JSON URL so it works under subpaths.
     var jsonUrl = __kbwgResolveFromSiteBase(jsonPath, 'brands-json.js');
 
     var pageKind = grid.getAttribute('data-kind') || (document.documentElement.classList.contains('page-recommended-brands') ? 'intl' : 'israel');
@@ -1290,7 +1297,6 @@ function stopLinkPropagation(el) {
         var state = { brands: brands, q: '', cat: '', priceTier: 0, pageKind: pageKind, brandTypeKeysMap: idx.brandTypeKeys };
         bind(state);
 
-        // Notify listeners that dynamic content is ready.
         try { window.dispatchEvent(new Event('kbwg:content-rendered')); } catch (e) {}
       })
       .catch(function (err) {

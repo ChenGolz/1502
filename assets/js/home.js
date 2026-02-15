@@ -1,3 +1,4 @@
+var KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) || 'he';
 // Home page helpers (v14) — fast, minimal, non-salesy
 (function(){
   function qs(sel){ return document.querySelector(sel); }
@@ -133,7 +134,7 @@
           '<div class="dealTop">' +
             '<div class="dealBrandRow">' +
               '<div>' +
-                (brand ? '<div class="dealBrand">' + brand + '</div>' : '') +
+                (brand ? '<div class="dealBrand " data-="true">' + brand + '</div>' : '') +
                 '<div class="dealName">' + name + '</div>' +
               '</div>' +
             '</div>' +

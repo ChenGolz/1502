@@ -4,6 +4,9 @@
 (function () {
   'use strict';
 
+  var KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) || 'he';
+
+
   const BUILD = String(window.KBWG_BUILD || '2026-02-11-v1');
   console.log('[KBWG] Ingredient Detective build', BUILD);
 

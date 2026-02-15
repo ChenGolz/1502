@@ -11,6 +11,9 @@ try { window.KBWG_PRODUCTS_BUILD = String(window.KBWG_BUILD || '2026-02-11-v1');
 (function () {
   'use strict';
 
+  var KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) || 'he';
+
+
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
       var s = document.createElement('script');
@@ -27,37 +30,6 @@ try { window.KBWG_PRODUCTS_BUILD = String(window.KBWG_BUILD || '2026-02-11-v1');
     try { return location && location.protocol === 'file:'; } catch (e) { return false; }
   }
 
-
-  // --- i18n (JSON per language) ---
-  function kbwgNormalizeLang(l){
-    l = String(l || '').trim().toLowerCase();
-    if(!l) return 'he';
-    if(l === 'iw') l = 'he';
-    if(l.startsWith('he')) return 'he';
-    if(l.startsWith('en')) return 'en';
-    return l.slice(0,2);
-  }
-  function kbwgGetLang(){
-    try {
-      var qs = new URLSearchParams(window.location.search || '');
-      var ql = qs.get('lang');
-      if (ql) return kbwgNormalizeLang(ql);
-    } catch(e) {}
-    try {
-      var saved = localStorage.getItem('kbwg_lang');
-      if (saved) return kbwgNormalizeLang(saved);
-    } catch(e) {}
-    return 'he';
-  }
-  function kbwgPickLangJson(jsonPath, lang){
-    var l = kbwgNormalizeLang(lang || kbwgGetLang());
-    var p = String(jsonPath || '');
-    if(!p) return p;
-    if(p.endsWith('.json')) p = p.slice(0,-5);
-    return p + '-' + l + '.json';
-  }
-
-  // Resolve URLs correctly when hosted under a subpath (e.g., GitHub Pages).
   function siteBaseFromScript() {
     // Prefer global helper from site.js if it exists.
     try {
@@ -241,16 +213,12 @@ try { window.KBWG_PRODUCTS_BUILD = String(window.KBWG_BUILD || '2026-02-11-v1');
   }
 
   // ---------- Run ----------
-  var lang = kbwgGetLang();
-  var productsRel = kbwgPickLangJson('data/products.json', lang);
-  var productsPath = resolveFromBase(productsRel);
-  var productsFallbackPath = resolveFromBase('data/products.json');
-  var intlBrandsPath = resolveFromBase('data/intl-brands.json');
+  var productsPath = resolveFromBase('data/products-' + KBWG_LANG + '.json');
+  var productsFallback = resolveFromBase('data/products.json');
+  var intlBrandsPath = resolveFromBase('data/intl-brands-' + KBWG_LANG + '.json');
+  var intlBrandsFallback = resolveFromBase('data/intl-brands.json');
 
-  var productsReq = fetchJson(productsPath).catch(function(){
-    if (productsFallbackPath === productsPath) throw new Error('Products JSON missing');
-    return fetchJson(productsFallbackPath);
-  });
+  var productsReq = fetchJson(productsPath);
   var brandsReq = fetchJson(intlBrandsPath).catch(function () { return []; });
 
   Promise.all([productsReq, brandsReq])

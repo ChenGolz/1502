@@ -164,6 +164,43 @@ h3{ font-size: 18px; margin:0 0 8px; }
 .spaced{ margin: 14px 0; }
 
 
+/* ---------------------------------------------------------
+   Language switcher placement (desktop + mobile)
+   --------------------------------------------------------- */
+#siteHeader .langSlot{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+/* Show only one slot per breakpoint */
+@media (min-width: 901px){
+  #siteHeader #langSlotMobile{ display: none; }
+}
+@media (max-width: 900px){
+  #siteHeader #langSlotDesktop{ display: none; }
+}
+
+/* Keep the switcher sized like the other header controls */
+#siteHeader #langSlotMobile{ width: 44px; height: 44px; }
+
+/* Mobile: keep the switcher between the hamburger and the site title (centered) */
+@media (max-width: 900px){
+  #siteHeader .headerRow{ position: relative; }
+  #siteHeader #langSlotMobile{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10003;
+  }
+}
+
+
+
+
+
 /* Hero */
 .hero{
   position: relative;
@@ -3346,7 +3383,6 @@ table{ width: 100%; border-collapse: collapse; }
 
 /* --- January 2026 UI fixes --- */
 
-/* Fix LTR word order inside RTL nav */
 .nav a{ unicode-bidi: plaintext; }
 
 /* מוצרים filter panel: prevent overlap + horizontal scroll */
@@ -3549,6 +3585,13 @@ html[dir="rtl"] input, html[dir="rtl"] textarea, html[dir="rtl"] select { font-f
 html[dir="rtl"] .nav, html[dir="rtl"] nav ul { flex-direction: row; }
 html[dir="rtl"] .menu, html[dir="rtl"] .topMenu, html[dir="rtl"] .navbar, html[dir="rtl"] .nav-links { flex-direction: row; }
 html[dir="rtl"] .card, html[dir="rtl"] .productCard, html[dir="rtl"] .dealCard, html[dir="rtl"] .brandCard { text-align: right; }
+
+/* --- English LTR enhancements --- */
+:root { --en-font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+html[dir="ltr"] body { direction: ltr; text-align: left; font-family: var(--en-font); }
+html[dir="ltr"] input, html[dir="ltr"] textarea, html[dir="ltr"] select { font-family: var(--en-font); }
+html[dir="ltr"] .card, html[dir="ltr"] .productCard, html[dir="ltr"] .dealCard, html[dir="ltr"] .brandCard { text-align: left; }
+
 
 /* ------------------------------------------------------------
    Mobile: reduce scrolling by showing 2 cards per row
@@ -5282,6 +5325,8 @@ html, body, main, button, input, select, textarea {
 }
 
 
+
+   this makes the mounted one show when inside the header slot. */
 /* DEALS: make the product images much smaller */
 .page-deals .dealCard > a.dealMedia{
   width: 80px !important;        /* <-- change this (60–110) */
@@ -5344,4 +5389,3 @@ html, body, main, button, input, select, textarea {
   border-width: 10px 10px 10px 0;
   border-color: transparent #00B853 transparent transparent;
 }
-
