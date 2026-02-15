@@ -1,4 +1,4 @@
-// Build: 2026-02-06-v24
+// Build: 2026-02-15-v40
 // Renders "Today's Top Deals" from data/products.json by selecting products where isDiscounted === true.
 // Enriches badge flags from data/intl-brands.json when available.
 // Matches the "Products" page UI badges (tags + meta pills) but does NOT show the price-range/tier UI.
@@ -98,7 +98,7 @@
     style.textContent = [
             '.dealMedia{position:relative;display:block;overflow:hidden;border-radius:14px;}',
       '.dealCard{position:relative;}',
-      '.dealDiscountBadge{position:absolute;top:14px;left:14px;z-index:10;background:rgba(255,255,255,.92);color:#16a34a;font-size:30px;font-weight:900;line-height:1;padding:10px 12px;border-radius:14px;box-shadow:0 10px 25px rgba(0,0,0,.18);border:2px solid rgba(34,197,94,.22);transform:rotate(-10deg);transform-origin:top left;pointer-events:none;}.dealDiscountBadge::after{content:"";position:absolute;left:12px;bottom:-9px;width:14px;height:14px;background:rgba(255,255,255,.92);border-left:2px solid rgba(34,197,94,.22);border-bottom:2px solid rgba(34,197,94,.22);transform:rotate(45deg);border-bottom-left-radius:4px;}@media (max-width:520px){.dealDiscountBadge{font-size:24px;top:10px;left:10px;padding:8px 10px;}}',
+      '.dealDiscountBadge{position:absolute;top:10px;left:10px;right:auto;z-index:12;background:transparent !important;color:#16a34a;font-size:26px;font-weight:900;line-height:1;padding:0 !important;margin:0 !important;display:inline-block !important;width:auto !important;max-width:none !important;transform:rotate(-10deg);transform-origin:top left;pointer-events:none;text-shadow:0 2px 10px rgba(0,0,0,.25),0 0 2px rgba(255,255,255,.92);-webkit-text-stroke:1.2px rgba(255,255,255,.85);}@media (max-width:520px){.dealDiscountBadge{font-size:22px;top:8px;left:8px;}}',
       '.dealImg{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;}',
       '.dealPlaceholder{display:flex;align-items:center;justify-content:center;aspect-ratio:1/1;font-size:34px;}',
       '.dealCard .dealTop{margin-top:10px;}',
