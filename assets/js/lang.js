@@ -1,4 +1,4 @@
-// KBWG Language + i18n helper. Build: 2026-02-15-v1
+// KBWG Language + i18n helper. Build: 2026-02-15-v2
 (function(){
   'use strict';
 
@@ -29,25 +29,9 @@
   }
 
   function getLang(){
+    // Default is Hebrew/RTL unless the URL explicitly asks for English.
     var q = getQueryLang();
-    if (q) return q;
-
-    try{
-      var ls = normLang(localStorage.getItem('kbwg_lang'));
-      if (ls) return ls;
-    }catch(e){}
-
-    try{
-      var hl = normLang(document.documentElement.getAttribute('lang'));
-      if (hl) return hl;
-    }catch(e){}
-
-    try{
-      var nav = normLang((navigator.languages && navigator.languages[0]) || navigator.language);
-      if (nav) return nav;
-    }catch(e){}
-
-    return 'he';
+    return (q === 'en') ? 'en' : 'he';
   }
 
   function withLangParam(url, lang){
@@ -58,12 +42,24 @@
       if (url.startsWith('assets/') || url.startsWith('data/')) return url;
 
       var u = new URL(url, location.href);
-      u.searchParams.set('lang', lang);
+      if (lang === 'en') u.searchParams.set('lang', 'en');
+      else u.searchParams.delete('lang');
+
       var out = u.pathname.replace(/^\//,'') + (u.search ? u.search : '') + (u.hash || '');
       return out;
     }catch(e){
-      if (url.indexOf('lang=') !== -1) return url;
-      return url + (url.indexOf('?') === -1 ? '?lang=' : '&lang=') + encodeURIComponent(lang || getLang());
+      // Minimal fallback string ops (best-effort)
+      if (lang === 'en'){
+        if (url.indexOf('lang=') !== -1){
+          return url.replace(/([?&])lang=[^&]*/,'$1lang=en').replace(/[?&]$/,'');
+        }
+        return url + (url.indexOf('?') === -1 ? '?lang=en' : '&lang=en');
+      }
+      // remove lang param
+      return url
+        .replace(/([?&])lang=[^&]*&?/,'$1')
+        .replace(/\?&/,'?')
+        .replace(/[?&]$/,'');
     }
   }
 
@@ -76,7 +72,8 @@
     if (opts.updateUrl !== false){
       try{
         var u = new URL(location.href);
-        u.searchParams.set('lang', lang);
+        if (lang === 'en') u.searchParams.set('lang', 'en');
+        else u.searchParams.delete('lang');
         location.href = u.toString();
         return;
       }catch(e){}
@@ -111,6 +108,7 @@
   function patchLinks(){
     try{
       var lang = getLang();
+      if (lang !== 'en') return;
       var links = document.querySelectorAll('a[href]');
       links.forEach(function(a){
         var href = a.getAttribute('href');
