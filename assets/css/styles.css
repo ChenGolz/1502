@@ -5398,4 +5398,44 @@ html, body, main, button, input, select, textarea {
     max-width: 64px !important;
   }
 }
+/* DEALS: discount badge as a corner sticker (top-left, angled) */
+.page-deals .dealCard { 
+  position: relative; 
+  overflow: visible;      /* lets the sticker “hang” a bit */
+}
+
+.page-deals .dealBadge{
+  position: absolute !important;
+  top: 12px !important;
+  left: 12px !important;     /* physical left even on RTL */
+  right: auto !important;
+  width: auto !important;    /* stop it becoming a full-width bar */
+  max-width: none !important;
+
+  background: #22c55e !important;  /* green */
+  color: #fff !important;
+  font-weight: 900 !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  padding: 10px 14px !important;
+  border-radius: 12px !important;
+
+  transform: rotate(-12deg) !important;  /* “bending/angled” look */
+  transform-origin: top left !important;
+  box-shadow: 0 10px 22px rgba(0,0,0,.18) !important;
+  z-index: 50 !important;
+  pointer-events: none; /* so it doesn't block clicks */
+}
+
+/* Optional: tiny “fold” triangle */
+.page-deals .dealBadge::after{
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-style: solid;
+  border-width: 10px 10px 10px 0;
+  border-color: transparent #22c55e transparent transparent;
+}
 
