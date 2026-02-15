@@ -1738,7 +1738,7 @@
         "url": "https://www.amazon.com/dp/B0DHFRC7N3?tag=nocrueltyil-20",
         "asin": "B0DHFRC7N3",
         "currency": "USD",
-        "priceUSD": 14.0,
+        "priceUSD": 11.20,
         "freeShipOver": 49
       }
     ],
@@ -1785,7 +1785,7 @@
         "url": "https://www.amazon.com/dp/B0DKPJG3GV?tag=nocrueltyil-20",
         "asin": "B0DKPJG3GV",
         "currency": "USD",
-        "priceUSD": 14.0,
+        "priceUSD": 11.20,
         "freeShipOver": 49
       }
     ],
@@ -1881,7 +1881,7 @@
         "url": "https://www.amazon.com/dp/B0DHFR2JX9?tag=nocrueltyil-20",
         "asin": "B0DHFR2JX9",
         "currency": "USD",
-        "priceUSD": 14.0,
+        "priceUSD": 11.20,
         "freeShipOver": 49
       }
     ],
@@ -1926,7 +1926,7 @@
         "url": "https://www.amazon.com/dp/B0DKPGH4GQ?tag=nocrueltyil-20",
         "asin": "B0DKPGH4GQ",
         "currency": "USD",
-        "priceUSD": 14.0,
+        "priceUSD": 11.20,
         "freeShipOver": 49
       }
     ],
@@ -2183,13 +2183,13 @@
         "url": "https://www.amazon.com/dp/B0CRZC14PM?tag=nocrueltyil-20",
         "asin": "B0CRZC14PM",
         "currency": "USD",
-        "priceUSD": 32.58,
+        "priceUSD": 39.94,
         "freeShipOver": 49
       }
     ],
     "isKids": false,
     "isMen": false,
-    "isDiscounted": true,
+    "isDiscounted": false,
     "image": "assets/img/products/B0CRZC14PM.jpg"
   },
   {
@@ -4007,8 +4007,7 @@
         "url": "https://www.amazon.com/dp/B0BSP47BS4?tag=nocrueltyil-20",
         "asin": "B0BSP47BS4",
         "currency": "USD",
-        "priceUSD": 13,
-        "freeShipOver": 49
+        "priceUSD": 13
       }
     ],
     "isKids": false,
@@ -8287,12 +8286,12 @@
         "url": "https://www.amazon.com/dp/B0D8RD7SSP?tag=nocrueltyil-20",
         "asin": "B0D8RD7SSP",
         "currency": "USD",
-        "priceUSD": 54.0,
+        "priceUSD": 90.0,
         "freeShipToIsrael": true
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": false,
     "image": "assets/img/products/B0D8RD7SSP.jpg"
   },
   {
@@ -8426,7 +8425,7 @@
         "url": "https://www.amazon.com/dp/B09CMX7X8H?tag=nocrueltyil-20",
         "asin": "B09CMX7X8H",
         "currency": "USD",
-        "priceUSD": 38.0,
+        "priceUSD": 70.0,
         "freeShipOver": 49
       }
     ],
@@ -11459,7 +11458,7 @@
         "url": "https://www.amazon.com/dp/B0BYR1PGGB?tag=nocrueltyil-20",
         "asin": "B0BYR1PGGB",
         "currency": "USD",
-        "priceUSD": 23.83
+        "priceUSD": 24.99
       }
     ],
     "isKids": false,
@@ -12073,7 +12072,7 @@
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": false,
     "image": "assets/img/products/B0B1JRGGLF.jpg"
   },
   {
@@ -12138,12 +12137,12 @@
         "url": "https://www.amazon.com/dp/B0DHLRKC5R?tag=nocrueltyil-20",
         "asin": "B0DHLRKC5R",
         "currency": "USD",
-        "priceUSD": 49.5,
+        "priceUSD": 99,
         "freeShipToIsrael": true
       }
     ],
     "isKids": false,
-    "isDiscounted": true,
+    "isDiscounted": false,
     "image": "assets/img/products/B0DHLRKC5R.jpg"
   },
   {
@@ -12172,7 +12171,7 @@
         "url": "https://www.amazon.com/dp/B0CBQZXBTR?tag=nocrueltyil-20",
         "asin": "B0CBQZXBTR",
         "currency": "USD",
-        "priceUSD": 18.99,
+        "priceUSD": 19.99,
         "freeShipOver": 49
       }
     ],
@@ -12207,7 +12206,7 @@
         "url": "https://www.amazon.com/dp/B0CY75FZT5?tag=nocrueltyil-20",
         "asin": "B0CY75FZT5",
         "currency": "USD",
-        "priceUSD": 29.99,
+        "priceUSD": 39,
         "freeShipOver": 49
       }
     ],
@@ -12336,7 +12335,7 @@
         "url": "https://www.amazon.com/dp/B0DWFZC283?ref=t_ac_view_request_product_image&campaignId=amzn1.campaign.AAEL70PFN8KI&linkCode=tr1&tag=nocrueltyil-20&linkId=amzn1.campaign.AAEL70PFN8KI_1769640084077",
         "asin": "B0DWFZC283",
         "currency": "USD",
-        "priceUSD": 18.2,
+        "priceUSD": 26,
         "freeShipOver": 49
       }
     ],
@@ -12399,7 +12398,8 @@
         "url": "https://www.amazon.com/dp/B09P4JDD5Z?tag=nocrueltyil-20",
         "asin": "B09P4JDD5Z",
         "currency": "USD",
-        "priceUSD": 33.99
+        "priceUSD": 33.99,
+        "freeShipOver": 49
       }
     ],
     "isKids": false,
@@ -15161,8 +15161,7 @@
         "url": "https://www.amazon.com/Attitude-Verified-Cleanser-Dermatologically-Products/dp/B07VC8BZB1?tag=nocrueltyil-20",
         "asin": "B07VC8BZB1",
         "currency": "USD",
-        "priceUSD": 17.65,
-        "freeShipOver": 49
+        "priceUSD": 17.65
       }
     ],
     "isKids": true,
@@ -15371,8 +15370,7 @@
         "url": "https://www.amazon.com/Attitude-Natural-Ingredients-Verified-Eucalyptus/dp/B0F7SHJM5P?tag=nocrueltyil-20",
         "asin": "B0F7SHJM5P",
         "currency": "USD",
-        "priceUSD": 36.17,
-        "freeShipOver": 49
+        "priceUSD": 36.17
       }
     ],
     "isMen": true,
@@ -16974,7 +16972,7 @@
         "url": "https://www.amazon.com/dp/B08HY9C5P6?ref=t_ac_view_request_product_image&campaignId=amzn1.campaign.2OSR0QJAB9732&linkCode=tr1&tag=nocrueltyil-20&linkId=amzn1.campaign.2OSR0QJAB9732_1769201331033",
         "asin": "B08HY9C5P6",
         "currency": "USD",
-        "priceUSD": 30.49,
+        "priceUSD": 29.49,
         "freeShipOver": 49
       }
     ],
@@ -17486,7 +17484,7 @@
         "url": "https://www.amazon.com/dp/B0DSJPYFV3?ref=t_ac_view_request_product_image&campaignId=amzn1.campaign.3RQWWQ6OEP5KO&linkCode=tr1&tag=nocrueltyil-20&linkId=amzn1.campaign.3RQWWQ6OEP5KO_1768995318788",
         "asin": "B0DSJPYFV3",
         "currency": "USD",
-        "priceUSD": 47.52,
+        "priceUSD": 61,
         "freeShipOver": 49
       }
     ],
@@ -18078,12 +18076,12 @@
         "url": "https://www.amazon.com/dp/B0F3JPTKC4?ref=t_ac_view_request_product_image&campaignId=amzn1.campaign.1YKGO0ZFJBXQU&linkCode=tr1&tag=nocrueltyil-20&linkId=amzn1.campaign.1YKGO0ZFJBXQU_1768953400189",
         "asin": "B0F3JPTKC4",
         "currency": "USD",
-        "priceUSD": 22.93,
+        "priceUSD": 26.98,
         "freeShipOver": 49
       }
     ],
     "image": "assets/img/products/B0F3JPTKC4.jpg",
-    "isDiscounted": true,
+    "isDiscounted": false,
     "isKids": true
   },
   {
