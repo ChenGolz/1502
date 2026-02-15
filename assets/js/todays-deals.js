@@ -665,21 +665,67 @@ var labels = resolveLabels(p, brand);
     // Discount badge (percent if possible, else "מבצע")
     var discountText = '';
     try {
-      function num(v){ return (typeof v === 'number' && isFinite(v)) ? v : null; }
-      var was =
-        num(offer.priceWasUSD) || num(offer.priceBeforeUSD) || num(offer.listPriceUSD) || num(offer.originalPriceUSD) ||
-        num(offer.priceWas) || num(offer.priceBefore) || num(offer.listPrice) || num(offer.originalPrice) || num(offer.compareAtPrice) || num(offer.wasPrice) ||
-        num(p && p.priceWas) || num(p && p.priceBefore) || num(p && p.listPrice) || num(p && p.originalPrice) || num(p && p.compareAtPrice);
+      function toNum(v){
+        if (typeof v === 'number' && isFinite(v)) return v;
+        if (typeof v === 'string'){
+          var s = v.trim();
+          if (!s) return null;
+          // Strip common symbols, keep digits/decimal
+          s = s.replace(/[%₪$€£]/g, '').trim();
+          // Support comma decimals
+          s = s.replace(',', '.');
+          var n = parseFloat(s);
+          return isFinite(n) ? n : null;
+        }
+        return null;
+      }
+      function pick(){
+        for (var i = 0; i < arguments.length; i++){
+          var n = toNum(arguments[i]);
+          if (n != null) return n;
+        }
+        return null;
+      }
+
+      // "Was" price candidates (offer first, then product)
+      var was = pick(
+        offer.priceWasUSD, offer.priceBeforeUSD, offer.listPriceUSD, offer.originalPriceUSD,
+        offer.priceWas, offer.priceBefore, offer.listPrice, offer.originalPrice,
+        offer.compareAtPrice, offer.wasPrice, offer.regularPrice,
+        (p && p.priceWasUSD), (p && p.priceBeforeUSD), (p && p.listPriceUSD), (p && p.originalPriceUSD),
+        (p && p.priceWas), (p && p.priceBefore), (p && p.listPrice), (p && p.originalPrice),
+        (p && p.compareAtPrice), (p && p.wasPrice), (p && p.regularPrice)
+      );
 
       var pct = null;
+
+      // Compute from was/current if possible
       if (was != null && price != null && was > price) {
         pct = Math.round((1 - (price / was)) * 100);
       } else {
-        var explicitPct = num(offer.discountPercent) || num(offer.discountPct) || num(p && p.discountPercent) || num(p && p.discountPct);
-        if (explicitPct != null) pct = Math.round(explicitPct);
+        // Otherwise use an explicit percent field (supports numbers or strings like "20%")
+        var explicitPct = pick(
+          offer.discountPercent, offer.discountPct, offer.discountPCT, offer.discount_percentage, offer.discountPercentage,
+          offer.pct, offer.percentOff, offer.discount, offer.dealDiscountPct,
+          (p && p.discountPercent), (p && p.discountPct), (p && p.discountPCT), (p && p.discount_percentage), (p && p.discountPercentage),
+          (p && p.pct), (p && p.percentOff), (p && p.discount), (p && p.dealDiscountPct)
+        );
+
+        if (explicitPct != null){
+          // If they entered 0.2 treat as 20%
+          if (explicitPct > 0 && explicitPct <= 1) pct = Math.round(explicitPct * 100);
+          else pct = Math.round(explicitPct);
+        }
       }
 
-      if (pct != null && pct >= 5) discountText = '-' + pct + '%';
+      // Clamp / validate
+      if (pct != null) {
+        pct = Math.abs(pct);
+        if (pct < 1) pct = null;
+        else if (pct > 99) pct = 99;
+      }
+
+      if (pct != null) discountText = '-' + pct + '%';
       else if (p && p.isDiscounted === true) discountText = 'מבצע';
     } catch (e) {
       if (p && p.isDiscounted === true) discountText = 'מבצע';
