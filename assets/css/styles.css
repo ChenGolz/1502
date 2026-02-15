@@ -185,6 +185,18 @@ h3{ font-size: 18px; margin:0 0 8px; }
 /* Keep the switcher sized like the other header controls */
 #siteHeader #langSlotMobile{ width: 44px; height: 44px; }
 
+/* Mobile: keep the switcher between the hamburger and the site title (centered) */
+@media (max-width: 900px){
+  #siteHeader .headerRow{ position: relative; }
+  #siteHeader #langSlotMobile{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10003;
+  }
+}
+
 /* When the Weglot widget is moved into a slot, neutralize any fixed positioning */
 #siteHeader .langSlot .wg-default,
 #siteHeader .langSlot .wg-drop,
@@ -5363,5 +5375,27 @@ html, body, main, button, input, select, textarea {
 #siteHeader .langSlot .wg-default.kbwgWeglotMounted,
 #siteHeader .langSlot .wg-drop.kbwgWeglotMounted{
   display: inline-flex !important;
+}
+/* DEALS: make the product images much smaller */
+.page-deals .dealCard > a.dealMedia{
+  width: 80px !important;        /* <-- change this (60–110) */
+  max-width: 80px !important;
+  margin-inline: auto !important; /* keep it centered */
+}
+
+/* Make sure the image fills the smaller box nicely */
+.page-deals .dealMedia{ aspect-ratio: 1 / 1; }
+.page-deals .dealImg{
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;   /* use 'contain' if you hate cropping */
+}
+
+/* Even smaller on phones */
+@media (max-width: 720px){
+  .page-deals .dealCard > a.dealMedia{
+    width: 64px !important;
+    max-width: 64px !important;
+  }
 }
 
