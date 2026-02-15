@@ -1,4 +1,4 @@
-// KBWG Language + i18n helper. Build: 2026-02-15-v3
+// KBWG Language + i18n helper. Build: 2026-02-15-v4
 (function(){
   'use strict';
 
@@ -33,6 +33,35 @@
     var q = getQueryLang();
     if (q) return q;
     return getPathLang();
+  }
+
+  // If someone lands on a Hebrew file with ?lang=en (or vice versa),
+  // redirect to the correct file variant so dir/lang match the actual page.
+  function reconcileQueryLang(){
+    var q = getQueryLang();
+    if (!q) return;
+    var pathLang = getPathLang();
+    // Only redirect when the query disagrees with the file variant.
+    if (q === pathLang) {
+      // Still clean the URL by removing ?lang=...
+      try{
+        var u0 = new URL(location.href);
+        u0.searchParams.delete('lang');
+        if (u0.toString() !== location.href) location.replace(u0.toString());
+      }catch(e){}
+      return;
+    }
+
+    try{
+      var u = new URL(location.href);
+      u.searchParams.delete('lang');
+      u.pathname = switchPathForLang(u.pathname, q);
+      location.replace(u.toString());
+    }catch(e){
+      // best-effort
+      var p = switchPathForLang(location.pathname, q);
+      location.replace(p + (location.hash || ''));
+    }
   }
 
   function setHtmlLangDir(lang){
@@ -96,7 +125,9 @@
     }
   }
 
-  // Apply ASAP based on current page language
+  // Apply ASAP based on current page language.
+  // First, reconcile any legacy ?lang=... URLs to the correct file.
+  reconcileQueryLang();
   setHtmlLangDir(getLang());
 
   // ---- JSON helpers ----
@@ -138,28 +169,39 @@
     }catch(e){}
   }
 
-  // ---- Simple language toggle UI ----
+  // ---- Language toggle UI ----
+  // We render a compact segmented control (HE | EN) that aligns nicely with the nav
+  // and stays small enough on mobile.
   function renderToggle(slot){
-    if (!slot || slot.__kbwgLangRendered) return;
-    slot.__kbwgLangRendered = true;
+    if (!slot) return;
 
     var lang = getLang();
-    var wrap = document.createElement('div');
-    wrap.className = 'kbwgLangToggle';
-    wrap.innerHTML =
-      '<button type="button" class="kbwgLangBtn" data-lang="he" aria-label="עברית">HE</button>' +
-      '<button type="button" class="kbwgLangBtn" data-lang="en" aria-label="English">EN</button>';
+    var existing = slot.querySelector && slot.querySelector('.kbwgLangToggle');
+    if (!existing){
+      var wrap = document.createElement('div');
+      wrap.className = 'kbwgLangToggle';
 
-    wrap.addEventListener('click', function(e){
-      var btn = e.target && e.target.closest && e.target.closest('.kbwgLangBtn');
-      if(!btn) return;
-      var next = btn.getAttribute('data-lang');
-      setLang(next);
-    });
+      // Short labels for tight spaces + full labels for desktop polish.
+      wrap.innerHTML =
+        '<button type="button" class="kbwgLangBtn" data-lang="he" aria-label="עברית">'
+          + '<span class="kbwgLangShort">HE</span><span class="kbwgLangFull">עברית</span>'
+        + '</button>'
+        + '<button type="button" class="kbwgLangBtn" data-lang="en" aria-label="English">'
+          + '<span class="kbwgLangShort">EN</span><span class="kbwgLangFull">English</span>'
+        + '</button>';
 
-    slot.innerHTML = '';
-    slot.appendChild(wrap);
+      wrap.addEventListener('click', function(e){
+        var btn = e.target && e.target.closest && e.target.closest('.kbwgLangBtn');
+        if(!btn) return;
+        var next = btn.getAttribute('data-lang');
+        setLang(next);
+      });
 
+      slot.innerHTML = '';
+      slot.appendChild(wrap);
+    }
+
+    // Update active state (important because the header can be injected after load)
     try{
       var buttons = slot.querySelectorAll('.kbwgLangBtn');
       buttons.forEach(function(b){
@@ -176,9 +218,19 @@
   function injectToggleStyles(){
     if (document.getElementById('kbwgLangToggleStyle')) return;
     var css = ''
-      + '.kbwgLangToggle{display:inline-flex;gap:6px;align-items:center;}'
-      + '.kbwgLangBtn{border:1px solid rgba(15,23,42,.18);background:rgba(255,255,255,.75);border-radius:10px;padding:6px 8px;font-weight:800;cursor:pointer;line-height:1;font-size:12px;}'
-      + '.kbwgLangBtn.isActive{background:rgba(0,200,83,.14);border-color:rgba(0,200,83,.45);}';
+      + '.kbwgLangToggle{display:inline-flex;align-items:center;gap:0;border:1px solid rgba(15,23,42,.16);background:rgba(255,255,255,.75);border-radius:999px;padding:2px;box-shadow:0 1px 2px rgba(0,0,0,.04);}'
+      + '.kbwgLangBtn{appearance:none;border:0;background:transparent;border-radius:999px;padding:7px 10px;font-weight:800;cursor:pointer;line-height:1;display:inline-flex;align-items:center;gap:6px;color:rgba(15,23,42,.78);}'
+      + '.kbwgLangBtn:focus{outline:none;}'
+      + '.kbwgLangBtn:focus-visible{box-shadow:0 0 0 3px rgba(42,91,154,.18);}'
+      + '.kbwgLangBtn.isActive{background:rgba(0,200,83,.18);color:rgba(10,80,40,.92);}'
+      + '.kbwgLangShort{display:none;}'
+      + '.kbwgLangFull{display:inline; font-size:12.5px;}'
+      + '@media (max-width: 900px){'
+        + '.kbwgLangBtn{padding:6px 8px;}'
+        + '.kbwgLangFull{display:none;}'
+        + '.kbwgLangShort{display:inline; font-size:12px; letter-spacing:.2px;}'
+      + '}'
+      + '@media (max-width: 360px){.kbwgLangBtn{padding:6px 7px;}}';
     var st = document.createElement('style');
     st.id = 'kbwgLangToggleStyle';
     st.textContent = css;
