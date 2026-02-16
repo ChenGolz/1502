@@ -11632,7 +11632,7 @@
     ],
     "isKids": false,
     "isDiscounted": true,
-    "discountPct": 30,
+    "discountPct": 41,
     "image": "assets/img/products/B07ZLD8W13.jpg"
   },
   {
@@ -12116,7 +12116,7 @@
     ],
     "isKids": false,
     "isDiscounted": true,
-    "discountPct": 34,
+    "discountPct": 31,
     "image": "assets/img/products/B0C8Y1TSKZ.jpg"
   },
   {
@@ -15875,12 +15875,13 @@
         "url": "https://www.amazon.com/dp/B086W38SXX?tag=nocrueltyil-20",
         "asin": "B086W38SXX",
         "currency": "USD",
-        "priceUSD": 26.8
+        "priceUSD": 26.8,
+        "freeShipOver": 49
       }
     ],
     "isKids": false,
     "isDiscounted": true,
-    "discountPct": 48,
+    "discountPct": 50,
     "image": "assets/img/products/B086W38SXX.jpg"
   },
   {
