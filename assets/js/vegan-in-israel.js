@@ -1,11 +1,9 @@
-var KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) || 'he';
 /* Vegan in Israel page logic (page-only) */
 (() => {
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-  const DATA_PATH = 'data/vegan-in-israel-' + KBWG_LANG + '.json';
-  const DATA_FALLBACK = 'data/vegan-in-israel.json';
+  const DATA_PATH = 'data/vegan-in-israel.json';
   const BUILD = (window.KBWG_BUILD || window.KBWG_SITE_BUILD || window.KBWG_PRODUCTS_BUILD || '').toString();
   const DATA_URL = BUILD ? `${DATA_PATH}?v=${encodeURIComponent(BUILD)}` : DATA_PATH;
   const STATE = {
@@ -62,8 +60,15 @@ var KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) || 'he';
     }
   };
 
-  function getLang(){
-    try { return (window.kbwgGetLang && window.kbwgGetLang()) || KBWG_LANG || 'he'; } catch(e) {}
+  function getLang() {
+    // Prefer Weglot if available
+    try {
+      if (window.Weglot && typeof Weglot.getCurrentLang === 'function') {
+        const wl = String(Weglot.getCurrentLang() || '').toLowerCase();
+        if (wl.startsWith('en')) return 'en';
+        if (wl.startsWith('he')) return 'he';
+      }
+    } catch {}
     const l = String(document.documentElement.getAttribute('lang') || 'he').toLowerCase();
     return l.startsWith('en') ? 'en' : 'he';
   }
@@ -214,8 +219,8 @@ function wireViewToggle() {
   }
 
   function buildGeocodeQuery(p) {
-    const addr = (p.address || p.address || '').trim();
-    const city = (p.city || p.city || '').trim();
+    const addr = (p.address_he || p.address || '').trim();
+    const city = (p.city_he || p.city || '').trim();
     // Keep it simple and robust for Hebrew/English inputs
     return [addr, city, 'ישראל'].filter(Boolean).join(', ');
   }
@@ -273,19 +278,19 @@ function wireViewToggle() {
   }
 
   function formatAddress(p) {
-    return isHe() ? (p.address || p.address || '') : (p.address || p.address || '');
+    return isHe() ? (p.address_he || p.address || '') : (p.address || p.address_he || '');
   }
 
   function formatName(p) {
-    return isHe() ? (p.name || p.name || '') : (p.name || p.name || '');
+    return isHe() ? (p.name_he || p.name || '') : (p.name || p.name_he || '');
   }
 
   function formatNotes(p) {
-    return isHe() ? (p.notes || '') : (p.notes || p.notes || '');
+    return isHe() ? (p.notes_he || '') : (p.notes_en || p.notes_he || '');
   }
 
   function mapQueryLink(p) {
-    const addr = encodeURIComponent(p.address || p.address || p.name || '');
+    const addr = encodeURIComponent(p.address || p.address_he || p.name || '');
     return `https://www.google.com/maps/search/?api=1&query=${addr}`;
   }
 
@@ -298,8 +303,8 @@ function wireViewToggle() {
     if (!q) return true;
 
     const hay = [
-      p.name, p.name, p.city, p.city, p.address, p.address,
-      p.region, p.region, p.typeLabel, p.notes, p.notes
+      p.name, p.name_he, p.city, p.city_he, p.address, p.address_he,
+      p.region, p.region_he, p.typeLabel_he, p.notes_he, p.notes_en
     ].filter(Boolean).map(normalize).join(' ');
     return hay.includes(q);
   }
@@ -310,9 +315,9 @@ function wireViewToggle() {
 
   function typeLabel(p) {
     if (isHe()) {
-      return p.typeLabel || (p.type === 'shop' ? 'חנות' : 'מסעדה');
+      return p.typeLabel_he || (p.type === 'shop' ? 'חנות' : 'מסעדה');
     }
-    return p.typeLabel || (p.type === 'shop' ? 'Shop' : 'Restaurant');
+    return p.typeLabel_en || (p.type === 'shop' ? 'Shop' : 'Restaurant');
   }
 
   function renderList() {
@@ -344,8 +349,8 @@ function wireViewToggle() {
       const name = formatName(p);
       const addr = formatAddress(p);
       const notes = formatNotes(p);
-      const city = isHe() ? (p.city || p.city) : (p.city || p.city);
-      const region = isHe() ? (p.region || p.region) : (p.region || p.region);
+      const city = isHe() ? (p.city_he || p.city) : (p.city || p.city_he);
+      const region = isHe() ? (p.region_he || p.region) : (p.region || p.region_he);
 
       const pills = [
         pill(typeLabel(p)),
@@ -595,6 +600,7 @@ function wireViewToggle() {
 
     if (shouldRenderMapNow() && !STATE.map) renderMap({ fit: true });
 
+    // Re-render dynamic content when language changes (e.g. Weglot switch)
     let __lastLang = getLang();
     const __langObserver = new MutationObserver(() => {
       const now = getLang();

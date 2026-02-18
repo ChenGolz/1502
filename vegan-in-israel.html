@@ -2,8 +2,8 @@
 
 <html dir="rtl" lang="he">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-947CLPDP2H"></script>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-947CLPDP2H"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="assets/css/styles.css?v=2026-02-15-v56" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/>
 <link href="assets/img/logo.png" rel="icon" type="image/png"/>
 <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet"/>
 <style>
@@ -96,7 +96,7 @@
   body.vii-view-map .viiLeft{ display:none; }
 }
     </style>
-<link href="vegan-in-israel.html" hreflang="he" rel="alternate"/><link href="vegan-in-israel-en.html" hreflang="en" rel="alternate"/><link href="vegan-in-israel.html" rel="canonical"/></head>
+</head>
 <body>
 <div id="siteHeaderMount"></div>
 <main>
@@ -116,115 +116,156 @@
 </div>
 </section>
 <section class="panel filter-panel" id="mapSection">
-<div class="wrap">
-<div class="contentCard">
-<h2 class="sectionTitle">מפה ורשימת מקומות</h2>
-<p class="muted" style="margin-top:0;">חיפוש + סינון מהיר, ואז ניווט במפה או ברשימה. במובייל: עוברים בין רשימה/מפה בכפתורים.</p>
-<div aria-label="בחירת תצוגה" class="viiTabs">
-<button aria-pressed="true" class="viiTabBtn" id="viewListBtn" type="button">רשימה</button>
-<button aria-pressed="false" class="viiTabBtn" id="viewMapBtn" type="button">מפה</button>
-</div>
-<div class="viiSplit">
-<!-- LEFT: Filters + list -->
-<div class="viiLeft">
-<div class="filtersRow" style="margin: 14px 0 10px;">
-<div class="field" style="flex:1; min-width: 240px;">
-<label for="searchInput">חיפוש</label>
-<input id="searchInput" placeholder="לדוגמה: תל אביב, שווארמה, חנות..." type="search"/>
-</div>
-<div class="field">
-<label for="regionSelect">אזור</label>
-<select id="regionSelect">
-<option value="all">כל הארץ</option>
-</select>
-</div>
-<div class="field">
-<label for="typeSelect">סוג</label>
-<select id="typeSelect">
-<option value="all">הכול</option>
-<option value="restaurant">מסעדות</option>
-<option value="shop">חנויות</option>
-</select>
-</div>
-<div class="field" style="min-width: 120px;">
-<button class="btnSmall" id="resetFilters" type="button">איפוס</button>
-</div>
-</div>
-<div class="viiMetaRow">
-<p class="muted">נמצאו <strong id="placesCount">0</strong> מקומות</p>
-<p class="muted" id="placesRange"></p>
-</div>
-<div class="placesGrid" id="placesGrid"></div>
-<div class="contentCard" style="margin-top:14px;">
-<h3 style="margin-top:0;">יש לכם מקום להוסיף?</h3>
-<p class="muted">שלחו לי שם + עיר + לינק (אינסטגרם/אתר) ואוסיף למפה. הכי חשוב: <strong>100% טבעוני בלבד</strong>.</p>
-<div class="placeActions">
-<a class="btnSmall" href="contact.html">צור קשר</a>
-<a class="btnSmall btnGhost" href="community-wall.html">Wall of Kindness</a>
-</div>
-</div>
-</div>
-<!-- RIGHT: Map -->
-<div class="viiRight">
-<div class="viiRightSticky">
-<div class="contentCard" style="padding:14px;">
-<div aria-label="מפה טבעונית" id="veganMap"></div>
-<div class="filtersRow" style="margin: 12px 0 0;">
-<div class="field" style="min-width: 180px;">
-<button class="btnSmall btnGhost" id="btnLoadCoords" type="button">טעני מיקומים חסרים</button>
-</div>
-<div class="field" style="min-width: 140px;">
-<button class="btnSmall" id="scrollToListBtn" type="button">לרשימה</button>
-</div>
-</div>
-<p class="muted" style="margin:10px 0 0;">טיפ: במובייל, לחצו “הצג במפה” בכרטיס — ונעבור אוטומטית לתצוגת מפה.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+  <div class="wrap">
+    <div class="contentCard">
+      <h2 class="sectionTitle">מפה ורשימת מקומות</h2>
+      <p class="muted" style="margin-top:0;">חיפוש + סינון מהיר, ואז ניווט במפה או ברשימה. במובייל: עוברים בין רשימה/מפה בכפתורים.</p>
+
+      <div class="viiTabs" aria-label="בחירת תצוגה">
+        <button class="viiTabBtn" id="viewListBtn" type="button" aria-pressed="true">רשימה</button>
+        <button class="viiTabBtn" id="viewMapBtn" type="button" aria-pressed="false">מפה</button>
+      </div>
+
+      <div class="viiSplit">
+        <!-- LEFT: Filters + list -->
+        <div class="viiLeft">
+          <div class="filtersRow" style="margin: 14px 0 10px;">
+            <div class="field" style="flex:1; min-width: 240px;">
+              <label for="searchInput">חיפוש</label>
+              <input id="searchInput" type="search" placeholder="לדוגמה: תל אביב, שווארמה, חנות..." />
+            </div>
+
+            <div class="field">
+              <label for="regionSelect">אזור</label>
+              <select id="regionSelect">
+                <option value="all">כל הארץ</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="typeSelect">סוג</label>
+              <select id="typeSelect">
+                <option value="all">הכול</option>
+                <option value="restaurant">מסעדות</option>
+                <option value="shop">חנויות</option>
+              </select>
+            </div>
+
+            <div class="field" style="min-width: 120px;">
+              <button class="btnSmall" id="resetFilters" type="button">איפוס</button>
+            </div>
+          </div>
+
+          <div class="viiMetaRow">
+            <p class="muted">נמצאו <strong id="placesCount">0</strong> מקומות</p>
+            <p class="muted" id="placesRange"></p>
+          </div>
+
+          <div class="placesGrid" id="placesGrid"></div>
+
+          <div class="contentCard" style="margin-top:14px;">
+            <h3 style="margin-top:0;">יש לכם מקום להוסיף?</h3>
+            <p class="muted">שלחו לי שם + עיר + לינק (אינסטגרם/אתר) ואוסיף למפה. הכי חשוב: <strong>100% טבעוני בלבד</strong>.</p>
+            <div class="placeActions">
+              <a class="btnSmall" href="contact.html">צור קשר</a>
+              <a class="btnSmall btnGhost" href="community-wall.html">Wall of Kindness</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Map -->
+        <div class="viiRight">
+          <div class="viiRightSticky">
+            <div class="contentCard" style="padding:14px;">
+              <div aria-label="מפה טבעונית" id="veganMap"></div>
+
+              <div class="filtersRow" style="margin: 12px 0 0;">
+                <div class="field" style="min-width: 180px;">
+                  <button class="btnSmall btnGhost" id="btnLoadCoords" type="button">טעני מיקומים חסרים</button>
+                </div>
+                <div class="field" style="min-width: 140px;">
+                  <button class="btnSmall" id="scrollToListBtn" type="button">לרשימה</button>
+                </div>
+              </div>
+
+              <p class="muted" style="margin:10px 0 0;">טיפ: במובייל, לחצו “הצג במפה” בכרטיס — ונעבור אוטומטית לתצוגת מפה.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
+
 <section class="panel">
-<div class="wrap">
-<div class="contentCard">
-<h2 class="sectionTitle">מסלולים מומלצים</h2>
-<p class="muted" style="margin-top:0;">רעיונות מהירים לסופ״ש/יום טיול. (תמיד מומלץ לבדוק שעות ולקבוע מקום מראש.)</p>
-<div class="itineraryWrap">
-<details class="contentCard">
-<summary>סופ״ש טבעוני בתל אביב</summary>
-<ul>
-<li>בוקר: בראנץ׳ ב־<strong>Anastasia</strong></li>
-<li>צהריים: שופינג ב־<strong>מרקט טבעוני דיזינגוף</strong></li>
-<li>ערב: חוויה מיוחדת ב־<strong>Opa</strong> (הזמנה מראש)</li>
-</ul>
-</details>
-<details class="contentCard">
-<summary>יום טעים בנמל</summary>
-<ul>
-<li>צהריים: <strong>J17</strong> – מנות מנחמות</li>
-<li>אחר הצהריים: טיול על הטיילת + קפה</li>
-<li>ערב: <strong>Goodness</strong> כשבא משהו מהיר</li>
-</ul>
-</details>
-<details class="contentCard">
-<summary>קפיצה לצפון</summary>
-<ul>
-<li>חיפה: <strong>Hummus BAR</strong> (טבעוני)</li>
-<li>פרדס חנה-כרכור: <strong>Yamima</strong> (שווארמה סייטן)</li>
-<li>לסיים בקפה/שוק מקומי</li>
-</ul>
-</details>
-</div>
-</div>
-</div>
+  <div class="wrap">
+    <div class="contentCard">
+      <h2 class="sectionTitle">מסלולים מומלצים</h2>
+      <p class="muted" style="margin-top:0;">רעיונות מהירים לסופ״ש/יום טיול. (תמיד מומלץ לבדוק שעות ולקבוע מקום מראש.)</p>
+
+      <div class="itineraryWrap">
+        <details class="contentCard">
+          <summary>סופ״ש טבעוני בתל אביב</summary>
+          <ul>
+            <li>בוקר: בראנץ׳ ב־<strong>Anastasia</strong></li>
+            <li>צהריים: שופינג ב־<strong>מרקט טבעוני דיזינגוף</strong></li>
+            <li>ערב: חוויה מיוחדת ב־<strong>Opa</strong> (הזמנה מראש)</li>
+          </ul>
+        </details>
+
+        <details class="contentCard">
+          <summary>יום טעים בנמל</summary>
+          <ul>
+            <li>צהריים: <strong>J17</strong> – מנות מנחמות</li>
+            <li>אחר הצהריים: טיול על הטיילת + קפה</li>
+            <li>ערב: <strong>Goodness</strong> כשבא משהו מהיר</li>
+          </ul>
+        </details>
+
+        <details class="contentCard">
+          <summary>קפיצה לצפון</summary>
+          <ul>
+            <li>חיפה: <strong>Hummus BAR</strong> (טבעוני)</li>
+            <li>פרדס חנה-כרכור: <strong>Yamima</strong> (שווארמה סייטן)</li>
+            <li>לסיים בקפה/שוק מקומי</li>
+          </ul>
+        </details>
+      </div>
+    </div>
+  </div>
 </section>
 </main>
 <div id="siteFooterMount"></div>
 <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script defer="" src="assets/js/lang.js?v=2026-02-15-v4"></script>
-<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v56"></script>
+<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
 <script src="assets/js/site.js?v=2026-02-15-v559"></script>
 <script src="assets/js/vegan-in-israel.js?v=2026-02-15-v55"></script>
+<script>
+    // Weglot refresh helper (kept consistent with your other pages)
+    function refreshWeglot(){ if(window.Weglot && Weglot.refresh){ Weglot.refresh(); } }
+    document.addEventListener('DOMContentLoaded', refreshWeglot);
+    </script>
+<script>
+(function(){
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // optional: if your JS triggers this after rendering cards/lists
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+
+  // watch for DOM changes (debounced)
+  var t=null;
+  var mo=new MutationObserver(function(){
+    clearTimeout(t);
+    t=setTimeout(wgRefresh, 250);
+  });
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
 </body>
 </html>

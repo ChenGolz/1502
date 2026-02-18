@@ -685,69 +685,214 @@ window.addEventListener('resize', () => {
 
 function fixEnglishNavLabels(){
   try{
-    const lang = (window.kbwgGetLang && window.kbwgGetLang()) || (document.documentElement.getAttribute('lang') || 'he');
-    const isEn = String(lang).toLowerCase().startsWith('en');
-    if (!isEn) return;
+    const normalize = () => {
+      const lang = (document.documentElement.getAttribute('lang') || '').toLowerCase();
+      const translated = (document.documentElement.getAttribute('data-wg-translated') || '').toLowerCase();
+      const isEn = lang.startsWith('en') || translated.startsWith('en') || String(location.pathname || '').includes('/en/');
+      if (!isEn) return;
 
-    const map = new Map([
-      ['index.html','Home'],
-      ['products.html','Products'],
-      ['bundles.html','Bundles'],
-      ['todays-top-deals.html',"Today's Deals"],
-      ['ingredient-detective.html','Ingredient Checker'],
-      ['hidden-gems-map.html','Hidden Gems Map'],
-      ['recommended-brands.html','Recommended Brands'],
-      ['israeli-brands.html','Israeli Brands'],
-      ['vegan-in-israel.html','Vegan in Israel'],
-      ['about.html','About'],
-      ['contact.html','Contact'],
-      ['learn.html','Learn'],
-      ['guides.html','Guides'],
-      ['community.html','Community']
-    ]);
+      const anchors = document.querySelectorAll('.siteHeader a, .navDrawer a, nav a');
+      anchors.forEach((a) => {
+        if (!a) return;
+        const href = String(a.getAttribute('href') || '').toLowerCase();
+        const txt = String(a.textContent || '').trim();
+        const lower = txt.toLowerCase();
 
-    // Logo text
-    try{
-      const logoText = document.querySelector('.logoText');
-      if (logoText) logoText.textContent = 'Shop Cruelty-Free';
-    }catch(e){}
-
-    // Header / nav / footer link labels
-    const anchors = document.querySelectorAll('.siteHeader a, .navDrawer a, nav a, .siteFooter a, .bottomBar a');
-    anchors.forEach(a => {
-      const href = (a.getAttribute('href') || '').split('#')[0];
-      const clean = href.split('?')[0];
-      if (map.has(clean)){
-        const t = (a.textContent || '').trim();
-        if (/[\u0590-\u05FF]/.test(t) || t.length <= 14){
-          a.textContent = map.get(clean);
+        // Prefer href-based detection (robust against auto-translation glitches)
+        if (href.includes('contact')){
+          if (txt !== 'Contact us') a.textContent = 'Contact us';
+          return;
         }
-      }
-    });
 
-    // Bottom bar labels (icons+text)
-    try{
-      const pills = document.querySelectorAll('.bottomBar .label');
-      pills.forEach(el=>{
-        const t=(el.textContent||'').trim();
-        const dict = {'בית':'Home','חיפוש':'Search','רכיבים':'Ingredients','דילים':'Deals','קהילה':'Community'};
-        if (dict[t]) el.textContent=dict[t];
+        // Guard against weird auto-translator outputs like "Us Contact Us"
+        const usCount = (lower.match(/\bus\b/g) || []).length;
+        if (lower === 'us contact us' || lower === 'contact us us' || (lower.includes('contact') && usCount >= 2)){
+          if (txt !== 'Contact us') a.textContent = 'Contact us';
+        }
       });
-    }catch(e){}
+    };
+
+    // Run now + a couple of delayed retries (catches late translator mutations)
+    normalize();
+    window.setTimeout(normalize, 400);
+    window.setTimeout(normalize, 1200);
+
+    // If Weglot is installed, hook into its lifecycle instead of using MutationObserver.
+    // MutationObserver + translators can cause infinite DOM-churn and heavy CPU usage.
+    if (window.Weglot && typeof window.Weglot.on === 'function' && !window.__KBWG_WEGLOT_NAV_FIX_BOUND){
+      window.__KBWG_WEGLOT_NAV_FIX_BOUND = true;
+      try { window.Weglot.on('initialized', normalize); } catch(e) {}
+      try {
+        window.Weglot.on('languageChanged', function(){
+          normalize();
+          window.setTimeout(normalize, 400);
+          window.setTimeout(normalize, 1200);
+        });
+      } catch(e) {}
+    }
+
+    // Some translators mutate late; run again after full load.
+    window.addEventListener('load', () => {
+      try { normalize(); } catch(e) {}
+    }, { once: true });
   } catch(e) {}
 }
 
 
+function findWeglotWidget(){
+  // Weglot can render different wrappers depending on account config:
+  // - .wg-default / .wg-drop (classic)
+  // - #weglot_switcher (classic id)
+  // - #wg-switcher / #wg-switcher-container (newer)
+  // - .weglot-container (some embeds)
+  // We'll grab the *outermost* wrapper we can find.
+  const sel = [
+    '.weglot-container',
+    '#wg-switcher-container',
+    '#wg-switcher',
+    '#weglot_switcher',
+    '#weglot_here',
+    '.wg-default',
+    '.wg-drop',
+    '[id^="weglot_"]'
+  ].join(',');
+  let el = document.querySelector(sel);
+  if (!el) return null;
 
+  // Move outer wrapper if we found an inner node.
+  const outer =
+    (el.closest && (el.closest('.weglot-container') || el.closest('#wg-switcher-container') || el.closest('.wg-default'))) || null;
+  if (outer) el = outer;
 
+  return el;
+}
 
+function placeWeglotSwitcher(){
+  try{
+    const slotDesktop = document.getElementById('langSlotDesktop');
+    const slotMobile  = document.getElementById('langSlotMobile');
+    if (!slotDesktop && !slotMobile) return;
+
+    const isMobile = window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+    const slot = (isMobile ? slotMobile : slotDesktop) || slotMobile || slotDesktop;
+    if (!slot) return;
+
+    const el = findWeglotWidget();
+    if (!el) return;
+
+    // If Weglot uses fixed positioning, moving into the header slot should still work.
+    if (el.parentElement !== slot){
+      slot.appendChild(el);
+    }
+
+    try { el.classList.add('kbwgWeglotMounted'); } catch(e) {}
+  } catch(e) {}
+}
+
+function initWeglotSwitcherPlacement(){
+  try{
+    if (window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_INIT) return;
+    window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_INIT = true;
+
+    const run = () => { try { placeWeglotSwitcher(); } catch(e) {} };
+
+    // Minimal observer: watch for Weglot injecting the widget, then disconnect.
+    let mo = null;
+    const startObserver = () => {
+      try{
+        if (mo || !document.body) return;
+        mo = new MutationObserver(() => {
+          run();
+          if (findWeglotWidget()){
+            try { mo.disconnect(); } catch(e) {}
+            mo = null;
+          }
+        });
+        mo.observe(document.body, { childList: true, subtree: true });
+        window.setTimeout(() => { try { mo && mo.disconnect(); } catch(e) {} mo = null; }, 20000);
+      }catch(e){}
+    };
+
+    // Keep trying for a short period to catch late async injection.
+    let ticks = 0;
+    const t = window.setInterval(() => {
+      ticks++;
+      run();
+      if (findWeglotWidget()){
+        window.setTimeout(run, 120);
+        window.setTimeout(run, 400);
+        window.clearInterval(t);
+      }
+      if (ticks > 120) window.clearInterval(t); // ~30s max
+    }, 250);
+
+    startObserver();
+
+    // Also try on resize (switching between desktop/mobile slots)
+    window.addEventListener('resize', () => { run(); }, { passive: true });
+
+    // If Weglot is installed, hook lifecycle events too.
+    if (window.Weglot && typeof window.Weglot.on === 'function' && !window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_BOUND){
+      window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_BOUND = true;
+      try { window.Weglot.on('initialized', run); } catch(e) {}
+      try { window.Weglot.on('languageChanged', function(){ run(); window.setTimeout(run, 200); }); } catch(e) {}
+    }
+
+    // A couple of immediate retries.
+    run();
+    window.setTimeout(run, 400);
+    window.setTimeout(run, 1200);
+    window.addEventListener('load', () => { run(); }, { once: true });
+  } catch(e) {}
+}
+
+function initWeglotSwitcherPlacement(){
+  try{
+    if (window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_INIT) return;
+    window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_INIT = true;
+
+    const run = () => { try { placeWeglotSwitcher(); } catch(e) {} };
+
+    // Keep trying for a short period to catch late async injection.
+    let ticks = 0;
+    const t = window.setInterval(() => {
+      ticks++;
+      run();
+      if (document.querySelector('.wg-default, .wg-drop, #weglot_switcher, #weglot_here') && (document.getElementById('langSlotDesktop') || document.getElementById('langSlotMobile'))){
+        // one extra run after it appears
+        window.setTimeout(run, 120);
+        window.setTimeout(run, 400);
+        window.clearInterval(t);
+      }
+      if (ticks > 40) window.clearInterval(t); // ~8s max
+    }, 200);
+
+    // Also try on resize (switching between desktop/mobile slots)
+    window.addEventListener('resize', () => { run(); }, { passive: true });
+
+    // If Weglot is installed, hook lifecycle events too.
+    if (window.Weglot && typeof window.Weglot.on === 'function' && !window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_BOUND){
+      window.__KBWG_WEGLOT_SWITCHER_PLACEMENT_BOUND = true;
+      try { window.Weglot.on('initialized', run); } catch(e) {}
+      try { window.Weglot.on('languageChanged', function(){ run(); window.setTimeout(run, 200); }); } catch(e) {}
+    }
+
+    // A couple of immediate retries.
+    run();
+    window.setTimeout(run, 400);
+    window.setTimeout(run, 1200);
+    window.addEventListener('load', () => { run(); }, { once: true });
+  } catch(e) {}
+}
 
 
 // Initial run
 try { setupMobileFilterCollapse(); } catch(e) {}
 window.addEventListener('DOMContentLoaded', () => {
   try { setupMobileFilterCollapse(); } catch(e) {}
-  try { fixEnglishNavLabels(); } catch(e) {}try {
+  try { fixEnglishNavLabels(); } catch(e) {}
+  try { initWeglotSwitcherPlacement(); } catch(e) {}
+  try {
     // Remove the old global notice banner (now shown inside the navy hero header).
     const legacy = document.getElementById('kbwgGlobalVeganNotice');
     if (legacy) legacy.remove();
@@ -785,13 +930,20 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
 /* ---------------------------------------------------------
+   KBWG Weglot switcher placer (v5)
+   - waits for header slots + Weglot widget
    - works across pages even when header is injected later
    --------------------------------------------------------- */
 (function(){
+  if (window.__KBWG_WEGLOT_PLACER_V5) return;
+  window.__KBWG_WEGLOT_PLACER_V5 = true;
 
   var SELECTORS = [
+    '.weglot-container',
     '#wg-switcher-container',
     '#wg-switcher',
+    '#weglot_switcher',
+    '#weglot_here',
     '.wg-default',
     '.wg-drop'
   ];
@@ -802,6 +954,7 @@ window.addEventListener('DOMContentLoaded', () => {
       var el = document.querySelector(sel);
       if (!el) continue;
       // prefer outer wrapper if we hit an inner node
+      var outer = (el.closest && el.closest('.weglot-container,#wg-switcher-container,#wg-switcher,.wg-default,.wg-drop')) || el;
       return outer;
     }
     return null;
@@ -829,7 +982,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     if (el.parentElement !== slot) slot.appendChild(el);
 
+    try { el.classList.add('kbwgWeglotMounted'); } catch(e){}
 
+    // In case Weglot set inline fixed positioning, neutralize (CSS also covers this)
     try{
       el.style.position = 'static';
       el.style.inset = 'auto';
@@ -860,6 +1015,17 @@ window.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('kbwg:layout-ready', function(){ mount(); setTimeout(mount, 250); setTimeout(mount, 900); });
   window.addEventListener('resize', schedule);
 
+  // If Weglot is available, re-mount on its lifecycle hooks
+  function bindWeglotHooks(){
+    try{
+      if (window.Weglot && typeof window.Weglot.on === 'function'){
+        try { window.Weglot.on('initialized', mount); } catch(e){}
+        try { window.Weglot.on('languageChanged', mount); } catch(e){}
+      }
+    }catch(e){}
+  }
+  bindWeglotHooks();
+  setTimeout(bindWeglotHooks, 800);
 
   // Observe DOM mutations until mounted (kept throttled)
   var obs = new MutationObserver(function(){ schedule(); });
@@ -869,3 +1035,4 @@ window.addEventListener('DOMContentLoaded', () => {
   setTimeout(mount, 1600);
   setTimeout(mount, 3200);
 })();
+

@@ -276,6 +276,7 @@
       el.feedCount.textContent = list.length ? kbRangeText(state.page, list.length, state.per) : 'אין תוצאות';
     }
 
+    // Let Weglot refresh (optional)
     try { window.dispatchEvent(new Event('kbwg:content-rendered')); } catch (e) {}
 
     // focus deep-link if present

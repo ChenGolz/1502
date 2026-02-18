@@ -1,5 +1,5 @@
-// // Build: 2026-02-15-v56
-try { window.KBWG_BRANDS_BUILD = String(window.KBWG_BUILD || '2026-02-15-v56'); console.info('[KBWG] KBWG_BRANDS_BUILD ' + window.KBWG_BRANDS_BUILD); } catch(e) {}
+// // Build: 2026-02-11-v23
+try { window.KBWG_BRANDS_BUILD = String(window.KBWG_BUILD || '2026-02-11-v1'); console.info('[KBWG] KBWG_BRANDS_BUILD ' + window.KBWG_BRANDS_BUILD); } catch(e) {}
 
 // Resolve URLs correctly when Weglot serves pages under /en/ (or when hosted under a subpath, e.g. GitHub Pages).
 // If you window.kbwgFetch("data/...") from /en/page.html the browser will request /en/data/... (404). We normalize to the true site base.
@@ -914,21 +914,14 @@ function stopLinkPropagation(el) {
     badgesWrap.className = 'brandBadges brandBadges--tight';
 
     function addBadge(text, cls) {
-      // Defensive: avoid crashing on empty/whitespace tokens when using classList.add()
-      var t = String(text || '').trim();
-      if (!t) return;
-
+      if (!text) return;
       var s = document.createElement('span');
-
-      var c = String(cls || '').trim();
-      s.className = 'brandBadge' + (c ? (' ' + c) : '');
-      s.textContent = t;
-
-      // Avoid translating certification program names.
-      if (/\bLeaping\s*Bunny\b/i.test(t) || /\bPETA\b/i.test(t)) {
+      s.className = 'brandBadge' + (cls ? (' ' + cls) : '');
+      s.textContent = text;
+      // Avoid Weglot translating certification program names.
+      if (/\bLeaping\s*Bunny\b/i.test(text) || /\bPETA\b/i.test(text)) {
         s.setAttribute('data-wg-notranslate', 'true');
-        // Use className concatenation (avoids DOMTokenList.add errors on some inputs)
-        s.className += ' wg-notranslate';
+        s.classList.add('wg-notranslate');
       }
       badgesWrap.appendChild(s);
     }

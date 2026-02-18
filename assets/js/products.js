@@ -1491,7 +1491,12 @@ function sortList(list) {
   function tag(label) {
     const s = document.createElement("span");
     s.className = "tag";
-    s.textContent = label;    if (/(Leaping Bunny|PETA|Vegan|INTL)/i.test(String(label))) {    }
+    s.textContent = label;
+    // Don’t translate certification tags/badges (Weglot)
+    if (/(Leaping Bunny|PETA|Vegan|INTL)/i.test(String(label))) {
+      s.setAttribute("data-wg-notranslate", "true");
+      s.classList.add("wg-notranslate");
+    }
     return s;
   }
 
@@ -1684,6 +1689,7 @@ const frag = document.createDocumentFragment();
     });
 
     grid.replaceChildren(frag);
+    // Notify (for translators like Weglot) after dynamic content renders.
     try { window.dispatchEvent(new Event('kbwg:content-rendered')); } catch (e) {}
 
 if (liveCount)     if (liveCount) {

@@ -5,9 +5,6 @@
 (function () {
   'use strict';
 
-  var KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) || 'he';
-
-
   // --- Config ---
   var AMAZON_TAG = 'nocrueltyil-20'; // used only if a link is missing a tag=
   var MAX_DEALS = 60;
@@ -133,6 +130,7 @@
     try { return location && location.protocol === 'file:'; } catch (e) { return false; }
   }
 
+  // Resolve correctly when Weglot serves pages under /en/... (or when hosted under a subpath).
   function siteBaseFromScript() {
     // Prefer global helper from site.js if it exists.
     try {
@@ -613,8 +611,9 @@ function formatFreeShipText(o) {
 
   function buildTags(p, labels) {
     var out = [];
-    if (labels.isLB) out.push('<span class="tag " data-="true">Leaping Bunny</span>');
-    if (labels.isPeta) out.push('<span class="tag " data-="true">PETA</span>');
+    // Match Products page tag labels + Weglot behavior
+    if (labels.isLB) out.push('<span class="tag wg-notranslate" data-wg-notranslate="true">Leaping Bunny</span>');
+    if (labels.isPeta) out.push('<span class="tag wg-notranslate" data-wg-notranslate="true">PETA</span>');
     if (labels.isVegan) out.push('<span class="tag">טבעוני</span>');
     if (p && p.isIsrael) out.push('<span class="tag">אתר ישראלי</span>');
     return out.join('');
@@ -751,7 +750,7 @@ var labels = resolveLabels(p, brand);
         '<div class="dealTop">' +
           '<div class="dealBrandRow">' +
             '<div>' +
-              '<div class="dealBrand " data-="true">' + esc(brandName) + '</div>' +
+              '<div class="dealBrand wg-notranslate" data-wg-notranslate="true">' + esc(brandName) + '</div>' +
               '<div class="dealName">' + esc(safeText(p.name)) + '</div>' +
               pillsHtml +
             '</div>' +
@@ -789,8 +788,7 @@ var labels = resolveLabels(p, brand);
     setLoading(true);
     showEmpty(false);
 
-    var productsPath = resolveFromBase('data/products-' + KBWG_LANG + '.json');
-  var productsFallback = resolveFromBase('data/products.json');
+    var productsPath = resolveFromBase('data/products.json');
     var brandsPath = resolveFromBase('data/intl-brands.json');
 
     function withCacheBust(url){
@@ -867,6 +865,7 @@ var labels = resolveLabels(p, brand);
             showEmpty(true);
           }
 
+          // Let Weglot refresh (optional)
           try { window.dispatchEvent(new Event('kbwg:content-rendered')); } catch (e) {}
           return;
         }

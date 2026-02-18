@@ -11458,11 +11458,11 @@
         "url": "https://www.amazon.com/dp/B0BYR1PGGB?tag=nocrueltyil-20",
         "asin": "B0BYR1PGGB",
         "currency": "USD",
-        "priceUSD": 24.99
+        "priceUSD": 23.83
       }
     ],
     "isKids": false,
-    "isDiscounted": true, "discountPct": 32,
+    "isDiscounted": true, "discountPct": 36,
     "image": "assets/img/products/B0BYR1PGGB.jpg"
   },
   {
@@ -14773,7 +14773,8 @@
         "url": "https://www.amazon.com/dp/B0CQRL3GPG?ref=t_ac_view_request_product_image&campaignId=amzn1.campaign.G4GTTKT6WJZ&linkCode=tr1&tag=nocrueltyil-20&linkId=amzn1.campaign.G4GTTKT6WJZ_1769090189279",
         "asin": "B0CQRL3GPG",
         "currency": "USD",
-        "priceUSD": 15.99
+        "priceUSD": 15.99,
+        "freeShipOver": 49
       }
     ],
     "isKids": false,
@@ -15861,12 +15862,12 @@
         "url": "https://www.amazon.com/dp/B086W38SXX?tag=nocrueltyil-20",
         "asin": "B086W38SXX",
         "currency": "USD",
-        "priceUSD": 26.8,
-        "freeShipOver": 49
+        "priceUSD": 29.9,
+         "freeShipOver": 49
       }
     ],
     "isKids": false,
-    "isDiscounted": true, "discountPct": 50,
+    "isDiscounted": true, "discountPct": 42,
     "image": "assets/img/products/B086W38SXX.jpg"
   },
   {

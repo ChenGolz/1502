@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Coming Soon | Buy Cruelty-Free</title>
+<meta name="description" content="We are working on new features and pages that will make it easier to find 100% vegan products that were not tested on animals.">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/>
+<link href="assets/img/logo.png" rel="icon" type="image/png"/>
+</head>
+<body>
+<div id="siteHeaderMount"></div>
+
+<main id="main">
+<section class="hero product-hero heroSmall"><img loading="eager" decoding="async" alt="" aria-hidden="true" class="decorPhoto decorCL" src="assets/img/photos/coming-soon.png"/>
+<div class="wrap heroInner">
+<div class="heroCopy center-text">
+<h1>Coming Soon</h1>
+<p>New pages and features are on the way — check back soon ✨</p>
+</div>
+</div>
+</section>
+<section class="panel filter-panel">
+<div class="wrap">
+<div class="toolbar-container contentCard">
+<p class="lead">Just a moment... this page is under construction.</p>
+<div class="infoCard">
+<p>In the meantime, you can return to the <a href="products.html">Product Database</a> or the <a href="ingredient-detective.html">Ingredient Checker</a>.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<div id="siteFooterMount"></div>
+
+<script defer src="assets/js/layout-inject.js?v=2026-02-15-v55" data-base="./"></script>
+<script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
+
+<script>
+(function(){
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // optional: if your JS triggers this after rendering cards/lists
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+
+  // watch for DOM changes (debounced)
+  var t=null;
+  var mo=new MutationObserver(function(){
+    clearTimeout(t);
+    t=setTimeout(wgRefresh, 250);
+  });
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
+
+</body>
+</html>

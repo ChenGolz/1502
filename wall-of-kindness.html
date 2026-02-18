@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="assets/css/styles.css?v=2026-02-15-v56" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/>
 <link href="assets/img/logo.png" rel="icon" type="image/png"/>
 <style>
     /* Page-only styles */
@@ -67,7 +67,7 @@
 
     .highlight{ outline: 3px solid rgba(245,158,11,.55); outline-offset: 2px; }
   </style>
-<link href="wall-of-kindness.html" hreflang="he" rel="alternate"/><link href="wall-of-kindness-en.html" hreflang="en" rel="alternate"/><link href="wall-of-kindness.html" rel="canonical"/></head>
+</head>
 <body class="pageWall">
 <div id="siteHeaderMount"></div>
 <main id="main">
@@ -90,7 +90,7 @@
 <div class="wrap">
 <div class="toolbar-container contentCard">
 <div class="wallLayout">
-<aside aria-label="טופס שליחה" class="wallPanel" id="postForm">
+<aside id="postForm" aria-label="טופס שליחה" class="wallPanel">
 <h2 class="panelTitle">העלאת פוסט</h2>
 <p class="panelHint">שתפי תמונה של קנייה טבעונית או של חיית מחמד שהצלת 🐾<br/>בקרוב: קיר קהילתי פתוח לכולם.</p>
 <form id="wallForm" novalidate="">
@@ -161,9 +161,31 @@
 </section>
 </main>
 <div id="siteFooterMount"></div>
-<script defer="" src="assets/js/lang.js?v=2026-02-15-v4"></script>
-<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v56"></script>
+<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
 <script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
 <script defer="" src="assets/js/wall-of-kindness.js?v=2026-02-15-v55"></script>
+<!-- Weglot helper: refresh translations after dynamic content renders -->
+<script>
+(function(){
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // optional: if your JS triggers this after rendering cards/lists
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+
+  // watch for DOM changes (debounced)
+  var t=null;
+  var mo=new MutationObserver(function(){
+    clearTimeout(t);
+    t=setTimeout(wgRefresh, 250);
+  });
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
 </body>
 </html>

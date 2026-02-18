@@ -11,9 +11,6 @@ try { window.KBWG_PRODUCTS_BUILD = String(window.KBWG_BUILD || '2026-02-11-v1');
 (function () {
   'use strict';
 
-  var KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) || 'he';
-
-
   function loadScript(src) {
     return new Promise(function (resolve, reject) {
       var s = document.createElement('script');
@@ -30,6 +27,7 @@ try { window.KBWG_PRODUCTS_BUILD = String(window.KBWG_BUILD || '2026-02-11-v1');
     try { return location && location.protocol === 'file:'; } catch (e) { return false; }
   }
 
+  // Resolve URLs correctly when Weglot serves pages under /en/... (or when hosted under a subpath).
   function siteBaseFromScript() {
     // Prefer global helper from site.js if it exists.
     try {
@@ -213,10 +211,8 @@ try { window.KBWG_PRODUCTS_BUILD = String(window.KBWG_BUILD || '2026-02-11-v1');
   }
 
   // ---------- Run ----------
-  var productsPath = resolveFromBase('data/products-' + KBWG_LANG + '.json');
-  var productsFallback = resolveFromBase('data/products.json');
-  var intlBrandsPath = resolveFromBase('data/intl-brands-' + KBWG_LANG + '.json');
-  var intlBrandsFallback = resolveFromBase('data/intl-brands.json');
+  var productsPath = resolveFromBase('data/products.json');
+  var intlBrandsPath = resolveFromBase('data/intl-brands.json');
 
   var productsReq = fetchJson(productsPath);
   var brandsReq = fetchJson(intlBrandsPath).catch(function () { return []; });

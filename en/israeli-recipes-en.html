@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Israeli Vegan Recipes | Buy Without Cruelty</title>
+<meta content="Direct links to Israeli websites with vegan recipes: veg.co.il, Vegans On Top, mako, Krutit, and more." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/>
+<link href="assets/img/logo.png" rel="icon" type="image/png"/>
+</head>
+<body>
+<div id="siteHeaderMount"></div>
+<main id="main">
+<section class="hero product-hero heroSmall">
+  <img loading="eager" decoding="async" alt="" aria-hidden="true" class="decorPhoto decorCL" src="assets/img/photos/israeli-recipes.png"/>
+  <div class="wrap heroInner">
+    <div class="heroCopy center-text">
+      <h1>Israeli Vegan Recipes</h1>
+      <p>Israeli pages with vegan recipes — including direct links to relevant categories (so you don't have to search).</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="wrap">
+    <div class="prose">
+      <h2>Recommended Israeli Websites</h2>
+      <p>All are in Hebrew, relatively updated, and suitable for beginners. Best tip: save 2–3 sites you like and keep coming back to them.</p>
+    </div>
+
+    <div class="gridCards" style="margin-top:14px">
+      <a class="miniCard" target="_blank" rel="noopener" href="https://veg.co.il/recipes/">
+        <h3>veg.co.il – Vegan and Vegetarian Recipes</h3>
+        <div class="muted">A large index with categories (soups, stews, desserts, and more).</div>
+        <div class="actions" style="margin-top:10px"><span class="btn primary">To Recipes</span></div>
+      </a>
+
+      <a class="miniCard" target="_blank" rel="noopener" href="https://vegansontop.co.il/recipes/">
+        <h3>Vegans On Top – Recipes Only</h3>
+        <div class="muted">An organized index page by categories. (Especially good for Israeli cuisine).</div>
+        <div class="actions" style="margin-top:10px"><span class="btn primary">To Recipes</span></div>
+      </a>
+
+      <a class="miniCard" target="_blank" rel="noopener" href="https://vegansontop.co.il/category/israeli-vegan-recipes/">
+        <h3>Vegans On Top – Israeli Recipes</h3>
+        <div class="muted">A dedicated category with "Israeli" ideas in a vegan version.</div>
+        <div class="actions" style="margin-top:10px"><span class="btn primary">To Category</span></div>
+      </a>
+
+      <a class="miniCard" target="_blank" rel="noopener" href="https://www.mako.co.il/food-recipes/recipes_column-vegan-recipes">
+        <h3>mako Good Food – Vegan Recipes</h3>
+        <div class="muted">A large concentration of vegan recipes of all kinds.</div>
+        <div class="actions" style="margin-top:10px"><span class="btn primary">To List</span></div>
+      </a>
+
+      <a class="miniCard" target="_blank" rel="noopener" href="https://www.krutit.co.il/category/vegan/">
+        <h3>Krutit – Vegan Recipes</h3>
+        <div class="muted">A vegan category with easy and delicious recipes.</div>
+        <div class="actions" style="margin-top:10px"><span class="btn primary">To Vegan</span></div>
+      </a>
+
+      <a class="miniCard" target="_blank" rel="noopener" href="https://etgar22.co.il/recipes/">
+        <h3>Challenge 22 – Mentors' Recipes</h3>
+        <div class="muted">A collection of vegan recipes for beginners + classics like tofu shakshuka.</div>
+        <div class="actions" style="margin-top:10px"><span class="btn primary">To Recipes</span></div>
+      </a>
+
+      <a class="miniCard" target="_blank" rel="noopener" href="https://etgar22.co.il/blog/quick-vegan-recipes/">
+        <h3>Challenge 22 – Quick Vegan Recipes (up to ~20 min)</h3>
+        <div class="muted">A list of quick recipes — perfect for days with no time.</div>
+        <div class="actions" style="margin-top:10px"><span class="btn primary">To List</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+<div id="siteFooterMount"></div>
+<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
+<script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
+<script>
+(function(){
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // optional: if your JS triggers this after rendering cards/lists
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+
+  // watch for DOM changes (debounced)
+  var t=null;
+  var mo=new MutationObserver(function(){
+    clearTimeout(t);
+    t=setTimeout(wgRefresh, 250);
+  });
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
+</body>
+</html>

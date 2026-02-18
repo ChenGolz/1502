@@ -2,8 +2,8 @@
 
 <html dir="rtl" lang="he">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-947CLPDP2H"></script>
+           <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-947CLPDP2H"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -19,9 +19,9 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <!-- Page-only typography (does not change header/site-wide typography) -->
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
-<link href="assets/css/styles.css?v=2026-02-15-v56" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/>
 <link href="assets/img/logo.png" rel="icon" type="image/png"/>
-<link href="products.html" hreflang="he" rel="alternate"/><link href="products-en.html" hreflang="en" rel="alternate"/><link href="products.html" rel="canonical"/></head>
+</head>
 <body class="page-products">
 <div id="siteHeaderMount"></div>
 <main id="main">
@@ -30,7 +30,7 @@
 <div class="wrap heroInner">
 <div class="heroCopy center-text">
 <h1>לקנות בלי לפגוע</h1>
-<div class="muted" style="margin-top:6px;font-weight:900;">עודכן לאחרונה: 09.02.2026</div>
+          <div class="muted" style="margin-top:6px;font-weight:900;">עודכן לאחרונה: 09.02.2026</div>
 <p>חיפוש וסינון מוצרים לפי קטגוריות ותגיות, עם קישורי קנייה והערות שימושיות כשצריך.</p>
 <div class="badgeRow center-badges">
 <div class="trust-badge"><span aria-hidden="true" class="icon">🐰</span> PETA</div>
@@ -87,8 +87,8 @@
 <div class="filters-actions">
 <!-- שורת כפתורי סינון מהיר (תמיד גלויה) -->
 <div aria-label="מסננים מהירים" class="toggles-row">
-<label class="check-pill"><input id="onlyLB" type="checkbox"/> <span>Leaping Bunny</span></label>
-<label class="check-pill"><input id="onlyPeta" type="checkbox"/> <span>PETA</span></label>
+<label class="check-pill"><input id="onlyLB" type="checkbox"/> <span class="wg-notranslate" data-wg-notranslate="true">Leaping Bunny</span></label>
+<label class="check-pill"><input id="onlyPeta" type="checkbox"/> <span class="wg-notranslate" data-wg-notranslate="true">PETA</span></label>
 <label class="check-pill highlight"><input id="onlyIsrael" type="checkbox"/> 🇮🇱 אתרים ישראליים</label>
 <label class="check-pill"><input id="onlyMen" type="checkbox"/> טיפוח לגבר</label>
 <label class="check-pill"><input id="onlyKids" type="checkbox"/> ילדים</label>
@@ -150,8 +150,28 @@
 </section>
 </main>
 <div id="siteFooterMount"></div>
-<script defer="" src="assets/js/lang.js?v=2026-02-15-v4"></script>
-<script defer="True" src="assets/js/products-json-loader.js?v=2026-02-15-v55"></script><script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v56"></script>
+<script defer="True" src="assets/js/products-json-loader.js?v=2026-02-15-v55"></script><script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
 <script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
+<!-- Weglot helper: refresh translations after dynamic content renders -->
+<script>
+(function(){
+  var t = null;
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  function schedule(){
+    if (t) clearTimeout(t);
+    t = setTimeout(wgRefresh, 140);
+  }
+
+  // initial + after dynamic content renders
+  document.addEventListener('DOMContentLoaded', function(){ schedule(); });
+  window.addEventListener('kbwg:content-rendered', function(){ schedule(); });
+
+  // Avoid MutationObserver on heavy pages (mobile performance).
+})();
+</script>
 </body>
 </html>

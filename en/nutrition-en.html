@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Health and Nutrition | NoCrueltyIL</title>
+<meta content="Recommended sources for a balanced vegan diet: B12, iron, calcium, vitamin D and more — without the confusion." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/>
+<link href="assets/img/logo.png" rel="icon" type="image/png"/>
+</head>
+<body>
+<div id="siteHeaderMount"></div>
+<main id="main">
+<section class="hero product-hero heroSmall">
+  <img loading="eager" decoding="async" alt="" aria-hidden="true" class="decorPhoto decorCL" src="assets/img/photos/nutrition.png"/>
+  <div class="wrap heroInner">
+    <div class="heroCopy center-text">
+      <h1>Health and Nutrition</h1>
+      <p>Three reliable sources to help you build a balanced vegan diet – without the confusion or the noise.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="wrap">
+    <div class="prose">
+      <h2>Recommended Reading</h2>
+      <p>We've selected “evergreen” sources that clearly explain what is important to check (with references to sources) – suitable for beginners as well.</p>
+    </div>
+
+    <div class="gridCards" style="margin-top:14px">
+      <a class="miniCard" target="_blank" rel="noopener" href="https://veganhealth.org/">
+        <h3>Vegan Health</h3>
+        <div class="muted">Evidence-based vegan nutrition: B12, iron, calcium, vitamin D, omega-3, and more.</div>
+        <div class="actions" style="margin-top:10px">
+          <span class="btn primary">To Website</span>
+        </div>
+      </a>
+
+      <a class="miniCard" target="_blank" rel="noopener" href="https://nutritionfacts.org/">
+        <h3>NutritionFacts.org</h3>
+        <div class="muted">Videos and short explanations summarizing studies + useful guides.</div>
+        <div class="actions" style="margin-top:10px">
+          <span class="btn primary">To Website</span>
+        </div>
+      </a>
+
+      <a class="miniCard" target="_blank" rel="noopener" href="https://www.vegansociety.com/resources/nutrition-and-health/nutrition-overview-0">
+        <h3>The Vegan Society – Nutrition overview</h3>
+        <div class="muted">A practical overview of nutrients in a vegan diet + key points for follow-up.</div>
+        <div class="actions" style="margin-top:10px">
+          <span class="btn primary">To Resource</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="prose" style="margin-top:18px">
+      <h2>Key Highlights</h2>
+      <ul>
+        <li><strong>Vitamin B12</strong> – A reliable source is mandatory (supplement or fortified food).</li>
+        <li>Build a menu with: legumes, whole grains, vegetables/fruits, nuts/seeds.</li>
+        <li>Pay attention to: iron, calcium, vitamin D, iodine, and omega-3 (usually a simple solution).</li>
+      </ul>
+      <p>Want the "scientific consensus" in brief? <a href="science.html">What the science says</a>.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+<div id="siteFooterMount"></div>
+<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
+<script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
+<script>
+(function(){
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // optional: if your JS triggers this after rendering cards/lists
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+
+  // watch for DOM changes (debounced)
+  var t=null;
+  var mo=new MutationObserver(function(){
+    clearTimeout(t);
+    t=setTimeout(wgRefresh, 250);
+  });
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
+</body>
+</html>

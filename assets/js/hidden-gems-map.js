@@ -1,4 +1,3 @@
-var KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) || 'he';
 (function () {
   // Prevent double-load
   if (window.__kbHiddenGemsListLoaded) return;

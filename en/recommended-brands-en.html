@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html class="page-recommended-brands" dir="ltr" lang="en">
+<head>
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-947CLPDP2H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-947CLPDP2H');
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Vegan Brands from Abroad · Cruelty-Free | 100% Vegan</title>
+<meta content="Brands from abroad that are 100% vegan and not tested on animals. Cruelty-free & vegan brands." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/><link href="assets/css/brands-compact.css?v=2026-02-15-v55" rel="stylesheet"/>
+<link href="assets/img/logo.png" rel="icon" type="image/png"/>
+</head>
+<body>
+<div id="siteHeaderMount"></div>
+<main id="main">
+<section class="hero product-hero heroSmall">
+<img alt="" aria-hidden="true" class="decorPhoto decorCL" decoding="async" loading="eager" src="assets/img/photos/recommended-brands.png"/>
+<div class="wrap heroInner">
+<div class="heroCopy center-text">
+<h1>International Brands</h1>
+<p>International brands that are 100% Vegan and Not Tested on Animals — because you deserve to shop with a clear heart.</p>
+</div>
+</div>
+</section>
+<section class="panel filter-panel">
+<div class="wrap">
+<div class="toolbar-container contentCard">
+<div class="noteBox">
+<h2 style="margin:0 0 8px">Brand List</h2>
+<div aria-label="Brand Filtering" class="brandsControls">
+<div class="brandsSearchControl">
+<label class="fieldLabel" for="brandSearch">Quick Search</label>
+<input autocomplete="off" id="brandSearch" placeholder="Search by brand name, category or tag..." type="search"/>
+<p class="hintText">Tip: Try “makeup”, “hair”, “Amazon” or a brand name.</p>
+</div>
+<div class="brandsCategoryControl"><label for="brandCategoryFilter">Filter by Product Type</label><select class="brandCategoryFilter" id="brandCategoryFilter"><option value="">All Product Types</option></select></div><div class="brandsPriceControl"><label for="brandPriceFilter">Filter by Price</label><select class="brandPriceFilter" id="brandPriceFilter"><option value="">All Levels</option></select></div>
+</div><p class="brandsPriceHint muted">Estimated Price: $ Cheap · $$$$$ Expensive. Selecting $$ will show brands up to $$ (inclusive).</p><div class="brandsMetaRow">
+<div class="brandsCount" data-brands-count=""></div>
+</div>
+</div></div><div class="cardsGrid cardsGrid--brands" data-json="data/intl-brands.json" data-page="intl" id="brandGrid"></div>
+</div>
+</section>
+</main>
+<div id="siteFooterMount"></div>
+<script src="assets/js/price-tier.js?v=2026-02-15-v55"></script><script src="assets/js/brands-json.js?v=2026-02-15-v55"></script>
+<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
+<script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
+<script>
+(function(){
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // optional: if your JS triggers this after rendering cards/lists
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+
+  // watch for DOM changes (debounced)
+  var t=null;
+  var mo=new MutationObserver(function(){
+    clearTimeout(t);
+    t=setTimeout(wgRefresh, 250);
+  });
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
+</body>
+</html>

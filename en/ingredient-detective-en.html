@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+<head>
+           <script async src="https://www.googletagmanager.com/gtag/js?id=G-947CLPDP2H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-947CLPDP2H');
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Ingredient Detective | NoCrueltyIL</title>
+<meta content="Fast ingredient checker to identify animal-derived ingredients. Includes option to paste INCI list — especially suitable for mobile." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/>
+<link href="assets/img/logo.png" rel="icon" type="image/png"/>
+</head>
+<body>
+<div id="siteHeaderMount"></div>
+<main id="main">
+<section class="hero product-hero heroSmall">
+<img alt="" aria-hidden="true" class="decorPhoto decorCL" decoding="async" loading="eager" src="assets/img/photos/ingredient-detective.png"/>
+<div class="wrap heroInner">
+<div class="heroCopy center-text">
+<h1>Ingredient Detective</h1>
+          <div class="muted" style="margin-top:6px;font-weight:900;">Last updated: 31.01.2026</div>
+<p>Fast ingredient checker: Type an ingredient name and get a short, clear answer before buying.</p>
+</div>
+</div>
+</section>
+<section class="panel filter-panel">
+<div class="wrap">
+<div class="toolbar-container contentCard">
+<p class="lead">Copy-paste the ingredient list (INCI) — and we'll check if there are animal-derived ingredients. You can also search for a single ingredient.</p>
+<div class="searchBlock">
+<label class="fieldLabel" for="qIng">Search Ingredient</label>
+<input autocomplete="off" id="qIng" placeholder="Example: lanolin / לנולין" type="search"/>
+<div class="hintText" id="hint">Enter at least two letters to start</div>
+<div aria-label="Ingredient suggestions" class="suggestions" id="sugs" role="listbox"></div>
+<button class="btn ghost" id="togglePaste" style="margin-top:10px; width:100%; justify-content:center;" type="button">Copy-Paste Ingredient List (Recommended)</button><div class="pasteBlock" id="pasteBlock" style="display:none; margin-top:10px;"><label class="fieldLabel" for="pasteIng">Paste</label><textarea id="pasteIng" placeholder="Paste ingredient list (INCI) here — separated by commas or lines" rows="5"></textarea><button class="btn primary" id="runPaste" style="margin-top:10px; width:100%; justify-content:center;" type="button">Decode it for me!</button></div></div>
+<div aria-live="polite" class="resultGrid" id="out"></div>
+</div>
+</div>
+</section>
+</main>
+<div id="siteFooterMount"></div>
+<script defer="" src="assets/js/ingredient-detective.js?v=2026-02-15-v55"></script>
+<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
+<script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
+<script>
+(function(){
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // optional: if your JS triggers this after rendering cards/lists
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+
+  // watch for DOM changes (debounced)
+  var t=null;
+  var mo=new MutationObserver(function(){
+    clearTimeout(t);
+    t=setTimeout(wgRefresh, 250);
+  });
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
+</body>
+</html>

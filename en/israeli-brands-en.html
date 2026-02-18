@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Israeli Brands 🇮🇱 | NoCrueltyIL</title>
+<meta content="Vegan and Cruelty-Free Israeli brands: Supporting local with a heart – transparent lists and updates." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/><link href="assets/css/brands-compact.css?v=2026-02-15-v55" rel="stylesheet"/>
+<link href="assets/img/logo.png" rel="icon" type="image/png"/>
+<style>
+  .smallBrandInvite{color:#8FD3FF;}
+</style>
+</head>
+<body>
+<div id="siteHeaderMount"></div>
+<main id="main">
+<section class="hero product-hero heroSmall">
+<img alt="" aria-hidden="true" class="decorPhoto decorCL" decoding="async" loading="eager" src="assets/img/photos/israeli-brands.png"/>
+<div class="wrap heroInner">
+<div class="heroCopy center-text">
+<h1>Israeli Brands</h1>
+          <div class="muted" style="margin-top:6px;font-weight:900;">Last Updated: 31.01.2026</div>
+<p>Recommended Israeli brands in one place — click on a brand to see what you can buy.</p>
+</div>
+</div>
+</section>
+<section class="panel filter-panel">
+<div class="wrap">
+<div class="toolbar-container contentCard">
+<div class="cardsGrid">
+<div class="infoCard">
+<h2>How We Choose Brands</h2>
+<ul>
+<li>Strict Cruelty-Free policy (Not tested on animals)</li>
+<li>Certifications like PETA / Leaping Bunny when possible</li>
+<li>Availability for purchase in Israel</li>
+</ul>
+</div>
+<div class="infoCard" style="text-align:center">
+<h2>Suggest a Brand to Add</h2>
+<p class="smallBrandInvite">If you are a small-to-medium Israeli brand with a Cruelty-Free policy and vegan products — I'd be happy to add you to the database for free. Just attach a link to your policy/transparency (or certificate, if any).</p>
+<a class="btnPrimary" href="contact.html">Contact Us</a>
+</div>
+</div>
+<div class="noteBox">
+<h2 style="margin:0 0 8px">Brand List</h2>
+<div aria-label="Brand Filtering" class="brandsControls"><div class="brandsSearchControl"><label class="fieldLabel" for="brandSearch">Quick Search</label><input autocomplete="off" id="brandSearch" placeholder="Search by brand name, category or tag..." type="search"/><p class="hintText">Tip: try “makeup”, “hair”, “vegan” or a brand name.</p></div><div class="brandsCategoryControl"><label for="brandCategoryFilter">Filter by Product Type</label><select class="brandCategoryFilter" id="brandCategoryFilter"><option value="">All Product Types</option></select></div><div class="brandsPriceControl"><label for="brandPriceFilter">Filter by Price</label><select class="brandPriceFilter" id="brandPriceFilter"><option value="">All Levels</option></select></div></div>
+<p class="brandsPriceHint muted">Estimated Price: $ Cheap · $$$$$ Expensive. Selecting $$ will show brands up to $$ (inclusive).</p>
+<div class="brandsMetaRow"><div class="brandsCount" data-brands-count="1">Showing 0 brands</div></div></div>
+<div aria-label="Brand List" class="brandGrid" data-json="data/israeli-brands.json" data-page="il" id="brandGrid"></div>
+</div>
+</div>
+</section>
+<section aria-label="Certification Information" class="panel">
+<div class="wrap">
+<div class="grid two spaced" style="margin-top:18px">
+<div class="infoCard">
+<h2>Why are many Israeli brands Vegan but without PETA / Leaping Bunny?</h2>
+<p>In Israel, there are many small-to-medium businesses that develop vegan formulas (no animal-derived ingredients) but <b>do not always</b> join international certification programs.</p>
+<ul>
+<li><b>Cost and Process</b> – Certification requires time, documentation, and sometimes fees.</li>
+<li><b>Local Target Audience</b> – A brand that sells mainly in Israel sometimes settles for internal policies and transparency.</li>
+<li><b>Markets and Regulation</b> – If the brand does not sell in countries with animal testing requirements, it may choose not to register for an international program.</li>
+</ul>
+<p class="mini">100% Vegan does not always mean Cruelty-Free — that's why we only include brands that meet both conditions.</p>
+</div>
+<div class="infoCard">
+<h2>How to check when there is no certificate?</h2>
+<ol class="steps">
+<li>Look for a “Testing Policy” / FAQ page on the brand's website.</li>
+<li>Check if they sell in markets where animal testing is problematic.</li>
+<li>Ask for a written answer: Are there tests on the product/ingredients, and who performs them?</li>
+<li>It is recommended to save a link or screenshot for documentation.</li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+</main>
+<div id="siteFooterMount"></div>
+<script src="assets/js/price-tier.js?v=2026-02-15-v55"></script><script src="assets/js/brands-json.js?v=2026-02-15-v55"></script>
+<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
+<script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
+<script>
+(function(){
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // optional: if your JS triggers this after rendering cards/lists
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+
+  // watch for DOM changes (debounced)
+  var t=null;
+  var mo=new MutationObserver(function(){
+    clearTimeout(t);
+    t=setTimeout(wgRefresh, 250);
+  });
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
+</body>
+</html>

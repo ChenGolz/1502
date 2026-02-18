@@ -14,16 +14,10 @@
 (function(){
   'use strict';
 
-  var KBWG_LANG = (window.kbwgGetLang && window.kbwgGetLang()) || 'he';
-  function fetchJsonWithFallback(primary, fallback){
-    return fetch(primary,{cache:'no-store'}).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
-      .catch(function(){ return fetch(fallback,{cache:'no-store'}).then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }); });
-  }
-
   try { window.KBWG_BUNDLES_BUILD = '2026-02-14-v5'; console.info('[KBWG] Bundles build', window.KBWG_BUNDLES_BUILD); } catch(e) {}
 
-  var PRODUCTS_PATH = 'data/products-' + KBWG_LANG + '.json';
-  var BRANDS_PATH = 'data/intl-brands-' + KBWG_LANG + '.json';
+  var PRODUCTS_PATH = 'data/products.json';
+  var BRANDS_PATH = 'data/intl-brands.json';
   var BRAND_INDEX = null;
   var FREE_SHIP_OVER_USD = 49;
 

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+<head>
+           <script async src="https://www.googletagmanager.com/gtag/js?id=G-947CLPDP2H"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-947CLPDP2H');
+</script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Product Database | NoCrueltyIL</title>
+<meta content="Checking for you: Search for vegan products not tested on animals – cosmetics, makeup, skincare, and cleaning in Israel." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/>
+<link href="assets/img/logo.png" rel="icon" type="image/png"/>
+</head>
+<body class="page-products">
+<div id="siteHeaderMount"></div>
+<main id="main">
+<section class="hero product-hero heroSmall">
+<img alt="" aria-hidden="true" class="decorPhoto decorCL" decoding="async" loading="eager" src="assets/img/photos/products.png"/>
+<div class="wrap heroInner">
+<div class="heroCopy center-text">
+<h1>Shop Without Cruelty</h1>
+<p>The largest database in Israel for 100% Vegan products that were not tested on animals.</p>
+</div>
+</div>
+</section>
+<section class="panel filter-panel">
+<div class="wrap">
+<div class="products-layout">
+<div class="productsAside">
+<aside class="sidebar" id="sidebar">
+<div class="sticky-sidebar">
+<div class="sidebar-header">
+<h3>Filter Results</h3>
+<button aria-label="Close filters" class="btn-icon mobile-only" id="closeSidebar" type="button">×</button>
+</div>
+<div class="sidebar-body">
+<div class="filter-group">
+<label class="filter-label" for="q">Search</label>
+<div class="search-input-wrapper">
+<input autocomplete="off" class="search-input" id="q" placeholder="Brand or product name..." type="search"/>
+</div>
+</div>
+<div class="filter-group">
+<label class="filter-label" for="category">Category</label>
+<select class="filter-select" id="category">
+<option value="">All Categories</option>
+</select>
+</div>
+<div class="filter-group">
+<label class="filter-label" for="price">Price Level</label>
+<select class="filter-select" id="price">
+<option value="">All Levels</option>
+<option value="1">$ (Budget)</option>
+<option value="2">$$</option>
+<option value="3">$$$</option>
+<option value="4">$$$$</option>
+<option value="5">$$$$$ (Luxury)</option>
+</select>
+</div>
+<details class="filter-group" open="">
+<summary class="filter-label">More Options</summary>
+<div class="filter-options">
+<label class="checkbox-label">
+<input id="peta" type="checkbox"/>
+PETA Certified
+</label>
+<label class="checkbox-label">
+<input id="lb" type="checkbox"/>
+Leaping Bunny Certified
+</label>
+<label class="checkbox-label">
+<input id="israeli" type="checkbox"/>
+Israeli Brand 🇮🇱
+</label>
+<label class="checkbox-label">
+<input id="free_shipping" type="checkbox"/>
+Free shipping over a certain amount
+</label>
+</div>
+</details>
+<div class="status-bar">
+<span class="count-tag" id="liveCount">0 products</span>
+<button class="btn-link" id="clearFilters" type="button">Clear All</button>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<section aria-label="Results" class="productsResults">
+<div class="emptyState" hidden="" id="emptyState">No results found. Try removing filters or searching for another word.</div>
+<div aria-label="Product list" class="product-grid" id="grid"></div>
+</section>
+</div>
+</div>
+</section>
+</main>
+<div id="siteFooterMount"></div>
+<script defer="True" src="assets/js/products-json-loader.js?v=2026-02-15-v55"></script><script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
+<script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
+<script>
+(function(){
+  var t = null;
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // observer for dynamic content
+  var mo = new MutationObserver(function(){
+    clearTimeout(t);
+    t = setTimeout(wgRefresh, 300);
+  });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+
+  // Custom event if your JS triggers it
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+})();
+</script>
+</body>
+</html>

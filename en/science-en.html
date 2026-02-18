@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Smashing Myths | NoCrueltyIL</title>
+<meta content="Scientific consensus on vegan nutrition: what leading nutrition organizations say, and what is important to check (B12 and more)." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/>
+<link href="assets/img/logo.png" rel="icon" type="image/png"/>
+</head>
+<body>
+<div id="siteHeaderMount"></div>
+<main id="main">
+<section class="hero product-hero heroSmall">
+  <img loading="eager" decoding="async" alt="" aria-hidden="true" class="decorPhoto decorCL" src="assets/img/photos/science.png"/>
+  <div class="wrap heroInner">
+    <div class="heroCopy center-text">
+      <h1>Smashing Myths</h1>
+      <p>A well-planned vegan diet is suitable for all stages of life – this is not an opinion, it's the professional consensus.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="wrap">
+    <div class="prose">
+      <h2>The Scientific Consensus</h2>
+      <p>Leading health and nutrition organizations worldwide have already determined that a vegan diet can provide all the nutritional needs, provided it is planned correctly.</p>
+    </div>
+
+    <div class="gridCards" style="margin-top:14px">
+      <a class="miniCard" target="_blank" rel="noopener" href="https://pubmed.ncbi.nlm.nih.gov/27886704/">
+        <h3>Academy of Nutrition and Dietetics (AND)</h3>
+        <div class="muted">The American organization (the largest in the world) states that a vegan diet is healthy and nutritionally adequate for all stages of life.</div>
+        <div class="actions" style="margin-top:10px">
+          <span class="btn primary">To Position Paper</span>
+        </div>
+      </a>
+
+      <a class="miniCard" target="_blank" rel="noopener" href="https://www.nhs.uk/live-well/eat-well/how-to-eat-a-balanced-diet/the-vegan-diet/">
+        <h3>NHS – The Vegan Diet</h3>
+        <div class="muted">The British Health Service guide to a healthy vegan diet: sources of protein, calcium, and iron.</div>
+        <div class="actions" style="margin-top:10px">
+          <span class="btn primary">To Guide</span>
+        </div>
+      </a>
+
+      <a class="miniCard" target="_blank" rel="noopener" href="https://www.bda.uk.com/resource/vegetarian-vegan-plant-based-diet.html">
+        <h3>BDA – Vegetarian / Vegan / Plant‑Based</h3>
+        <div class="muted">The British Dietetic Association page: recommended foods + B12 as a supplement/fortified.</div>
+        <div class="actions" style="margin-top:10px">
+          <span class="btn primary">To Resource</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</main>
+<div id="siteFooterMount"></div>
+<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
+<script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
+<script>
+(function(){
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // optional: if your JS triggers this after rendering cards/lists
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+
+  // watch for DOM changes (debounced)
+  var t=null;
+  var mo=new MutationObserver(function(){
+    clearTimeout(t);
+    t=setTimeout(wgRefresh, 250);
+  });
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
+</body>
+</html>

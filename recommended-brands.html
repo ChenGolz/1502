@@ -2,8 +2,8 @@
 
 <html class="page-recommended-brands" dir="rtl" lang="he">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-947CLPDP2H"></script>
+   <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-947CLPDP2H"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="assets/css/styles.css?v=2026-02-15-v56" rel="stylesheet"/><link href="assets/css/brands-compact.css?v=2026-02-15-v55" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/><link href="assets/css/brands-compact.css?v=2026-02-15-v55" rel="stylesheet"/>
 <link href="assets/img/logo.png" rel="icon" type="image/png"/>
 <style>
 /* מומלצים brands – page polish (scoped) */
@@ -320,7 +320,7 @@
   height: 18px;
   border-radius: 6px;
 }
-</style><link href="recommended-brands.html" hreflang="he" rel="alternate"/><link href="recommended-brands-en.html" hreflang="en" rel="alternate"/><link href="recommended-brands.html" rel="canonical"/></head>
+</style></head>
 <body class="page-recommended-brands page-recommended-brands page-recommended-brands page-recommended-brands">
 <div id="siteHeaderMount"></div>
 <main id="main">
@@ -328,16 +328,16 @@
 <img alt="" aria-hidden="true" class="decorPhoto decorCL" decoding="async" loading="eager" src="assets/img/photos/recommended-brands.png"/>
 <div class="wrap heroInner">
 <div class="heroCopy center-text">
-<h1 data-i18n="recommended-brands_h1">הנבחרת הבינלאומית</h1>
-<div class="muted" style="margin-top:6px;font-weight:900;">עודכן לאחרונה: 11.02.2026</div>
-<p>אספנו עבורך את המותגים הטובים ביותר מחו"ל — כולם 100% טבעוניים וללא ניסויים בבעלי חיים. קנייה בטוחה, בלי הפתעות.</p>
+<h1 data-i18n="recommended-brands_h1">בינלאומי</h1>
+          <div class="muted" style="margin-top:6px;font-weight:900;">עודכן לאחרונה: 11.02.2026</div>
+<p>מותגים בינלאומיים מומלצים.</p>
 </div>
 </div>
 </section>
 <section class="panel filter-panel">
 <div class="wrap">
 <div class="toolbar-container contentCard"><div class="filterPanel__collapseArea">
-<p class="lead">אפשר לסנן לפי קטגוריה, מחיר או פשוט לחפש את המותג האהוב עליך.</p><p class="muted" data-price-note="1">💡 מדד המחיר: הסימון ($) הוא להערכה בלבד.</p>
+<p class="lead">בחרי קטגוריה כדי לראות מותגים רלוונטיים, או חפשי לפי שם.</p><p class="muted" data-price-note="1">הסימון $ הוא הערכה כללית לרמת המחירים של המותג (לא מחיר מדויק לכל מוצר).</p>
 <div aria-label="חיפוש מותגים" class="brandsControls">
 <div class="brandsSearchControl">
 <label class="visuallyHidden" for="brandSearch">חיפוש מותגים</label>
@@ -347,7 +347,7 @@
 <label for="brandCategoryFilter">סינון לפי סוג מוצר</label>
 <select class="brandCategoryFilter" id="brandCategoryFilter"><option value="">כל סוגי המוצרים</option></select>
 </div><div class="brandsPriceControl"><label for="brandPriceFilter">סינון לפי מחיר</label><select class="brandPriceFilter" id="brandPriceFilter"><option value="">כל הרמות</option></select></div>
-</div><p class="brandsPriceHint muted">סינון לפי $$ יציג מותגים זולים ובינוניים כאחד.</p><div class="brandsMetaRow">
+</div><p class="brandsPriceHint muted">מחיר משוער: $ זול · $$$$$ יקר. בחירה ב־$$ תציג מותגים עד $$ (כולל).</p><div class="brandsMetaRow">
 <div class="brandsCount" data-brands-count=""></div>
 </div>
 </div></div><div class="cardsGrid cardsGrid--brands" data-json="data/intl-brands.json" data-page="intl" id="brandGrid"></div>
@@ -355,9 +355,31 @@
 </section>
 </main>
 <div id="siteFooterMount"></div>
-<script defer="" src="assets/js/lang.js?v=2026-02-15-v4"></script>
 <script src="assets/js/price-tier.js?v=2026-02-15-v55"></script><script src="assets/js/brands-json.js?v=2026-02-15-v55"></script>
-<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v56"></script>
+<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
 <script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
+<!-- Weglot helper: refresh translations after dynamic content renders -->
+<script>
+(function(){
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // optional: if your JS triggers this after rendering cards/lists
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+
+  // watch for DOM changes (debounced)
+  var t=null;
+  var mo=new MutationObserver(function(){
+    clearTimeout(t);
+    t=setTimeout(wgRefresh, 250);
+  });
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
 </body>
 </html>

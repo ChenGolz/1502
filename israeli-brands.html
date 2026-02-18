@@ -9,12 +9,12 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="assets/css/styles.css?v=2026-02-15-v56" rel="stylesheet"/><link href="assets/css/brands-compact.css?v=2026-02-15-v55" rel="stylesheet"/>
+<link href="assets/css/styles.css?v=2026-02-15-v55" rel="stylesheet"/><link href="assets/css/brands-compact.css?v=2026-02-15-v55" rel="stylesheet"/>
 <link href="assets/img/logo.png" rel="icon" type="image/png"/>
 <style>
   .smallBrandInvite{color:#8FD3FF;}
 </style>
-<link href="israeli-brands.html" hreflang="he" rel="alternate"/><link href="israeli-brands-en.html" hreflang="en" rel="alternate"/><link href="israeli-brands.html" rel="canonical"/></head>
+</head>
 <body>
 <div id="siteHeaderMount"></div>
 <main id="main">
@@ -23,7 +23,7 @@
 <div class="wrap heroInner">
 <div class="heroCopy center-text">
 <h1>מותגים ישראליים</h1>
-<div class="muted" style="margin-top:6px;font-weight:900;">עודכן לאחרונה: 31.01.2026</div>
+          <div class="muted" style="margin-top:6px;font-weight:900;">עודכן לאחרונה: 31.01.2026</div>
 <p>מותגים ישראליים מומלצים במקום אחד — לחצי על מותג כדי לראות מה אפשר לקנות.</p>
 </div>
 </div>
@@ -82,9 +82,31 @@
 </section>
 </main>
 <div id="siteFooterMount"></div>
-<script defer="" src="assets/js/lang.js?v=2026-02-15-v4"></script>
 <script src="assets/js/price-tier.js?v=2026-02-15-v55"></script><script src="assets/js/brands-json.js?v=2026-02-15-v55"></script>
-<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v56"></script>
+<script data-base="./" defer="" src="assets/js/layout-inject.js?v=2026-02-15-v55"></script>
 <script defer="" src="assets/js/site.js?v=2026-02-15-v55"></script>
+<!-- Weglot helper: refresh translations after dynamic content renders -->
+<script>
+(function(){
+  function wgRefresh(){
+    try{
+      if (window.Weglot && typeof Weglot.refresh === 'function') Weglot.refresh();
+    }catch(e){}
+  }
+  // initial
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(wgRefresh, 80); });
+
+  // optional: if your JS triggers this after rendering cards/lists
+  window.addEventListener('kbwg:content-rendered', function(){ setTimeout(wgRefresh, 80); });
+
+  // watch for DOM changes (debounced)
+  var t=null;
+  var mo=new MutationObserver(function(){
+    clearTimeout(t);
+    t=setTimeout(wgRefresh, 250);
+  });
+  mo.observe(document.documentElement, { childList:true, subtree:true });
+})();
+</script>
 </body>
 </html>
